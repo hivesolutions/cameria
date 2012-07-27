@@ -4,7 +4,7 @@
     "model" : "m7014",
     "device" : "encoder",
     "camera" : {
-    	"resolution" : "640x480",
+        "resolution" : "640x480",
         "width" : 640,
         "height" : 480,
         "fps" : 20
