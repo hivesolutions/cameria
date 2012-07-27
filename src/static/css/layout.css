@@ -289,13 +289,16 @@ pre {
     width: 24px;
 }
 
-
 .capitalize {
 	text-transform: capitalize;
 }
 
 .cameras {
     margin: 24px 0px 24px 0px;
+}
+
+.cameras img {
+	background: transparent url(../images/pattern.jpg) repeat center center;
 }
 
 .cameras a:hover {
