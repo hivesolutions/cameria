@@ -82,8 +82,13 @@ def show_set(id):
     return flask.render_template(
         "sets_show.html.tpl",
         link = "sets",
+        sub_link = "show",
         set = set
     )
+
+@app.route("/sets/<id>/settings")
+def settings_set(id):
+    pass
 
 @app.route("/cameras")
 def list_camera():
@@ -102,6 +107,17 @@ def show_camera(id):
 
     return flask.render_template(
         "cameras_show.html.tpl",
+        link = "cameras",
+        sub_link = "show",
+        camera = camera
+    )
+
+@app.route("/cameras/<id>/settings")
+def settings_camera(id):
+    camera = get_camera(id)
+
+    return flask.render_template(
+        "cameras_settings.html.tpl",
         link = "cameras",
         camera = camera
     )
@@ -123,6 +139,7 @@ def show_device(id):
     return flask.render_template(
         "devices_show.html.tpl",
         link = "devices",
+        sub_link = "show",
         device = device
     )
 
