@@ -1,0 +1,21 @@
+{
+    "id" : "gj",
+    "name" : "Galeria da Jóia",
+    "camera" : {
+        "resolution" : "320x240",
+        "width" : 320,
+        "height" : 240,
+        "compression" : 50,
+        "fps" : 1,
+        "clock" : 0
+    },
+    "cameras" : [{
+                "id" : "gj_01"
+            }, {
+                "id" : "gj_02"
+            }, {
+                "id" : "gj_03"
+            }, {
+                "id" : "gj_04"
+            }]
+}

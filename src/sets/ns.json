@@ -1,0 +1,17 @@
+{
+    "id" : "ns",
+    "name" : "Norte Shopping",
+    "camera" : {
+        "resolution" : "320x240",
+        "width" : 320,
+        "height" : 240,
+        "compression" : 50,
+        "fps" : 1,
+        "clock" : 0
+    },
+    "cameras" : [{
+                "id" : "ns_01"
+            }, {
+                "id" : "ns_02"
+            }]
+}

@@ -1,0 +1,9 @@
+{
+    "id" : "axis_m1114",
+    "type" : "axis",
+    "model" : "m1114",
+    "device" : "camera",
+    "settings" : {
+        "resolution" : true
+    }
+}

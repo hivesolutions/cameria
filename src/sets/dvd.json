@@ -1,0 +1,19 @@
+{
+    "id" : "dvd",
+    "name" : "Dolce Vita Douro",
+    "camera" : {
+        "resolution" : "320x240",
+        "width" : 320,
+        "height" : 240,
+        "compression" : 50,
+        "fps" : 1,
+        "clock" : 0
+    },
+    "cameras" : [{
+                "id" : "dvd_01"
+            }, {
+                "id" : "dvd_02"
+            }, {
+                "id" : "dvd_03"
+            }]
+}

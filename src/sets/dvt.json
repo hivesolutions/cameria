@@ -1,0 +1,21 @@
+{
+    "id" : "dvt",
+    "name" : "Dolce Vita Tejo",
+    "camera" : {
+        "resolution" : "320x240",
+        "width" : 320,
+        "height" : 240,
+        "compression" : 50,
+        "fps" : 1,
+        "clock" : 0
+    },
+    "cameras" : [{
+                "id" : "dvt_01"
+            }, {
+                "id" : "dvt_02"
+            }, {
+                "id" : "dvt_03"
+            }, {
+                "id" : "dvt_04"
+            }]
+}

@@ -1,0 +1,9 @@
+{
+    "id" : "axis_211",
+    "type" : "axis",
+    "model" : "211",
+    "device" : "camera",
+    "settings" : {
+        "resolution" : true
+    }
+}

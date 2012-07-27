@@ -1,0 +1,9 @@
+{
+    "id" : "axis_m7014",
+    "type" : "axis",
+    "model" : "m7014",
+    "device" : "encoder",
+    "settings" : {
+        "resolution" : false
+    }
+}

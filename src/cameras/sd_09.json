@@ -1,0 +1,12 @@
+{
+    "id" : "sd_09",
+    "url" : "galeriadajoia.dyndns.org:7008",
+    "camera" : "1",
+    "password" : "root",
+    "username" : "root",
+    "protocol" : "http",
+    "compression" : 30,
+    "fps" : 4,
+    "type" : "axis",
+    "model" : "211"
+}
