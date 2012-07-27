@@ -1,4 +1,4 @@
-{% extends "partials/layout.html.tpl" %}
+{% extends "partials/layout_device.html.tpl" %}
 {% block title %}Devices{% endblock %}
 {% block name %}{{ device.type }} {{ device.model }}{% endblock %}
 {% block content %}
