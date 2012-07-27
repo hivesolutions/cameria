@@ -1,4 +1,4 @@
-{% extends "partials/layout_full.html.tpl" %}
+{% extends "partials/layout_set_f.html.tpl" %}
 {% block title %}{{ set.name }}{% endblock %}
 {% block name %}{{ set.name }}{% endblock %}
 {% block content %}
