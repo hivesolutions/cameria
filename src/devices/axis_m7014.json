@@ -3,6 +3,9 @@
     "type" : "axis",
     "model" : "m7014",
     "device" : "encoder",
+    "camera" : {
+        "fps" : 20
+    },
     "settings" : {
         "resolution" : false
     }

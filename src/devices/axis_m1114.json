@@ -3,6 +3,10 @@
     "type" : "axis",
     "model" : "m1114",
     "device" : "camera",
+    "camera" : {
+        "resolution" : "640x480",
+        "fps" : 20
+    },
     "settings" : {
         "resolution" : true
     }

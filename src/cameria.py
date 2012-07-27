@@ -98,6 +98,7 @@ def list_camera():
 @app.route("/cameras/<id>")
 def show_camera(id):
     camera = get_camera(id)
+    filter(camera)
 
     return flask.render_template(
         "cameras_show.html.tpl",
@@ -228,7 +229,10 @@ def filter(camera):
     model = camera.get("model", "211")
 
     device = get_device(type, model)
+    _camera = device.get("camera", {})
     settings = device.get("settings", {})
+
+    merge(camera, _camera, override = False)
 
     for key, value in settings.items():
         if value: continue

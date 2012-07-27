@@ -290,7 +290,7 @@ pre {
 }
 
 .capitalize {
-	text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .cameras {
@@ -298,7 +298,7 @@ pre {
 }
 
 .cameras img {
-	background: transparent url(../images/pattern.jpg) repeat center center;
+    background: transparent url(../images/pattern.jpg) repeat center center;
 }
 
 .cameras a:hover {
