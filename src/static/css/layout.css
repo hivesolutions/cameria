@@ -298,7 +298,7 @@ pre {
 }
 
 .cameras img {
-    background: transparent url(../images/pattern.jpg) repeat center center;
+    background: transparent url(../images/pattern.png) repeat left top;
 }
 
 .cameras a:hover {
