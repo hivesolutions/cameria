@@ -74,6 +74,12 @@
             // (data reference)
             var camera = matchedObject;
 
+            // create a custom mazimize function with a clojure in the
+            // camera element reference
+            var __maximize = function() {
+                _maximize(camera);
+            };
+
             // registers for the key down on the window so that
             // we can handle the fullscreen trigger
             matchedObject.length && _window.keydown(function(event) {
@@ -85,12 +91,12 @@
                         if (event.shiftKey && keyValue == 70) {
                             var maximized = camera.data("maximized") || false;
                             if (maximized) {
-                                _minimize();
-                                _window.unbind("resize", _maximize)
+                                _minimize(camera);
+                                _window.unbind("resize", __maximize)
                                 camera.data("maximized", false);
                             } else {
-                                _maximize();
-                                _window.resize(_maximize);
+                                _maximize(camera);
+                                _window.resize(__maximize);
                                 camera.data("maximized", true);
                             }
                         }
@@ -100,14 +106,17 @@
         /**
          * Maximizes the current camera image occupying the complete screen,
          * this shiould provide a fullscreen feel.
+         *
+         * @param {Element}
+         *            camera The reference to the camera element to be used in
+         *            the maximization process.
          */
-        var _maximize = function() {
+        var _maximize = function(camera) {
             // retrieves the various elements to be used in the
             // maximization operation (some of them are global)
             var _window = jQuery(window);
             var _html = jQuery("html");
             var _body = jQuery("body");
-            var camera = jQuery(".cameras img");
             var overlay = jQuery("#overlay");
 
             // resets the html element to remove all the possible
@@ -179,14 +188,17 @@
         /**
          * Minimizes the current camera image window into the "normal" behaviour
          * this function should be able to restore the original values for the
-         * global elements used in a maximization.
+         * global elements used in a maximization. *
+         *
+         * @param {Element}
+         *            camera The reference to the camera element to be used in
+         *            the minimization process.
          */
-        var _minimize = function() {
+        var _minimize = function(camera) {
             // retrieves the various elements that are going
             // to be used in the restore operation (minimization)
             var _html = jQuery("html");
             var _body = jQuery("body");
-            var camera = jQuery(".cameras img");
             var overlay = jQuery("#overlay");
 
             // resets the global attributes for the html
@@ -229,5 +241,5 @@
 jQuery(document).ready(function() {
             // registers the camera object in the target elements
             // (should enalbe normal functionality)
-            jQuery(".cameras img").uxcamera();
+            jQuery(".cameras img.single").uxcamera();
         });
