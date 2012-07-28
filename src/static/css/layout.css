@@ -60,6 +60,12 @@
     margin: 20px 0px 0px 0px;
 }
 
+#overlay {
+    display: none;
+    left: 0px;
+    top: 0px;
+}
+
 html {
     overflow-y: scroll;
 }
