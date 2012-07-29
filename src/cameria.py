@@ -273,9 +273,17 @@ def run():
     # then checks the current environment variable
     # for the target port for execution (external)
     # and then start running it (continuous loop)
-    app.debug = True
+    debug = os.environ.get("DEBUG", False) and True or False
+    reloader = os.environ.get("RELOADER", False) and True or False
     port = int(os.environ.get("PORT", 5000))
-    app.run(use_debugger = True, debug = True, use_reloader = False, host = "0.0.0.0", port = port)
+    app.debug = debug
+    app.run(
+        use_debugger = debug,
+        debug = debug,
+        use_reloader = reloader,
+        host = "0.0.0.0",
+        port = port
+    )
 
 if __name__ == "__main__":
     run()
