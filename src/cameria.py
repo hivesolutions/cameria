@@ -143,6 +143,18 @@ def show_device(id):
         device = device
     )
 
+@app.errorhandler(404)
+def handler_404(error):
+    return str(error)
+
+@app.errorhandler(413)
+def handler_413(error):
+    return str(error)
+
+@app.errorhandler(BaseException)
+def handler_exception(error):
+    return str(error)
+
 def get_sets():
     sets_directory = os.path.join(SETS_FOLDER)
     if not os.path.exists(sets_directory): raise RuntimeError("Sets directory does not exist")
