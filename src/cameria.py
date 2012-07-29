@@ -270,10 +270,12 @@ def filter(camera):
 
 def run():
     # sets the debug control in the application
+    # then checks the current environment variable
+    # for the target port for execution (external)
     # and then start running it (continuous loop)
     app.debug = True
-    app.run(use_debugger = True, debug = True, use_reloader = False, host = "0.0.0.0")
-    #app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(use_debugger = True, debug = True, use_reloader = False, host = "0.0.0.0", port = port)
 
 if __name__ == "__main__":
     run()
