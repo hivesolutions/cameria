@@ -156,7 +156,6 @@ def login():
 
     # updates the current user (name) in session with
     # the username that has just be accepted in the login
-    flask.session["user"] = user
     flask.session["username"] = username
     flask.session["tokens"] = tokens
     flask.session["cameras"] = cameras
@@ -167,7 +166,6 @@ def login():
 
 @app.route("/signout" , methods = ("GET", "POST"))
 def logout():
-    del flask.session["user"]
     del flask.session["username"]
     del flask.session["tokens"]
     del flask.session["cameras"]
