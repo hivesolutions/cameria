@@ -51,12 +51,62 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 
 app = flask.Flask(__name__)
 
+def ensure_login(token = None):
+    if "username" in flask.session and not token: return None
+    if token in flask.session.get("tokens", None): return None
+    return flask.redirect(
+        flask.url_for("login")
+    )
+
+def ensure(token):
+
+    def decorator(function, *args, **kwargs):
+
+        def interceptor(*args, **kwargs):
+            ensure = ensure_login(token)
+            if ensure: return ensure
+            return function(*args, **kwargs)
+
+        return interceptor
+
+    return decorator
+
+@ensure("index")
 @app.route("/", methods = ("GET",))
 @app.route("/index" , methods = ("GET",))
 def index():
     return flask.render_template(
         "index.html.tpl",
         link = "home"
+    )
+
+@app.route("/signin" , methods = ("GET",))
+def signin():
+    return flask.render_template(
+        "signin.html.tpl"
+    )
+
+@app.route("/signin" , methods = ("POST",))
+def login():
+    # retrieves both the username and the password from
+    # the flask request form, these are the values that
+    # are going to be used in the username validation
+    username = flask.request.form.get("username", None)
+    password = flask.request.form.get("password", None)
+
+    if not username == "admin" or not password == "admin":
+        return flask.render_template(
+            "signin.html.tpl",
+            username = username,
+            error = "Invalid user name and/or password"
+        )
+
+    # updates the current user (name) in session with
+    # the username that has just be accepted in the login
+    flask.session["username"] = username
+
+    return flask.redirect(
+        flask.url_for("index")
     )
 
 @app.route("/about", methods = ("GET",))
@@ -89,7 +139,14 @@ def show_set(id):
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
 def settings_set(id):
-    pass
+    set = get_set(id)
+
+    return flask.render_template(
+        "sets_settings.html.tpl",
+        link = "sets",
+        sub_link = "settings",
+        set = set
+    )
 
 @app.route("/cameras", methods = ("GET",))
 def list_camera():
@@ -280,6 +337,7 @@ def run():
     port = int(os.environ.get("PORT", 5000))
     not debug and sslify.SSLify(app)
     app.debug = debug
+    app.secret_key = "cameria_is_a_secret"
     app.run(
         use_debugger = debug,
         debug = debug,

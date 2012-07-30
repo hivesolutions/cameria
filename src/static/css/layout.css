@@ -145,6 +145,10 @@ input {
     width: 524px;
 }
 
+input.small {
+    width: 324px;
+}
+
 input.lower {
     color: #999999;
 }
