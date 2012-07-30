@@ -68,7 +68,7 @@ class SSLify(object):
     @property
     def hsts_header(self):
         """
-        Returns the proper HSTS policy.
+        Returns the proper hsts policy.
         """
         
         hsts_policy = "max-age={0}".format(self.hsts_age)
