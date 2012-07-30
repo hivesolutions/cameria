@@ -45,6 +45,10 @@ import functools
 
 import sslify
 
+SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
+""" The "secret" key to be at the internal encryption
+processes handled by flask (eg: sessions) """
+
 PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
 of the password into an hash value """
@@ -429,7 +433,7 @@ def run():
     port = int(os.environ.get("PORT", 5000))
     not debug and sslify.SSLify(app)
     app.debug = debug
-    app.secret_key = "cameria_is_a_secret"
+    app.secret_key = SECRET_KEY
     app.run(
         use_debugger = debug,
         debug = debug,
