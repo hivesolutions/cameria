@@ -51,23 +51,22 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 
 app = flask.Flask(__name__)
 
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods = ("GET",))
+@app.route("/index" , methods = ("GET",))
 def index():
     return flask.render_template(
         "index.html.tpl",
         link = "home"
     )
 
-@app.route("/")
-@app.route("/about")
+@app.route("/about", methods = ("GET",))
 def about():
     return flask.render_template(
         "about.html.tpl",
         link = "about"
     )
 
-@app.route("/sets")
+@app.route("/sets", methods = ("GET",))
 def list_set():
     sets = get_sets()
 
@@ -77,7 +76,7 @@ def list_set():
         sets = sets
     )
 
-@app.route("/sets/<id>")
+@app.route("/sets/<id>", methods = ("GET",))
 def show_set(id):
     set = get_set(id)
 
@@ -88,11 +87,11 @@ def show_set(id):
         set = set
     )
 
-@app.route("/sets/<id>/settings")
+@app.route("/sets/<id>/settings", methods = ("GET",))
 def settings_set(id):
     pass
 
-@app.route("/cameras")
+@app.route("/cameras", methods = ("GET",))
 def list_camera():
     cameras = get_cameras()
 
@@ -102,7 +101,7 @@ def list_camera():
         cameras = cameras
     )
 
-@app.route("/cameras/<id>")
+@app.route("/cameras/<id>", methods = ("GET",))
 def show_camera(id):
     camera = get_camera(id)
     filter(camera)
@@ -114,17 +113,18 @@ def show_camera(id):
         camera = camera
     )
 
-@app.route("/cameras/<id>/settings")
+@app.route("/cameras/<id>/settings", methods = ("GET",))
 def settings_camera(id):
     camera = get_camera(id)
 
     return flask.render_template(
         "cameras_settings.html.tpl",
         link = "cameras",
+        sub_link = "settings",
         camera = camera
     )
 
-@app.route("/devices")
+@app.route("/devices", methods = ("GET",))
 def list_device():
     devices = get_devices()
 
@@ -134,7 +134,7 @@ def list_device():
         devices = devices
     )
 
-@app.route("/device/<id>")
+@app.route("/device/<id>", methods = ("GET",))
 def show_device(id):
     device = get_device(id = id)
 
