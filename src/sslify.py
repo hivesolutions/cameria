@@ -123,7 +123,7 @@ class SSLify(object):
     def set_hsts_header(self, response):
         """
         Adds hsts header to each response.
-        This header should enable extra secutiry options to be
+        This header should enable extra security options to be
         interpreted at the client side.
 
         @type response: Response
