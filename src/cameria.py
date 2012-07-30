@@ -41,6 +41,7 @@ import os
 import json
 import flask
 import hashlib
+import datetime
 import functools
 
 import sslify
@@ -61,6 +62,8 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(31)
 
 def ensure_login(token = None):
     if "username" in flask.session and not token: return None
@@ -168,6 +171,10 @@ def login():
     flask.session["username"] = username
     flask.session["tokens"] = tokens
     flask.session["cameras"] = cameras
+
+    # makes the current session permanent this will allow
+    # the session to persist along multiple browser initialization
+    flask.session.permanent = True
 
     return flask.redirect(
         flask.url_for("index")
