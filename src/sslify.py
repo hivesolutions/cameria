@@ -40,6 +40,8 @@ __license__ = "GNU General Public License (GPL), Version 3"
 import flask
 
 YEAR_IN_SECS = 31536000
+""" The number of seconds that exist in a
+complete year (365 days) """
 
 class SSLify(object):
     """
@@ -47,7 +49,20 @@ class SSLify(object):
     of the protocol in the http connection.
     """
 
-    def __init__(self, app, age=YEAR_IN_SECS, subdomains=False):
+    def __init__(self, app, age = YEAR_IN_SECS, subdomains = False):
+        """
+        Constructor of the class.
+
+        @type app: App
+        @param app: The application object to be used in the
+        in ssl operation for the forcing of the protocol.
+        @type age: int
+        @param age: The maximum age of the hsts operation.
+        @type subdomains: bool
+        @param subdomains: If subdomain should be allows as part
+        of the security policy.
+        """
+
         if app is not None:
             self.app = app
             self.hsts_age = age
@@ -59,7 +74,11 @@ class SSLify(object):
 
     def init_app(self, app):
         """
-        Configures the configured Flask app to enforce ssl.
+        Configures the configured flask app to enforce ssl.
+
+        @type app: App
+        @param app: The application to be configured to enforce
+        the ssl redirection support.
         """
 
         app.before_request(self.redirect_to_ssl)
@@ -69,20 +88,25 @@ class SSLify(object):
     def hsts_header(self):
         """
         Returns the proper hsts policy.
-        """
-        
-        hsts_policy = "max-age={0}".format(self.hsts_age)
 
-        if self.hsts_include_subdomains:
-            hsts_policy += "; includeSubDomains"
+        @rtype: String
+        @return: The proper hsts policy string value.
+        """
+
+        hsts_policy = "max-age={0}".format(self.hsts_age)
+        if self.hsts_include_subdomains: hsts_policy += "; includeSubDomains"
 
         return hsts_policy
 
     def redirect_to_ssl(self):
         """
         Redirect incoming requests to https.
+
+        @rtype: Request
+        @return: The changed request containing the redirect
+        instruction in case it's required.
         """
-        
+
         criteria = [
             flask.request.is_secure,
             self.app.debug,
@@ -92,13 +116,22 @@ class SSLify(object):
         if not any(criteria):
             if flask.request.url.startswith("http://"):
                 url = flask.request.url.replace("http://", "https://", 1)
-                r = flask.redirect(url)
+                request = flask.redirect(url)
 
-                return r
+                return request
 
     def set_hsts_header(self, response):
         """
-        Adds HSTS header to each response.
+        Adds hsts header to each response.
+        This header should enable extra secutiry options to be
+        interpreted at the client side.
+
+        @type response: Response
+        @param response: The response to be used to set the hsts
+        policy header.
+        @rtype: Response
+        @return: The changed response object, containing the strict
+        transport security (hsts) header.
         """
 
         response.headers.setdefault("Strict-Transport-Security", self.hsts_header)
