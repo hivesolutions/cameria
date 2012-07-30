@@ -6,11 +6,18 @@
                 "sets.settings", "cameras.list", "cameras.show",
                 "cameras.settings", "devices.list", "devices.show"]
     },
-    "ns" : {
-        "name" : "Norte Shopping",
+    "dvt" : {
+        "name" : "Dolce Vita Tejo",
         "password" : "8b0ec7ce73e08ec8725d9bc027116d3ad9824d55",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
-                "cameras.show", "devices.list"],
-        "cameras" : ["ns_01", "ns_02"]
+                "cameras.show"],
+        "cameras" : ["jt_01", "jt_02", "jt_03"]
+    },
+    "jt" : {
+        "name" : "Jóia do Tempo",
+        "password" : "8b0ec7ce73e08ec8725d9bc027116d3ad9824d55",
+        "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
+                "cameras.show"],
+        "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04"]
     }
 }

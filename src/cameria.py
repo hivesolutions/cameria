@@ -73,6 +73,23 @@ def ensure_camera(camera):
 def ensure_cameras(cameras):
     for camera in cameras: ensure_camera(camera)
 
+def ensure_cameras_f(cameras):
+    _cameras = []
+    for camera in cameras:
+        try: ensure_camera(camera)
+        except: continue
+        else: _cameras.append(camera)
+    return _cameras
+
+def ensure_sets_f(sets):
+    _sets = []
+    for set in sets:
+        cameras = set.get("cameras", ())
+        try: ensure_cameras(cameras)
+        except: continue
+        else: _sets.append(set)
+    return _sets
+
 def ensure(token = None):
 
     def decorator(function):
@@ -171,6 +188,7 @@ def about():
 @ensure("sets.list")
 def list_set():
     sets = get_sets()
+    sets = ensure_sets_f(sets)
 
     return flask.render_template(
         "sets_list.html.tpl",
@@ -208,6 +226,7 @@ def settings_set(id):
 @ensure("cameras.list")
 def list_camera():
     cameras = get_cameras()
+    cameras = ensure_cameras_f(cameras)
 
     return flask.render_template(
         "cameras_list.html.tpl",
