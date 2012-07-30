@@ -1,6 +1,6 @@
 {% extends "partials/layout_set_f.html.tpl" %}
-{% block title %}{{ set.name }}{% endblock %}
-{% block name %}{{ set.name }}{% endblock %}
+{% block title %}Sets{% endblock %}
+{% block name %}Sets :: {{ set.name }}{% endblock %}
 {% block content %}
     <div class="cameras">
         {% for camera in set.cameras %}

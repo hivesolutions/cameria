@@ -1,6 +1,6 @@
 {% extends "partials/layout_camera_f.html.tpl" %}
-{% block title %}{{ camera.id }}{% endblock %}
-{% block name %}{{ camera.id }}{% endblock %}
+{% block title %}Cameras{% endblock %}
+{% block name %}Cameras :: {{ camera.id }}{% endblock %}
 {% block content %}
     <div class="cameras single">
         {% if "resolution" in camera %}

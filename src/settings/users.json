@@ -1,23 +1,27 @@
 {
     "admin" : {
+        "username" : "admin",
         "name" : "Administrator",
         "password" : "8b0ec7ce73e08ec8725d9bc027116d3ad9824d55",
         "tokens" : ["index", "about", "sets.list", "sets.show",
                 "sets.settings", "cameras.list", "cameras.show",
-                "cameras.settings", "devices.list", "devices.show"]
+                "cameras.settings", "devices.list", "devices.show",
+                "users.show"]
     },
     "dvt" : {
+        "username" : "dvt",
         "name" : "Dolce Vita Tejo",
         "password" : "24292eefff340043ed72879a7cc0368850c9accd",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
-                "cameras.show"],
+                "cameras.show", "users.show"],
         "cameras" : ["jt_01", "jt_02", "jt_03"]
     },
     "jt" : {
+        "username" : "js",
         "name" : "Jóia do Tempo",
         "password" : "0abe97d8065745e4c52672031393a36cfe49f6ca",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
-                "cameras.show"],
+                "cameras.show", "users.show"],
         "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04"]
     }
 }

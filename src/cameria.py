@@ -286,6 +286,18 @@ def show_device(id):
         device = device
     )
 
+@app.route("/user/<username>", methods = ("GET",))
+@ensure("users.show")
+def show_user(username):
+    user = get_user(username = username)
+
+    return flask.render_template(
+        "users_show.html.tpl",
+        link = "users",
+        sub_link = "show",
+        user = user
+    )
+
 @app.errorhandler(404)
 def handler_404(error):
     return str(error)
@@ -306,6 +318,13 @@ def get_users():
     finally: users_file.close()
 
     return users
+
+def get_user(username):
+    users = get_users()
+    user = users.get(username, None)
+    if not user: raise RuntimeError("Users not found")
+
+    return user
 
 def get_sets():
     sets_directory = os.path.join(SETS_FOLDER)

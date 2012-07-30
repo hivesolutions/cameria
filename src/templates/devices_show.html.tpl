@@ -1,6 +1,6 @@
 {% extends "partials/layout_device.html.tpl" %}
 {% block title %}Devices{% endblock %}
-{% block name %}{{ device.type }} {{ device.model }}{% endblock %}
+{% block name %}Devices :: {{ device.type }} {{ device.model }}{% endblock %}
 {% block content %}
     <div class="quote capitalize">{{ device.type }} {{ device.model }}</div>
     <div class="separator-horizontal"></div>
