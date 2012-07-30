@@ -1,0 +1,4 @@
+include src/cameria.wsgi
+include src/projects/README.md
+recursive-include src/static *
+recursive-include src/templates *
