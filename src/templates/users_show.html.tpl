@@ -17,7 +17,7 @@
             <tr>
                 <td class="right label" width="50%">cameras</td>
                 <td class="left value" width="50%">
-                    {% if not "user" in cameras or user.cameras == None %}
+                    {% if not "cameras" in user or user.cameras == None %}
                         all
                     {% else %}
                         {% for camera in user.cameras %}
