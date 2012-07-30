@@ -309,6 +309,7 @@ def get_sets():
     sets_directory = os.path.join(SETS_FOLDER)
     if not os.path.exists(sets_directory): raise RuntimeError("Sets directory does not exist")
     entries = os.listdir(sets_directory)
+    entries.sort()
 
     sets = []
 
@@ -349,6 +350,7 @@ def get_cameras():
     cameras_directory = os.path.join(CAMERAS_FOLDER)
     if not os.path.exists(cameras_directory): raise RuntimeError("Cameras directory does not exist")
     entries = os.listdir(cameras_directory)
+    entries.sort()
 
     cameras = []
 
@@ -374,6 +376,7 @@ def get_devices():
     devices_directory = os.path.join(DEVICES_FOLDER)
     if not os.path.exists(devices_directory): raise RuntimeError("Devices directory does not exist")
     entries = os.listdir(devices_directory)
+    entries.sort()
 
     devices = []
 
