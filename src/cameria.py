@@ -40,28 +40,44 @@ __license__ = "GNU General Public License (GPL), Version 3"
 import os
 import json
 import flask
+import hashlib
+import functools
 
 import sslify
+
+PASSWORD_SALT = "cameria"
+""" The salt suffix to be used during the encoding
+of the password into an hash value """
 
 CURRENT_DIRECTORY = os.path.dirname(__file__)
 CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
 SETS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "sets")
 CAMERAS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "cameras")
 DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
+SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
 
 def ensure_login(token = None):
     if "username" in flask.session and not token: return None
-    if token in flask.session.get("tokens", None): return None
+    if token in flask.session.get("tokens", []): return None
     return flask.redirect(
         flask.url_for("login")
     )
 
-def ensure(token):
+def ensure_camera(camera):
+    cameras = flask.session.get("cameras")
+    if cameras == None or camera["id"] in cameras: return
+    raise RuntimeError("Permission denied")
 
-    def decorator(function, *args, **kwargs):
+def ensure_cameras(cameras):
+    for camera in cameras: ensure_camera(camera)
 
+def ensure(token = None):
+
+    def decorator(function):
+
+        @functools.wraps(function)
         def interceptor(*args, **kwargs):
             ensure = ensure_login(token)
             if ensure: return ensure
@@ -71,9 +87,9 @@ def ensure(token):
 
     return decorator
 
-@ensure("index")
 @app.route("/", methods = ("GET",))
 @app.route("/index" , methods = ("GET",))
+@ensure("index")
 def index():
     return flask.render_template(
         "index.html.tpl",
@@ -94,22 +110,57 @@ def login():
     username = flask.request.form.get("username", None)
     password = flask.request.form.get("password", None)
 
-    if not username == "admin" or not password == "admin":
+    # retrieves the structure containing the information
+    # on the currently available users and unpacks the
+    # various attributes from it (defaulting to base values)
+    users = get_users()
+    user = users.get(username, None)
+    _password = user.get("password", None)
+
+    # encodes the provided password into an sha1 hash appending
+    # the salt value to it before the encoding
+    password_sha1 = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
+
+    # checks that both the user structure and the password values
+    # are present and that the password matched, if one of these
+    # values fails the login process fails and the user is redirected
+    # to the signin page with an error string
+    if not user or not _password or not password_sha1 == _password:
         return flask.render_template(
             "signin.html.tpl",
             username = username,
             error = "Invalid user name and/or password"
         )
 
+    # retrieves the tokens and cameras sequence from the user to set
+    # them in the current session
+    tokens = user.get("tokens", ())
+    cameras = user.get("cameras", None)
+
     # updates the current user (name) in session with
     # the username that has just be accepted in the login
+    flask.session["user"] = user
     flask.session["username"] = username
+    flask.session["tokens"] = tokens
+    flask.session["cameras"] = cameras
 
     return flask.redirect(
         flask.url_for("index")
     )
 
+@app.route("/signout" , methods = ("GET", "POST"))
+def logout():
+    del flask.session["user"]
+    del flask.session["username"]
+    del flask.session["tokens"]
+    del flask.session["cameras"]
+
+    return flask.redirect(
+        flask.url_for("signin")
+    )
+
 @app.route("/about", methods = ("GET",))
+@ensure("about")
 def about():
     return flask.render_template(
         "about.html.tpl",
@@ -117,6 +168,7 @@ def about():
     )
 
 @app.route("/sets", methods = ("GET",))
+@ensure("sets.list")
 def list_set():
     sets = get_sets()
 
@@ -127,8 +179,11 @@ def list_set():
     )
 
 @app.route("/sets/<id>", methods = ("GET",))
+@ensure("sets.show")
 def show_set(id):
     set = get_set(id)
+    cameras = set.get("cameras", [])
+    ensure_cameras(cameras)
 
     return flask.render_template(
         "sets_show.html.tpl",
@@ -138,6 +193,7 @@ def show_set(id):
     )
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
+@ensure("sets.settings")
 def settings_set(id):
     set = get_set(id)
 
@@ -149,6 +205,7 @@ def settings_set(id):
     )
 
 @app.route("/cameras", methods = ("GET",))
+@ensure("cameras.list")
 def list_camera():
     cameras = get_cameras()
 
@@ -159,9 +216,11 @@ def list_camera():
     )
 
 @app.route("/cameras/<id>", methods = ("GET",))
+@ensure("cameras.show")
 def show_camera(id):
     camera = get_camera(id)
     filter(camera)
+    ensure_camera(camera)
 
     return flask.render_template(
         "cameras_show.html.tpl",
@@ -171,8 +230,10 @@ def show_camera(id):
     )
 
 @app.route("/cameras/<id>/settings", methods = ("GET",))
+@ensure("cameras.settings")
 def settings_camera(id):
     camera = get_camera(id)
+    ensure_camera(camera)
 
     return flask.render_template(
         "cameras_settings.html.tpl",
@@ -182,6 +243,7 @@ def settings_camera(id):
     )
 
 @app.route("/devices", methods = ("GET",))
+@ensure("devices.list")
 def list_device():
     devices = get_devices()
 
@@ -192,6 +254,7 @@ def list_device():
     )
 
 @app.route("/device/<id>", methods = ("GET",))
+@ensure("devices.show")
 def show_device(id):
     device = get_device(id = id)
 
@@ -213,6 +276,15 @@ def handler_413(error):
 @app.errorhandler(BaseException)
 def handler_exception(error):
     return str(error)
+
+def get_users():
+    users_path = os.path.join(SETTINGS_FOLDER, "users.json")
+    if not os.path.exists(users_path): raise RuntimeError("Users file does not exist")
+    users_file = open(users_path, "rb")
+    try: users = json.load(users_file)
+    finally: users_file.close()
+
+    return users
 
 def get_sets():
     sets_directory = os.path.join(SETS_FOLDER)
