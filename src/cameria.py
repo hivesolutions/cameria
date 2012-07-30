@@ -41,6 +41,8 @@ import os
 import json
 import flask
 
+import sslify
+
 CURRENT_DIRECTORY = os.path.dirname(__file__)
 CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
 SETS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "sets")
@@ -276,6 +278,7 @@ def run():
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
     port = int(os.environ.get("PORT", 5000))
+    not debug and sslify.SSLify(app)
     app.debug = debug
     app.run(
         use_debugger = debug,
