@@ -69,8 +69,13 @@ def ensure_login(token = None):
         flask.url_for("login")
     )
 
+def ensure_user(username):
+    _username = flask.session.get("username", None)
+    if not _username == None and username == _username: return
+    raise RuntimeError("Permission denied")
+
 def ensure_camera(camera):
-    cameras = flask.session.get("cameras")
+    cameras = flask.session.get("cameras", None)
     if cameras == None or camera["id"] in cameras: return
     raise RuntimeError("Permission denied")
 
@@ -170,9 +175,9 @@ def login():
 
 @app.route("/signout" , methods = ("GET", "POST"))
 def logout():
-    del flask.session["username"]
-    del flask.session["tokens"]
-    del flask.session["cameras"]
+    if "username" in flask.session: del flask.session["username"]
+    if "tokens" in flask.session: del flask.session["tokens"]
+    if "cameras" in flask.session: del flask.session["cameras"]
 
     return flask.redirect(
         flask.url_for("signin")
@@ -290,6 +295,8 @@ def show_device(id):
 @ensure("users.show")
 def show_user(username):
     user = get_user(username = username)
+    username = user["username"]
+    ensure_user(username)
 
     return flask.render_template(
         "users_show.html.tpl",
@@ -322,7 +329,7 @@ def get_users():
 def get_user(username):
     users = get_users()
     user = users.get(username, None)
-    if not user: raise RuntimeError("Users not found")
+    if not user: raise RuntimeError("User '%s' not found" % username)
 
     return user
 
