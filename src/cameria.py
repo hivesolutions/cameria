@@ -62,7 +62,6 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
-app.config["SESSION_COOKIE_SECURE"] = True
 app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(31)
 
 def ensure_login(token = None):

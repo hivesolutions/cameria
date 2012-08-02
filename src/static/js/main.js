@@ -80,6 +80,12 @@
                 _maximize(camera);
             };
 
+            // creates the custom fixed scroll function that ensures that
+            // the scroll top position of the window is always zero
+            var __fixedScroll = function() {
+                _window.scrollTop(0);
+            };
+
             // registers for the key down on the window so that
             // we can handle the fullscreen trigger
             matchedObject.length && _window.keydown(function(event) {
@@ -93,10 +99,12 @@
                             if (maximized) {
                                 _minimize(camera);
                                 _window.unbind("resize", __maximize)
+                                _window.unbind("scroll", __fixedScroll);
                                 camera.data("maximized", false);
                             } else {
                                 _maximize(camera);
                                 _window.resize(__maximize);
+                                _window.scroll(__fixedScroll);
                                 camera.data("maximized", true);
                             }
                         }
@@ -172,6 +180,10 @@
                 camera.width(cameraWidth * sizeRatio);
                 camera.height(windowHeight);
             }
+
+            // scrolls the window to the top position so that
+            // the camera is correctly viewed
+            _window.scrollTop(0);
 
             // updates the overlay size and color (black for image
             // contrast)
