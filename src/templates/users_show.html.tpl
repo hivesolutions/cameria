@@ -2,7 +2,7 @@
 {% block title %}Users{% endblock %}
 {% block name %}Users :: {{ user.username }}{% endblock %}
 {% block content %}
-    <div class="quote capitalize">{{ user.name }}</div>
+    <div class="quote">{{ user.name }}</div>
     <div class="separator-horizontal"></div>
     <table>
         <tbody>

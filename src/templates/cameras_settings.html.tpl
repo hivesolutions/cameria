@@ -2,7 +2,7 @@
 {% block title %}Cameras{% endblock %}
 {% block name %}Cameras :: {{ camera.id }}{% endblock %}
 {% block content %}
-    <div class="quote capitalize">{{ camera.id }}</div>
+    <div class="quote">{{ camera.id }}</div>
     <div class="separator-horizontal"></div>
     <table>
         <tbody>
