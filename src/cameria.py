@@ -64,7 +64,7 @@ app = flask.Flask(__name__)
 app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(31)
 
 @app.route("/", methods = ("GET",))
-@app.route("/index" , methods = ("GET",))
+@app.route("/index", methods = ("GET",))
 @extras.ensure("index")
 def index():
     return flask.render_template(
@@ -72,13 +72,13 @@ def index():
         link = "home"
     )
 
-@app.route("/signin" , methods = ("GET",))
+@app.route("/signin", methods = ("GET",))
 def signin():
     return flask.render_template(
         "signin.html.tpl"
     )
 
-@app.route("/signin" , methods = ("POST",))
+@app.route("/signin", methods = ("POST",))
 def login():
     # retrieves both the username and the password from
     # the flask request form, these are the values that
@@ -127,7 +127,7 @@ def login():
         flask.url_for("index")
     )
 
-@app.route("/signout" , methods = ("GET", "POST"))
+@app.route("/signout", methods = ("GET", "POST"))
 def logout():
     if "username" in flask.session: del flask.session["username"]
     if "tokens" in flask.session: del flask.session["tokens"]
