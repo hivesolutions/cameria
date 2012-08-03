@@ -131,7 +131,7 @@ setuptools.setup(
     zip_safe = False,
     py_modules = [
         "cameria",
-        "sslify"
+        "extras"
     ],
     package_dir = {
         "" : os.path.normpath("src")

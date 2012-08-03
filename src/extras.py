@@ -38,6 +38,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
 import flask
+import functools
 
 YEAR_IN_SECS = 31536000
 """ The number of seconds that exist in a
@@ -136,3 +137,54 @@ class SSLify(object):
 
         response.headers.setdefault("Strict-Transport-Security", self.hsts_header)
         return response
+
+def ensure_login(token = None):
+    if "username" in flask.session and not token: return None
+    if token in flask.session.get("tokens", []): return None
+    return flask.redirect(
+        flask.url_for("login")
+    )
+
+def ensure_user(username):
+    _username = flask.session.get("username", None)
+    if not _username == None and username == _username: return
+    raise RuntimeError("Permission denied")
+
+def ensure_camera(camera):
+    cameras = flask.session.get("cameras", None)
+    if cameras == None or camera["id"] in cameras: return
+    raise RuntimeError("Permission denied")
+
+def ensure_cameras(cameras):
+    for camera in cameras: ensure_camera(camera)
+
+def ensure_cameras_f(cameras):
+    _cameras = []
+    for camera in cameras:
+        try: ensure_camera(camera)
+        except: continue
+        else: _cameras.append(camera)
+    return _cameras
+
+def ensure_sets_f(sets):
+    _sets = []
+    for set in sets:
+        cameras = set.get("cameras", ())
+        try: ensure_cameras(cameras)
+        except: continue
+        else: _sets.append(set)
+    return _sets
+
+def ensure(token = None):
+
+    def decorator(function):
+
+        @functools.wraps(function)
+        def interceptor(*args, **kwargs):
+            ensure = ensure_login(token)
+            if ensure: return ensure
+            return function(*args, **kwargs)
+
+        return interceptor
+
+    return decorator

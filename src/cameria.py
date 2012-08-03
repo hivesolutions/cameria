@@ -42,9 +42,8 @@ import json
 import flask
 import hashlib
 import datetime
-import functools
 
-import sslify
+import extras
 
 SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
 """ The "secret" key to be at the internal encryption
@@ -64,60 +63,9 @@ SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 app = flask.Flask(__name__)
 app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(31)
 
-def ensure_login(token = None):
-    if "username" in flask.session and not token: return None
-    if token in flask.session.get("tokens", []): return None
-    return flask.redirect(
-        flask.url_for("login")
-    )
-
-def ensure_user(username):
-    _username = flask.session.get("username", None)
-    if not _username == None and username == _username: return
-    raise RuntimeError("Permission denied")
-
-def ensure_camera(camera):
-    cameras = flask.session.get("cameras", None)
-    if cameras == None or camera["id"] in cameras: return
-    raise RuntimeError("Permission denied")
-
-def ensure_cameras(cameras):
-    for camera in cameras: ensure_camera(camera)
-
-def ensure_cameras_f(cameras):
-    _cameras = []
-    for camera in cameras:
-        try: ensure_camera(camera)
-        except: continue
-        else: _cameras.append(camera)
-    return _cameras
-
-def ensure_sets_f(sets):
-    _sets = []
-    for set in sets:
-        cameras = set.get("cameras", ())
-        try: ensure_cameras(cameras)
-        except: continue
-        else: _sets.append(set)
-    return _sets
-
-def ensure(token = None):
-
-    def decorator(function):
-
-        @functools.wraps(function)
-        def interceptor(*args, **kwargs):
-            ensure = ensure_login(token)
-            if ensure: return ensure
-            return function(*args, **kwargs)
-
-        return interceptor
-
-    return decorator
-
 @app.route("/", methods = ("GET",))
 @app.route("/index" , methods = ("GET",))
-@ensure("index")
+@extras.ensure("index")
 def index():
     return flask.render_template(
         "index.html.tpl",
@@ -190,7 +138,7 @@ def logout():
     )
 
 @app.route("/about", methods = ("GET",))
-@ensure("about")
+@extras.ensure("about")
 def about():
     return flask.render_template(
         "about.html.tpl",
@@ -198,10 +146,10 @@ def about():
     )
 
 @app.route("/sets", methods = ("GET",))
-@ensure("sets.list")
+@extras.ensure("sets.list")
 def list_set():
     sets = get_sets()
-    sets = ensure_sets_f(sets)
+    sets = extras.ensure_sets_f(sets)
 
     return flask.render_template(
         "sets_list.html.tpl",
@@ -210,11 +158,11 @@ def list_set():
     )
 
 @app.route("/sets/<id>", methods = ("GET",))
-@ensure("sets.show")
+@extras.ensure("sets.show")
 def show_set(id):
     set = get_set(id)
     cameras = set.get("cameras", [])
-    ensure_cameras(cameras)
+    extras.ensure_cameras(cameras)
 
     return flask.render_template(
         "sets_show.html.tpl",
@@ -224,7 +172,7 @@ def show_set(id):
     )
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
-@ensure("sets.settings")
+@extras.ensure("sets.settings")
 def settings_set(id):
     set = get_set(id)
 
@@ -236,10 +184,10 @@ def settings_set(id):
     )
 
 @app.route("/cameras", methods = ("GET",))
-@ensure("cameras.list")
+@extras.ensure("cameras.list")
 def list_camera():
     cameras = get_cameras()
-    cameras = ensure_cameras_f(cameras)
+    cameras = extras.ensure_cameras_f(cameras)
 
     return flask.render_template(
         "cameras_list.html.tpl",
@@ -248,11 +196,11 @@ def list_camera():
     )
 
 @app.route("/cameras/<id>", methods = ("GET",))
-@ensure("cameras.show")
+@extras.ensure("cameras.show")
 def show_camera(id):
     camera = get_camera(id)
     filter(camera)
-    ensure_camera(camera)
+    extras.ensure_camera(camera)
 
     return flask.render_template(
         "cameras_show.html.tpl",
@@ -262,10 +210,10 @@ def show_camera(id):
     )
 
 @app.route("/cameras/<id>/settings", methods = ("GET",))
-@ensure("cameras.settings")
+@extras.ensure("cameras.settings")
 def settings_camera(id):
     camera = get_camera(id)
-    ensure_camera(camera)
+    extras.ensure_camera(camera)
 
     return flask.render_template(
         "cameras_settings.html.tpl",
@@ -275,7 +223,7 @@ def settings_camera(id):
     )
 
 @app.route("/devices", methods = ("GET",))
-@ensure("devices.list")
+@extras.ensure("devices.list")
 def list_device():
     devices = get_devices()
 
@@ -286,7 +234,7 @@ def list_device():
     )
 
 @app.route("/device/<id>", methods = ("GET",))
-@ensure("devices.show")
+@extras.ensure("devices.show")
 def show_device(id):
     device = get_device(id = id)
 
@@ -298,11 +246,11 @@ def show_device(id):
     )
 
 @app.route("/user/<username>", methods = ("GET",))
-@ensure("users.show")
+@extras.ensure("users.show")
 def show_user(username):
     user = get_user(username = username)
     username = user["username"]
-    ensure_user(username)
+    extras.ensure_user(username)
 
     return flask.render_template(
         "users_show.html.tpl",
@@ -463,7 +411,7 @@ def run():
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
     port = int(os.environ.get("PORT", 5000))
-    not debug and sslify.SSLify(app)
+    not debug and extras.SSLify(app)
     app.debug = debug
     app.secret_key = SECRET_KEY
     app.run(
