@@ -2,7 +2,7 @@
 {% block title %}Sets{% endblock %}
 {% block name %}Sets :: {{ set.name }}{% endblock %}
 {% block content %}
-    <div class="cameras">
+    <div class="cameras reload" data-timeout="60000">
         {% for camera in set.cameras %}
             <a href="{{ url_for('show_camera', id = camera.id) }}">
                 {% if "resolution" in camera %}
