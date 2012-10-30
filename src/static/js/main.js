@@ -24,7 +24,7 @@
 // __license__   = GNU General Public License (GPL), Version 3
 
 (function($) {
-    jQuery.fn.uxcamera = function(options) {
+    jQuery.fn.ucamera = function(options) {
         // the default values for the data query
         var defaults = {};
 
@@ -251,7 +251,7 @@
 })(jQuery);
 
 (function($) {
-    jQuery.fn.uxreload = function(options) {
+    jQuery.fn.ureload = function(options) {
         // the default values for the data query
         var defaults = {};
 
@@ -289,9 +289,10 @@
             timeout = parseInt(timeout);
 
             // registers for the reload of the page for every
-            // timeout that has passed
-            setTimeout(function() {
-                        location.reload(true);
+            // timeout that has passed (in case no connection
+            // is available no refresh is done)
+            setInterval(function() {
+                        _update();
                     }, timeout);
         };
 
@@ -299,6 +300,25 @@
          * Registers the event handlers for the created objects.
          */
         var _registerHandlers = function() {
+        };
+
+        var _update = function() {
+            // runs the remote request on the current document url
+            // to make sure the connection is available before refresh
+            jQuery.ajax({
+                        url : document.URL,
+                        success : function(data) {
+                            // in cas no data is retrieved, the server is
+                            // considered to be down and (returns immediately)
+                            if (!data) {
+                                return;
+                            }
+
+                            // reloads the current location to provide the interface
+                            // with the must uptodate data
+                            location.reload(true);
+                        }
+                    });
         };
 
         // initializes the plugin
@@ -312,9 +332,9 @@
 jQuery(document).ready(function() {
             // registers the camera object in the target elements
             // (should enable normal functionality)
-            jQuery(".cameras img.single").uxcamera();
+            jQuery(".cameras img.single").ucamera();
 
             // registers for the reload operations in the target elements
             // (should reload page from time to time)
-            jQuery(".reload").uxreload();
+            jQuery(".reload").ureload();
         });
