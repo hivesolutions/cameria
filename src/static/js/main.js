@@ -250,8 +250,71 @@
     };
 })(jQuery);
 
+(function($) {
+    jQuery.fn.uxreload = function(options) {
+        // the default values for the data query
+        var defaults = {};
+
+        // sets the default options value
+        var options = options ? options : {};
+
+        // constructs the options
+        var options = jQuery.extend(defaults, options);
+
+        // sets the jquery matched object
+        var matchedObject = this;
+
+        /**
+         * Initializer of the plugin, runs the necessary functions to initialize
+         * the structures.
+         */
+        var initialize = function() {
+            _appendHtml();
+            _registerHandlers();
+        };
+
+        /**
+         * Creates the necessary html for the component.
+         */
+        var _appendHtml = function() {
+            // in case there's no selected elements must
+            // return immediately no reload
+            if (matchedObject.length == 0) {
+                return;
+            }
+
+            // retrieves the timetout information from the
+            // matched object and parses it as an integer
+            var timeout = matchedObject.attr("data-timeout");
+            timeout = parseInt(timeout);
+
+            // registers for the reload of the page for every
+            // timeout that has passed
+            setTimeout(function() {
+                        location.reload(true);
+                    }, timeout);
+        };
+
+        /**
+         * Registers the event handlers for the created objects.
+         */
+        var _registerHandlers = function() {
+        };
+
+        // initializes the plugin
+        initialize();
+
+        // returns the object
+        return this;
+    };
+})(jQuery);
+
 jQuery(document).ready(function() {
             // registers the camera object in the target elements
-            // (should enalbe normal functionality)
+            // (should enable normal functionality)
             jQuery(".cameras img.single").uxcamera();
+
+            // registers for the reload operations in the target elements
+            // (should reload page from time to time)
+            jQuery(".reload").uxreload();
         });
