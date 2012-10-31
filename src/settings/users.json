@@ -14,14 +14,47 @@
         "password" : "24292eefff340043ed72879a7cc0368850c9accd",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
                 "cameras.show", "users.show"],
-        "cameras" : ["jt_01", "jt_02", "jt_03"]
+        "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04"]
+    },
+    "dvd" : {
+        "username" : "dvd",
+        "name" : "Dolce Vita Douro",
+        "password" : "ec566371be173f33b5fc66aa8b68e22085b5e0b3",
+        "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
+                "cameras.show", "users.show"],
+        "cameras" : ["dvd_01", "dvd_02", "dvd_03"]
+    },
+    "gj" : {
+        "username" : "gj",
+        "name" : "Galeria da Jóia",
+        "password" : "50803a97a3f7badbb19ca22a28e9ee345320993c",
+        "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
+                "cameras.show", "users.show"],
+        "cameras" : ["gj_01", "gj_02", "gj_03", "gj_04"]
     },
     "jt" : {
-        "username" : "js",
+        "username" : "jt",
         "name" : "Jóia do Tempo",
         "password" : "0abe97d8065745e4c52672031393a36cfe49f6ca",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
                 "cameras.show", "users.show"],
-        "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04"]
+        "cameras" : ["jt_01", "jt_02", "jt_03"]
+    },
+    "ns" : {
+        "username" : "ns",
+        "name" : "Norte Shopping",
+        "password" : "11ef8517fcb8740be882e830560dc731443c8dc1",
+        "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
+                "cameras.show", "users.show"],
+        "cameras" : ["ns_01", "ns_02", "ns_03"]
+    },
+    "sd" : {
+        "username" : "sd",
+        "name" : "Sede",
+        "password" : "953ce3b31eea97ed7549fa68b7757ce552b88818",
+        "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
+                "cameras.show", "users.show"],
+        "cameras" : ["sd_01", "sd_02", "sd_03", "sd_04", "sd_05", "sd_06",
+                "sd_07", "sd_08", "sd_09"]
     }
 }
