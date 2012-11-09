@@ -1,0 +1,12 @@
+{
+    "id" : "af_01",
+    "url" : "lugardajoiafa.dyndns.org:7000",
+    "camera" : "1",
+    "password" : "root",
+    "username" : "root",
+    "protocol" : "http",
+    "compression" : 30,
+    "fps" : 4,
+    "type" : "axis",
+    "model" : "m1114"
+}
