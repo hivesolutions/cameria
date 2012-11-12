@@ -285,9 +285,12 @@ def login_json():
     # in case any of the mandatory arguments is not provided
     # an error is set in the current page
     if not username or not password:
-        return json.dumps({
-            "error" : "Both username and password must be provided"
-        })
+        flask.Response(
+            json.dumps({
+                "error" : "Both username and password must be provided"
+            }),
+            mimetype = "application/json"
+        )
 
     # retrieves the structure containing the information
     # on the currently available users and unpacks the
@@ -305,9 +308,12 @@ def login_json():
     # values fails the login process fails and an error is sent
     # to the used (client) indicating so
     if not user or not _password or not password_sha1 == _password:
-        return json.dumps({
-            "error" : "Invalid user name and/or password"
-        })
+        flask.Response(
+            json.dumps({
+                "error" : "Invalid user name and/or password"
+            }),
+            mimetype = "application/json"
+        )
 
     # retrieves the tokens and cameras sequence from the user to set
     # them in the current session
