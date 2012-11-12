@@ -288,7 +288,9 @@ def login_json():
     if not username or not password:
         flask.Response(
             json.dumps({
-                "error" : "Both username and password must be provided"
+                "exception" : {
+                    "error" : "Both username and password must be provided"
+                }
             }),
             mimetype = "application/json"
         )
@@ -311,7 +313,9 @@ def login_json():
     if not user or not _password or not password_sha1 == _password:
         flask.Response(
             json.dumps({
-                "error" : "Invalid user name and/or password"
+                "exception" : {
+                    "error" : "Invalid user name and/or password"
+                }
             }),
             mimetype = "application/json"
         )
@@ -333,11 +337,12 @@ def login_json():
 
     # tries to retrieve the session identifier from the current
     # session but only in case it exists
-    id = hasattr(flask.session, "sid") and flask.session.sid or None
+    sid = hasattr(flask.session, "sid") and flask.session.sid or None
 
     return flask.Response(
         json.dumps({
-            "id" : id,
+            "sid" : sid,
+            "session_id" : sid,
             "username" : username
         }),
         mimetype = "application/json"
