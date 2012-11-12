@@ -95,8 +95,8 @@ class RedisSessionInterface(flask.sessions.SessionInterface):
         # none is found generates a new one using the default
         # strategy and returns a new session object with that
         # session identifier
-        sid = request.args.get("sid")
-        sid = sid or request.form.get("sid")
+        sid = request.args.get("sid", request.args.get("session_id"))
+        sid = sid or request.form.get("sid", request.form.get("session_id"))
         sid = sid or request.cookies.get(app.session_cookie_name)
 
         if not sid:
