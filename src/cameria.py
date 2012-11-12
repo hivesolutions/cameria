@@ -289,7 +289,7 @@ def login_json():
         return flask.Response(
             json.dumps({
                 "exception" : {
-                    "error" : "Both username and password must be provided"
+                    "message" : "Both username and password must be provided"
                 }
             }),
             mimetype = "application/json"
@@ -314,7 +314,7 @@ def login_json():
         return flask.Response(
             json.dumps({
                 "exception" : {
-                    "error" : "Invalid user name and/or password"
+                    "message" : "Invalid user name and/or password"
                 }
             }),
             mimetype = "application/json"
