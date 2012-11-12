@@ -328,10 +328,13 @@ def login_json():
     # session but only in case it exists
     id = hasattr(flask.session, "sid") and flask.session.sid or None
 
-    return json.dumps({
-        "id" : id,
-        "username" : username
-    })
+    return flask.Response(
+        json.dumps({
+            "id" : id,
+            "username" : username
+        }),
+        mimetype = "application/json"
+    )
 
 @app.route("/sets", methods = ("GET",))
 @extras.ensure("sets.list", json = True)
@@ -339,7 +342,10 @@ def list_set_json():
     sets = get_sets()
     sets = extras.ensure_sets_f(sets)
 
-    return json.dumps(sets)
+    return flask.Response(
+        json.dumps(sets),
+        mimetype = "application/json"
+    )
 
 @app.route("/cameras.json", methods = ("GET",))
 @extras.ensure("cameras.list", json = True)
@@ -347,16 +353,22 @@ def list_camera_json():
     cameras = get_cameras()
     cameras = extras.ensure_cameras_f(cameras)
 
-    return json.dumps(cameras)
+    return flask.Response(
+        json.dumps(cameras),
+        mimetype = "application/json"
+    )
 
 @app.route("/session.json", methods = ("GET",))
 def session_json():
     session = flask.session
     id = hasattr(session, "sid") and session.sid or None
 
-    return json.dumps({
-        "id" : id
-    })
+    return flask.Response(
+        json.dumps({
+            "id" : id
+        }),
+        mimetype = "application/json"
+    )
 
 @app.errorhandler(404)
 def handler_404(error):

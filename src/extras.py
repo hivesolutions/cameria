@@ -43,8 +43,9 @@ import redis
 import flask
 import pickle
 import datetime
-import werkzeug
 import functools
+
+import werkzeug.datastructures
 
 YEAR_IN_SECS = 31536000
 """ The number of seconds that exist in a
