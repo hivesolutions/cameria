@@ -333,7 +333,7 @@ def login_json():
     })
 
 @app.route("/session.json", methods = ("GET",))
-def session():
+def session_json():
     session = flask.session
     id = hasattr(session, "sid") and session.sid or None
 
