@@ -533,7 +533,7 @@ def run():
     # and then start running it (continuous loop)
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
-    redis_url = os.getenv("REDISTOGO_URL", "redis://localhost:6379")
+    redis_url = os.getenv("REDISTOGO_URL", None)
     port = int(os.environ.get("PORT", 5000))
     not debug and extras.SSLify(app)
     app.session_interface = extras.RedisSessionInterface(url = redis_url)

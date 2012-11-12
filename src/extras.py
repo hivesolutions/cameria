@@ -41,6 +41,7 @@ import uuid
 import json
 import redis
 import flask
+import shelve
 import pickle
 import datetime
 import functools
@@ -51,12 +52,62 @@ YEAR_IN_SECS = 31536000
 """ The number of seconds that exist in a
 complete year (365 days) """
 
+class RedisMemory:
+    """
+    "Local" in memory stub object that simulates
+    the redis interface, useful for debugging.
+
+    This memory interface may create problems in
+    a multiple process environment (non shared memory).
+    """
+
+    values = None
+    """ The map containing the various values to
+    be set in the memory map, simulates the redis
+    data store """
+
+    def __init__(self):
+        self.values = {}
+
+    def get(self, name):
+        name_s = str(name)
+        return self.values.get(name_s)
+
+    def set(self, name, value):
+        name_s = str(name)
+        self.values[name_s] = value
+
+    def setex(self, name, value, expire):
+        self.set(name, value)
+
+    def delete(self, name):
+        if not name in self.values: return
+        del self.values[name]
+
+class RedisShelve(RedisMemory):
+    
+    def __init__(self, path = "redis.shelve"):
+        RedisMemory.__init__(self)
+        self.values = shelve.open(path)
+        
+    def close(self):
+        self.values.close()
+
+    def set(self, name, value):
+        RedisMemory.set(self, name, value)
+        self.values.sync()
+
+    def delete(self, name):
+        name_s = str(name)
+        if not self.values.has_key(name_s): return
+        del self.values[name_s]
+
 class RedisSession(werkzeug.datastructures.CallbackDict, flask.sessions.SessionMixin):
 
     def __init__(self, initial = None, sid = None, new = False):
         def on_update(self): self.modified = True
-
         werkzeug.datastructures.CallbackDict.__init__(self, initial, on_update)
+
         self.sid = sid
         self.new = new
         self.modified = False
@@ -72,9 +123,8 @@ class RedisSessionInterface(flask.sessions.SessionInterface):
     the generated object will be serialized """
 
     def __init__(self, _redis = None, prefix = "session:", url = None):
-        #@TODO tenho de criar um redis dummy que use
-        # em vez de redis um ficheiro local
-        if _redis == None: _redis = url and redis.from_url(url) or redis.Redis()
+        if _redis == None:
+            _redis = url and redis.from_url(url) or RedisShelve()
 
         self.redis = _redis
         self.prefix = prefix
@@ -98,7 +148,6 @@ class RedisSessionInterface(flask.sessions.SessionInterface):
         sid = request.args.get("sid", request.args.get("session_id"))
         sid = sid or request.form.get("sid", request.form.get("session_id"))
         sid = sid or request.cookies.get(app.session_cookie_name)
-
         if not sid:
             sid = self.generate_sid()
             return self.session_class(sid = sid)
