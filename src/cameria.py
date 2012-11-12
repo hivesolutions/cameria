@@ -348,7 +348,7 @@ def login_json():
         mimetype = "application/json"
     )
 
-@app.route("/sets", methods = ("GET",))
+@app.route("/sets.json", methods = ("GET",))
 @extras.ensure("sets.list", json = True)
 def list_set_json():
     sets = get_sets()
