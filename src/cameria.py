@@ -302,8 +302,8 @@ def login_json():
 
     # checks that both the user structure and the password values
     # are present and that the password matched, if one of these
-    # values fails the login process fails and the user is redirected
-    # to the signin page with an error string
+    # values fails the login process fails and an error is sent
+    # to the used (client) indicating so
     if not user or not _password or not password_sha1 == _password:
         return json.dumps({
             "error" : "Invalid user name and/or password"
@@ -332,6 +332,22 @@ def login_json():
         "id" : id,
         "username" : username
     })
+
+@app.route("/sets", methods = ("GET",))
+@extras.ensure("sets.list", json = True)
+def list_set_json():
+    sets = get_sets()
+    sets = extras.ensure_sets_f(sets)
+
+    return json.dumps(sets)
+
+@app.route("/cameras.json", methods = ("GET",))
+@extras.ensure("cameras.list", json = True)
+def list_camera_json():
+    cameras = get_cameras()
+    cameras = extras.ensure_cameras_f(cameras)
+
+    return json.dumps(cameras)
 
 @app.route("/session.json", methods = ("GET",))
 def session_json():

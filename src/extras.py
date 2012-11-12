@@ -38,6 +38,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
 import uuid
+import json
 import redis
 import flask
 import pickle
@@ -238,12 +239,18 @@ class SSLify(object):
         response.headers.setdefault("Strict-Transport-Security", self.hsts_header)
         return response
 
-def ensure_login(token = None):
+def ensure_login(token = None, json_s = False):
     if "username" in flask.session and not token: return None
     if token in flask.session.get("tokens", []): return None
-    return flask.redirect(
-        flask.url_for("login")
-    )
+
+    if json_s:
+        return json.dumps({
+            "error" : "Not enough permissions for operation"
+        })
+    else:
+        return flask.redirect(
+            flask.url_for("login")
+        )
 
 def ensure_user(username):
     _username = flask.session.get("username", None)
@@ -275,13 +282,13 @@ def ensure_sets_f(sets):
         else: _sets.append(set)
     return _sets
 
-def ensure(token = None):
+def ensure(token = None, json = False):
 
     def decorator(function):
 
         @functools.wraps(function)
         def interceptor(*args, **kwargs):
-            ensure = ensure_login(token)
+            ensure = ensure_login(token, json)
             if ensure: return ensure
             return function(*args, **kwargs)
 
