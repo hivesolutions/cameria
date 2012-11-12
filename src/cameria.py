@@ -286,7 +286,7 @@ def login_json():
     # in case any of the mandatory arguments is not provided
     # an error is set in the current page
     if not username or not password:
-        flask.Response(
+        return flask.Response(
             json.dumps({
                 "exception" : {
                     "error" : "Both username and password must be provided"
@@ -311,7 +311,7 @@ def login_json():
     # values fails the login process fails and an error is sent
     # to the used (client) indicating so
     if not user or not _password or not password_sha1 == _password:
-        flask.Response(
+        return flask.Response(
             json.dumps({
                 "exception" : {
                     "error" : "Invalid user name and/or password"
