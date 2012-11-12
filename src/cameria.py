@@ -355,7 +355,9 @@ def list_set_json():
     sets = extras.ensure_sets_f(sets)
 
     return flask.Response(
-        json.dumps(sets),
+        json.dumps({
+            "sets" : sets
+        }),
         mimetype = "application/json"
     )
 
@@ -366,7 +368,9 @@ def list_camera_json():
     cameras = extras.ensure_cameras_f(cameras)
 
     return flask.Response(
-        json.dumps(cameras),
+        json.dumps({
+            "cameras" : cameras
+        }),
         mimetype = "application/json"
     )
 
