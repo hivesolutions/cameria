@@ -324,8 +324,9 @@ def login_json():
     # the session to persist along multiple browser initialization
     flask.session.permanent = True
 
-    session = flask.session
-    id = hasattr(session, "sid") and session.sid or None
+    # tries to retrieve the session identifier from the current
+    # session but only in case it exists
+    id = hasattr(flask.session, "sid") and flask.session.sid or None
 
     return json.dumps({
         "id" : id,
