@@ -348,14 +348,16 @@ def login_json():
         mimetype = "application/json"
     )
 
-@app.route("/sets", methods = ("GET",))
+@app.route("/sets.json", methods = ("GET",))
 @extras.ensure("sets.list", json = True)
 def list_set_json():
     sets = get_sets()
     sets = extras.ensure_sets_f(sets)
 
     return flask.Response(
-        json.dumps(sets),
+        json.dumps({
+            "sets" : sets
+        }),
         mimetype = "application/json"
     )
 
@@ -366,7 +368,9 @@ def list_camera_json():
     cameras = extras.ensure_cameras_f(cameras)
 
     return flask.Response(
-        json.dumps(cameras),
+        json.dumps({
+            "cameras" : cameras
+        }),
         mimetype = "application/json"
     )
 
