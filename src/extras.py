@@ -85,11 +85,18 @@ class RedisMemory:
         del self.values[name]
 
 class RedisShelve(RedisMemory):
-    
+    """
+    "Local" in persistent stub object that simulates
+    the redis interface, useful for debugging.
+
+    This shelve interface requires a writable path
+    where its persistent file may be written.
+    """
+
     def __init__(self, path = "redis.shelve"):
         RedisMemory.__init__(self)
         self.values = shelve.open(path)
-        
+
     def close(self):
         self.values.close()
 
