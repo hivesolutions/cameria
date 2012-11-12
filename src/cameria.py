@@ -268,6 +268,7 @@ def show_user(username):
         user = user
     )
 
+@app.route("/login.json", methods = ("GET", "POST"))
 @app.route("/signin.json", methods = ("GET", "POST"))
 def login_json():
     # retrieves both the username and the password from
