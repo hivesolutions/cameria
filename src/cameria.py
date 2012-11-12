@@ -86,11 +86,20 @@ def login():
     username = flask.request.form.get("username", None)
     password = flask.request.form.get("password", None)
 
+    # in case any of the mandatory arguments is not provided
+    # an error is set in the current page
+    if not username or not password:
+        return flask.render_template(
+            "signin.html.tpl",
+            username = username,
+            error = "Both username and password must be provided"
+        )
+
     # retrieves the structure containing the information
     # on the currently available users and unpacks the
     # various attributes from it (defaulting to base values)
     users = get_users()
-    user = users.get(username, None)
+    user = users.get(username, {})
     _password = user.get("password", None)
 
     # encodes the provided password into an sha1 hash appending
@@ -259,6 +268,79 @@ def show_user(username):
         user = user
     )
 
+@app.route("/signin.json", methods = ("GET", "POST"))
+def login_json():
+    # retrieves both the username and the password from
+    # the flask request args or form, these are the values that
+    # are going to be used in the username validation
+    username = flask.request.args.get(
+        "username",
+        flask.request.form.get("username", None)
+    )
+    password = flask.request.args.get(
+        "password",
+        flask.request.form.get("password", None)
+    )
+
+    # in case any of the mandatory arguments is not provided
+    # an error is set in the current page
+    if not username or not password:
+        return json.dumps({
+            "error" : "Both username and password must be provided"
+        })
+
+    # retrieves the structure containing the information
+    # on the currently available users and unpacks the
+    # various attributes from it (defaulting to base values)
+    users = get_users()
+    user = users.get(username, {})
+    _password = user.get("password", None)
+
+    # encodes the provided password into an sha1 hash appending
+    # the salt value to it before the encoding
+    password_sha1 = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
+
+    # checks that both the user structure and the password values
+    # are present and that the password matched, if one of these
+    # values fails the login process fails and the user is redirected
+    # to the signin page with an error string
+    if not user or not _password or not password_sha1 == _password:
+        return json.dumps({
+            "error" : "Invalid user name and/or password"
+        })
+
+    # retrieves the tokens and cameras sequence from the user to set
+    # them in the current session
+    tokens = user.get("tokens", ())
+    cameras = user.get("cameras", None)
+
+    # updates the current user (name) in session with
+    # the username that has just be accepted in the login
+    flask.session["username"] = username
+    flask.session["tokens"] = tokens
+    flask.session["cameras"] = cameras
+
+    # makes the current session permanent this will allow
+    # the session to persist along multiple browser initialization
+    flask.session.permanent = True
+
+    session = flask.session
+    id = hasattr(session, "sid") and session.sid or None
+
+    return json.dumps({
+        "id" : id,
+        "username" : username
+    })
+
+@app.route("/session.json", methods = ("GET",))
+def session():
+    session = flask.session
+    id = hasattr(session, "sid") and session.sid or None
+
+    return json.dumps({
+        "id" : id
+    })
+
 @app.errorhandler(404)
 def handler_404(error):
     return str(error)
@@ -410,8 +492,10 @@ def run():
     # and then start running it (continuous loop)
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
+    redis_url = os.getenv("REDISTOGO_URL", "redis://localhost:6379")
     port = int(os.environ.get("PORT", 5000))
     not debug and extras.SSLify(app)
+    app.session_interface = extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
     app.secret_key = SECRET_KEY
     app.run(

@@ -37,12 +37,112 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
+import uuid
+import redis
 import flask
+import pickle
+import datetime
+import werkzeug
 import functools
 
 YEAR_IN_SECS = 31536000
 """ The number of seconds that exist in a
 complete year (365 days) """
+
+class RedisSession(werkzeug.datastructures.CallbackDict, flask.sessions.SessionMixin):
+
+    def __init__(self, initial = None, sid = None, new = False):
+        def on_update(self): self.modified = True
+
+        werkzeug.datastructures.CallbackDict.__init__(self, initial, on_update)
+        self.sid = sid
+        self.new = new
+        self.modified = False
+
+class RedisSessionInterface(flask.sessions.SessionInterface):
+
+    serializer = pickle
+    """ The serializer to be used for the values
+    contained in the session (used on top of the class) """
+
+    session_class = RedisSession
+    """ The class to be used to encapsulate a session
+    the generated object will be serialized """
+
+    def __init__(self, _redis = None, prefix = "session:", url = None):
+        #@TODO tenho de criar um redis dummy que use
+        # em vez de redis um ficheiro local
+        if _redis == None: _redis = url and redis.from_url(url) or redis.Redis()
+
+        self.redis = _redis
+        self.prefix = prefix
+
+    def generate_sid(self):
+        return str(uuid.uuid4())
+
+    def get_redis_expiration_time(self, app, session):
+        if session.permanent: return app.permanent_session_lifetime
+        return datetime.timedelta(days = 1)
+
+    def get_seconds(self, delta):
+        return (delta.microseconds + (delta.seconds + delta.days * 24 * 3600) * 10 ** 6) / 10 ** 6
+
+    def open_session(self, app, request):
+        # tries to retrieve the session identifier from the
+        # application cookie (or from parameters) in case
+        # none is found generates a new one using the default
+        # strategy and returns a new session object with that
+        # session identifier
+        sid = request.args.get("sid")
+        sid = sid or request.form.get("sid")
+        sid = sid or request.cookies.get(app.session_cookie_name)
+
+        if not sid:
+            sid = self.generate_sid()
+            return self.session_class(sid = sid)
+
+        # tries to retrieve the session value from redis in
+        # case the values is successfully found loads it using
+        # the serializer and returns the session object
+        value = self.redis.get(self.prefix + sid)
+        if not value == None:
+            data = self.serializer.loads(value)
+            return self.session_class(data, sid = sid)
+
+        # returns a new session object with an already existing
+        # session identifier, but not found in data source (redis)
+        return self.session_class(sid = sid, new = True)
+
+    def save_session(self, app, session, response):
+        # retrieves the domain associated with the cookie to
+        # be able to correctly modify it
+        domain = self.get_cookie_domain(app)
+
+        if not session:
+            self.redis.delete(self.prefix + session.sid)
+            if session.modified: response.delete_cookie(
+                app.session_cookie_name,
+                domain = domain
+            )
+            return
+
+        redis_expire = self.get_redis_expiration_time(app, session)
+        cookie_expire = self.get_expiration_time(app, session)
+        value = self.serializer.dumps(dict(session))
+        total_seconds = self.get_seconds(redis_expire)
+        self.redis.setex(
+            self.prefix + session.sid,
+            value,
+            int(total_seconds)
+        )
+
+        response.set_cookie(
+            app.session_cookie_name,
+            session.sid,
+            expires = cookie_expire,
+            httponly = True,
+            domain = domain
+        )
 
 class SSLify(object):
     """
@@ -64,7 +164,7 @@ class SSLify(object):
         of the security policy.
         """
 
-        if app is not None:
+        if not app == None:
             self.app = app
             self.hsts_age = age
             self.hsts_include_subdomains = subdomains
