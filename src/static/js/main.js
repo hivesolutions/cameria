@@ -315,9 +315,9 @@
                             }
 
                             // in case the status of the received message is not the
-                            // correct one (sucess or not modified) the message is
+                            // correct one (success or not modified) the message is
                             // considered invalid (returns immediately)
-                            if (status != "sucess" && status != "notmodified") {
+                            if (status != "success" && status != "notmodified") {
                                 return;
                             }
 
