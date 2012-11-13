@@ -114,7 +114,7 @@
         /**
          * Maximizes the current camera image occupying the complete screen,
          * this shiould provide a fullscreen feel.
-         * 
+         *
          * @param {Element}
          *            camera The reference to the camera element to be used in
          *            the maximization process.
@@ -201,7 +201,7 @@
          * Minimizes the current camera image window into the "normal" behaviour
          * this function should be able to restore the original values for the
          * global elements used in a maximization. *
-         * 
+         *
          * @param {Element}
          *            camera The reference to the camera element to be used in
          *            the minimization process.
