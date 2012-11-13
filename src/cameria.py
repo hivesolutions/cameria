@@ -114,7 +114,7 @@ def login():
         return flask.render_template(
             "signin.html.tpl",
             username = username,
-            error = "Invalid user name and/or password"
+            error = "Invalid username and/or password"
         )
 
     # retrieves the tokens and cameras sequence from the user to set
