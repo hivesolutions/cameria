@@ -39,7 +39,6 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import uuid
 import json
-import redis
 import flask
 import shelve
 import pickle
@@ -47,6 +46,9 @@ import datetime
 import functools
 
 import werkzeug.datastructures
+
+try: import redis
+except: pass
 
 YEAR_IN_SECS = 31536000
 """ The number of seconds that exist in a

@@ -114,7 +114,7 @@
         /**
          * Maximizes the current camera image occupying the complete screen,
          * this shiould provide a fullscreen feel.
-         *
+         * 
          * @param {Element}
          *            camera The reference to the camera element to be used in
          *            the maximization process.
@@ -201,7 +201,7 @@
          * Minimizes the current camera image window into the "normal" behaviour
          * this function should be able to restore the original values for the
          * global elements used in a maximization. *
-         *
+         * 
          * @param {Element}
          *            camera The reference to the camera element to be used in
          *            the minimization process.
@@ -307,10 +307,17 @@
             // to make sure the connection is available before refresh
             jQuery.ajax({
                         url : document.URL,
-                        success : function(data) {
-                            // in cas no data is retrieved, the server is
+                        success : function(data, status) {
+                            // in case no data is retrieved, the server is
                             // considered to be down and (returns immediately)
                             if (!data) {
+                                return;
+                            }
+
+                            // in case the status of the received message is not the
+                            // correct one (sucess or not modified) the message is
+                            // considered invalid (returns immediately)
+                            if (status != "sucess" && status != "notmodified") {
                                 return;
                             }
 
