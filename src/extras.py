@@ -303,9 +303,15 @@ def ensure_login(token = None, json_s = False):
     if token in flask.session.get("tokens", []): return None
 
     if json_s:
-        return json.dumps({
-            "error" : "Not enough permissions for operation"
-        })
+        return flask.Response(
+            json.dumps({
+                "exception" : {
+                    "message" : "Not enough permissions for operation"
+                }
+            }),
+            status = 403,
+            mimetype = "application/json"
+        )
     else:
         return flask.redirect(
             flask.url_for("login")

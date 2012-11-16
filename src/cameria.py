@@ -61,7 +61,7 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
-app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(31)
+app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(365)
 
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
@@ -292,6 +292,7 @@ def login_json():
                     "message" : "Both username and password must be provided"
                 }
             }),
+            status = 400,
             mimetype = "application/json"
         )
 
@@ -317,6 +318,7 @@ def login_json():
                     "message" : "Invalid user name and/or password"
                 }
             }),
+            status = 403,
             mimetype = "application/json"
         )
 
