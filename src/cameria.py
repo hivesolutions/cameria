@@ -41,9 +41,13 @@ import os
 import json
 import flask
 import hashlib
+import tempfile
 import datetime
+import cStringIO
 
+import mongo
 import extras
+import export
 
 SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
 """ The "secret" key to be at the internal encryption
@@ -53,8 +57,23 @@ PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
 of the password into an hash value """
 
+SINGLE_ENTITIES = (
+    ("users", "username"),
+)
+""" The set of entities to be considered single file
+oriented (exports to one file per complete set) """
+
+MULTIPLE_ENTITIES = (
+    ("sets", "id"),
+    ("cameras", "id"),
+    ("devices", "id")
+)
+""" The set of entities to be considered multiple file
+oriented (exports to one file per entity) """
+
 CURRENT_DIRECTORY = os.path.dirname(__file__)
 CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
+UPLOAD_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "uploads")
 SETS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "sets")
 CAMERAS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "cameras")
 DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
@@ -62,6 +81,8 @@ SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
 app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(365)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
@@ -98,7 +119,7 @@ def login():
     # retrieves the structure containing the information
     # on the currently available users and unpacks the
     # various attributes from it (defaulting to base values)
-    users = get_users()
+    users = get_users_m()
     user = users.get(username, {})
     _password = user.get("password", None)
 
@@ -144,6 +165,64 @@ def logout():
 
     return flask.redirect(
         flask.url_for("signin")
+    )
+
+@app.route("/import", methods = ("GET",))
+#@extras.ensure("import")
+def import_d():
+    return flask.render_template(
+        "import.html.tpl",
+        link = "import"
+    )
+
+@app.route("/import", methods = ("POST",))
+#@extras.ensure("import")
+def import_do():
+    # retrieves the import file values (reference to the
+    # uploaded file) and then validates if it has been
+    # defined, in case it fails prints the template with
+    # the appropriate error variable set
+    import_file = flask.request.files.get("import_file", None)
+    if import_file == None or not import_file.filename:
+        return flask.render_template(
+            "import.html.tpl",
+            error = "No file defined"
+        )
+
+    # creates a temporary file path for the storage of the file
+    # and then saves it into that directory
+    fd, file_path = tempfile.mkstemp()
+    import_file.save(file_path)
+
+    db = mongo.get_db()
+    manager = export.ExportManager(
+        db,
+        single = SINGLE_ENTITIES,
+        multiple = MULTIPLE_ENTITIES
+    )
+    try: manager.import_data(file_path)
+    finally: os.close(fd); os.remove(file_path)
+    return flask.redirect(
+        flask.url_for("index")
+    )
+
+@app.route("/export", methods = ("GET",))
+@extras.ensure("export")
+def export_do():
+    db = mongo.get_db()
+    file = cStringIO.StringIO()
+    manager = export.ExportManager(
+        db,
+        single = SINGLE_ENTITIES,
+        multiple = MULTIPLE_ENTITIES
+    )
+    manager.export_data(file)
+    return flask.Response(
+        file.getvalue(),
+        headers = {
+            "Content-Disposition" : "attachment; filename=database.dat"
+        },
+        mimetype = "application/octet-stream"
     )
 
 @app.route("/about", methods = ("GET",))
@@ -407,6 +486,11 @@ def get_users():
     try: users = json.load(users_file)
     finally: users_file.close()
 
+    return users
+
+def get_users_m():
+    db = mongo.get_db()
+    users = mongo.MongoMap(db.users, "username")
     return users
 
 def get_user(username):
