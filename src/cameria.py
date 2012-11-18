@@ -168,7 +168,7 @@ def logout():
     )
 
 @app.route("/import", methods = ("GET",))
-#@extras.ensure("import")
+@extras.ensure("import")
 def import_d():
     return flask.render_template(
         "import.html.tpl",
@@ -176,7 +176,7 @@ def import_d():
     )
 
 @app.route("/import", methods = ("POST",))
-#@extras.ensure("import")
+@extras.ensure("import")
 def import_do():
     # retrieves the import file values (reference to the
     # uploaded file) and then validates if it has been
@@ -207,7 +207,7 @@ def import_do():
     )
 
 @app.route("/export", methods = ("GET",))
-#@extras.ensure("export")
+@extras.ensure("export")
 def export_do():
     db = mongo.get_db()
     file = cStringIO.StringIO()
