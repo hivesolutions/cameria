@@ -207,7 +207,7 @@ def import_do():
     )
 
 @app.route("/export", methods = ("GET",))
-@extras.ensure("export")
+#@extras.ensure("export")
 def export_do():
     db = mongo.get_db()
     file = cStringIO.StringIO()
@@ -469,15 +469,33 @@ def session_json():
 
 @app.errorhandler(404)
 def handler_404(error):
-    return str(error)
+    return flask.Response(
+        flask.render_template(
+            "error.html.tpl",
+            error = "404 - Page not found"
+        ),
+        status = 404
+    )
 
 @app.errorhandler(413)
 def handler_413(error):
-    return str(error)
+    return flask.Response(
+        flask.render_template(
+            "error.html.tpl",
+            error = "412 - Precondition failed"
+        ),
+        status = 413
+    )
 
 @app.errorhandler(BaseException)
 def handler_exception(error):
-    return str(error)
+    return flask.Response(
+        flask.render_template(
+            "error.html.tpl",
+            error = str(error)
+        ),
+        status = 500
+    )
 
 def get_users():
     users_path = os.path.join(SETTINGS_FOLDER, "users.json")
