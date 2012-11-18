@@ -634,6 +634,17 @@ def filter(camera):
         if not key in camera: continue
         del camera[key]
 
+def load():
+    # sets the global wide application settings and
+    # configures the application object according to
+    # this settings
+    debug = os.environ.get("DEBUG", False) and True or False
+    redis_url = os.getenv("REDISTOGO_URL", None)
+    not debug and extras.SSLify(app)
+    app.session_interface = extras.RedisSessionInterface(url = redis_url)
+    app.debug = debug
+    app.secret_key = SECRET_KEY
+
 def run():
     # sets the debug control in the application
     # then checks the current environment variable
@@ -655,5 +666,5 @@ def run():
         port = port
     )
 
-if __name__ == "__main__":
-    run()
+if __name__ == "__main__": run()
+else: load()

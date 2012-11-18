@@ -1,3 +1,4 @@
+gunicorn==0.15.0
 Flask==0.9
 Jinja2==2.6
 Werkzeug==0.8.3
