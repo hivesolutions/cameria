@@ -3,8 +3,8 @@
         "username" : "admin",
         "name" : "Administrator",
         "password" : "8b0ec7ce73e08ec8725d9bc027116d3ad9824d55",
-        "tokens" : ["index", "about", "sets.list", "sets.show",
-                "sets.settings", "cameras.list", "cameras.show",
+        "tokens" : ["index", "import", "export", "about", "sets.list",
+                "sets.show", "sets.settings", "cameras.list", "cameras.show",
                 "cameras.settings", "devices.list", "devices.show",
                 "users.show"]
     },
