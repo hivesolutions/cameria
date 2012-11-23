@@ -30,7 +30,8 @@
         "password" : "24292eefff340043ed72879a7cc0368850c9accd",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
                 "cameras.show", "users.show"],
-        "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04"]
+        "cameras" : ["dvt_01", "dvt_02", "dvt_03", "dvt_04", "jt_01", "jt_02",
+                "jt_03"]
     },
     "gj" : {
         "username" : "gj",
@@ -46,7 +47,8 @@
         "password" : "0abe97d8065745e4c52672031393a36cfe49f6ca",
         "tokens" : ["index", "about", "sets.list", "sets.show", "cameras.list",
                 "cameras.show", "users.show"],
-        "cameras" : ["jt_01", "jt_02", "jt_03"]
+        "cameras" : ["jt_01", "jt_02", "jt_03", "dvt_01", "dvt_02", "dvt_03",
+                "dvt_04"]
     },
     "ns" : {
         "username" : "ns",
