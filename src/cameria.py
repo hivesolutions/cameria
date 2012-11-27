@@ -653,7 +653,9 @@ def run():
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
     redis_url = os.getenv("REDISTOGO_URL", None)
+    mongo_url = os.getenv("MONGOHQ_URL", "localhost:27017")
     port = int(os.environ.get("PORT", 5000))
+    mongo.url = mongo_url
     not debug and extras.SSLify(app)
     app.session_interface = extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
