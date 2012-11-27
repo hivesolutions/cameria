@@ -46,7 +46,11 @@ the connection relation with the database service """
 
 url = "mongodb://localhost:27017"
 """ The global variable containing the url to be used
-for the connection with the service """ 
+for the connection with the service """
+
+database = "master"
+""" The global variable containing the value for the
+database to be used in the connection with the service """
 
 class MongoMap(object):
     """
@@ -79,5 +83,7 @@ def get_connection():
 def get_db():
     connection = get_connection()
     if not connection: return None
-    db = connection.cameria
+    result = pymongo.uri_parser.parse_uri(url)
+    _database = result.get("database", None) or database
+    db = connection[_database]
     return db

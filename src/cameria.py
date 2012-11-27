@@ -57,6 +57,14 @@ PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
 of the password into an hash value """
 
+MONGO_URL = "mongodb://localhost:27017"
+""" The default url to be used for the connection with
+the mongo database """
+
+MONGO_DATABASE = "cameria"
+""" The default database to be used for the connection with
+the mongo database """
+
 SINGLE_ENTITIES = (
     ("users", "username"),
 )
@@ -653,9 +661,10 @@ def run():
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
     redis_url = os.getenv("REDISTOGO_URL", None)
-    mongo_url = os.getenv("MONGOHQ_URL", "localhost:27017")
+    mongo_url = os.getenv("MONGOHQ_URL", MONGO_URL)
     port = int(os.environ.get("PORT", 5000))
     mongo.url = mongo_url
+    mongo.database = MONGO_DATABASE
     not debug and extras.SSLify(app)
     app.session_interface = extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
