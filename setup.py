@@ -128,6 +128,9 @@ setuptools.setup(
     keywords = "automium build automation",
     url = "http://cameria.com",
     zip_safe = False,
+    packages = [
+        "quorum"
+    ],
     py_modules = [
         "cameria"
     ],
