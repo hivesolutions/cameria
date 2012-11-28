@@ -45,9 +45,7 @@ import tempfile
 import datetime
 import cStringIO
 
-import mongo
-import extras
-import export
+import quorum
 
 SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
 """ The "secret" key to be at the internal encryption
@@ -94,7 +92,7 @@ app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
-@extras.ensure("index")
+@quorum.extras.ensure("index")
 def index():
     return flask.render_template(
         "index.html.tpl",
@@ -176,7 +174,7 @@ def logout():
     )
 
 @app.route("/import", methods = ("GET",))
-@extras.ensure("import")
+@quorum.extras.ensure("import")
 def import_d():
     return flask.render_template(
         "import.html.tpl",
@@ -184,7 +182,7 @@ def import_d():
     )
 
 @app.route("/import", methods = ("POST",))
-@extras.ensure("import")
+@quorum.extras.ensure("import")
 def import_do():
     # retrieves the import file values (reference to the
     # uploaded file) and then validates if it has been
@@ -202,8 +200,8 @@ def import_do():
     fd, file_path = tempfile.mkstemp()
     import_file.save(file_path)
 
-    db = mongo.get_db()
-    manager = export.ExportManager(
+    db = quorum.mongo.get_db()
+    manager = quorum.export.ExportManager(
         db,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
@@ -215,11 +213,11 @@ def import_do():
     )
 
 @app.route("/export", methods = ("GET",))
-@extras.ensure("export")
+@quorum.extras.ensure("export")
 def export_do():
-    db = mongo.get_db()
+    db = quorum.mongo.get_db()
     file = cStringIO.StringIO()
-    manager = export.ExportManager(
+    manager = quorum.export.ExportManager(
         db,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
@@ -234,7 +232,7 @@ def export_do():
     )
 
 @app.route("/about", methods = ("GET",))
-@extras.ensure("about")
+@quorum.extras.ensure("about")
 def about():
     return flask.render_template(
         "about.html.tpl",
@@ -242,10 +240,10 @@ def about():
     )
 
 @app.route("/sets", methods = ("GET",))
-@extras.ensure("sets.list")
+@quorum.extras.ensure("sets.list")
 def list_set():
     sets = get_sets()
-    sets = extras.ensure_sets_f(sets)
+    sets = ensure_sets_f(sets)
 
     return flask.render_template(
         "sets_list.html.tpl",
@@ -254,11 +252,11 @@ def list_set():
     )
 
 @app.route("/sets/<id>", methods = ("GET",))
-@extras.ensure("sets.show")
+@quorum.extras.ensure("sets.show")
 def show_set(id):
     set = get_set(id)
     cameras = set.get("cameras", [])
-    extras.ensure_cameras(cameras)
+    ensure_cameras(cameras)
 
     return flask.render_template(
         "sets_show.html.tpl",
@@ -268,7 +266,7 @@ def show_set(id):
     )
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
-@extras.ensure("sets.settings")
+@quorum.extras.ensure("sets.settings")
 def settings_set(id):
     set = get_set(id)
 
@@ -280,10 +278,10 @@ def settings_set(id):
     )
 
 @app.route("/cameras", methods = ("GET",))
-@extras.ensure("cameras.list")
+@quorum.extras.ensure("cameras.list")
 def list_camera():
     cameras = get_cameras()
-    cameras = extras.ensure_cameras_f(cameras)
+    cameras = ensure_cameras_f(cameras)
 
     return flask.render_template(
         "cameras_list.html.tpl",
@@ -292,11 +290,11 @@ def list_camera():
     )
 
 @app.route("/cameras/<id>", methods = ("GET",))
-@extras.ensure("cameras.show")
+@quorum.extras.ensure("cameras.show")
 def show_camera(id):
     camera = get_camera(id)
     filter(camera)
-    extras.ensure_camera(camera)
+    ensure_camera(camera)
 
     return flask.render_template(
         "cameras_show.html.tpl",
@@ -306,10 +304,10 @@ def show_camera(id):
     )
 
 @app.route("/cameras/<id>/settings", methods = ("GET",))
-@extras.ensure("cameras.settings")
+@quorum.extras.ensure("cameras.settings")
 def settings_camera(id):
     camera = get_camera(id)
-    extras.ensure_camera(camera)
+    ensure_camera(camera)
 
     return flask.render_template(
         "cameras_settings.html.tpl",
@@ -319,7 +317,7 @@ def settings_camera(id):
     )
 
 @app.route("/devices", methods = ("GET",))
-@extras.ensure("devices.list")
+@quorum.extras.ensure("devices.list")
 def list_device():
     devices = get_devices()
 
@@ -330,7 +328,7 @@ def list_device():
     )
 
 @app.route("/device/<id>", methods = ("GET",))
-@extras.ensure("devices.show")
+@quorum.extras.ensure("devices.show")
 def show_device(id):
     device = get_device(id = id)
 
@@ -342,11 +340,11 @@ def show_device(id):
     )
 
 @app.route("/user/<username>", methods = ("GET",))
-@extras.ensure("users.show")
+@quorum.extras.ensure("users.show")
 def show_user(username):
     user = get_user(username = username)
     username = user["username"]
-    extras.ensure_user(username)
+    quorum.extras.ensure_user(username)
 
     return flask.render_template(
         "users_show.html.tpl",
@@ -438,10 +436,10 @@ def login_json():
     )
 
 @app.route("/sets.json", methods = ("GET",))
-@extras.ensure("sets.list", json = True)
+@quorum.extras.ensure("sets.list", json = True)
 def list_set_json():
     sets = get_sets()
-    sets = extras.ensure_sets_f(sets)
+    sets = ensure_sets_f(sets)
 
     return flask.Response(
         json.dumps({
@@ -451,10 +449,10 @@ def list_set_json():
     )
 
 @app.route("/cameras.json", methods = ("GET",))
-@extras.ensure("cameras.list", json = True)
+@quorum.extras.ensure("cameras.list", json = True)
 def list_camera_json():
     cameras = get_cameras()
-    cameras = extras.ensure_cameras_f(cameras)
+    cameras = ensure_cameras_f(cameras)
 
     return flask.Response(
         json.dumps({
@@ -515,8 +513,8 @@ def get_users():
     return users
 
 def get_users_m():
-    db = mongo.get_db()
-    users = mongo.MongoMap(db.users, "username")
+    db = quorum.mongo.get_db()
+    users = quorum.mongo.MongoMap(db.users, "username")
     return users
 
 def get_user(username):
@@ -642,14 +640,39 @@ def filter(camera):
         if not key in camera: continue
         del camera[key]
 
+def ensure_cameras(cameras):
+    for camera in cameras: ensure_camera(camera)
+
+def ensure_cameras_f(cameras):
+    _cameras = []
+    for camera in cameras:
+        try: ensure_camera(camera)
+        except: continue
+        else: _cameras.append(camera)
+    return _cameras
+
+def ensure_camera(camera):
+    cameras = flask.session.get("cameras", None)
+    if cameras == None or camera["id"] in cameras: return
+    raise RuntimeError("Permission denied")
+
+def ensure_sets_f(sets):
+    _sets = []
+    for set in sets:
+        cameras = set.get("cameras", ())
+        try: ensure_cameras(cameras)
+        except: continue
+        else: _sets.append(set)
+    return _sets
+
 def load():
     # sets the global wide application settings and
     # configures the application object according to
     # this settings
     debug = os.environ.get("DEBUG", False) and True or False
     redis_url = os.getenv("REDISTOGO_URL", None)
-    not debug and extras.SSLify(app)
-    app.session_interface = extras.RedisSessionInterface(url = redis_url)
+    not debug and quorum.extras.SSLify(app)
+    app.session_interface = quorum.extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
     app.secret_key = SECRET_KEY
 
@@ -663,10 +686,10 @@ def run():
     redis_url = os.getenv("REDISTOGO_URL", None)
     mongo_url = os.getenv("MONGOHQ_URL", MONGO_URL)
     port = int(os.environ.get("PORT", 5000))
-    mongo.url = mongo_url
-    mongo.database = MONGO_DATABASE
-    not debug and extras.SSLify(app)
-    app.session_interface = extras.RedisSessionInterface(url = redis_url)
+    quorum.mongo.url = mongo_url
+    quorum.mongo.database = MONGO_DATABASE
+    not debug and quorum.extras.SSLify(app)
+    app.session_interface = quorum.extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
     app.secret_key = SECRET_KEY
     app.run(
