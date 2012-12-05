@@ -90,6 +90,12 @@ app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(365)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 
+quorum.load(
+    app,
+    redis_session = True,
+    mongo_database = MONGO_DATABASE
+)
+
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
 @quorum.ensure("index")
@@ -666,10 +672,6 @@ def ensure_sets_f(sets):
     return _sets
 
 def load():
-    # runs the loading of the quorum structures, this should
-    # delegate a series of setup operations to quorum
-    quorum.load(app, redis_session = True)
-
     # sets the global wide application settings and
     # configures the application object according to
     # this settings
@@ -679,10 +681,6 @@ def load():
     app.secret_key = SECRET_KEY
 
 def run():
-    # runs the loading of the quorum structures, this should
-    # delegate a series of setup operations to quorum
-    quorum.load(app, redis_session = True)
-
     # sets the debug control in the application
     # then checks the current environment variable
     # for the target port for execution (external)
@@ -690,7 +688,6 @@ def run():
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
     port = int(os.environ.get("PORT", 5000))
-    quorum.mongodb.database = MONGO_DATABASE
     not debug and quorum.extras.SSLify(app)
     app.debug = debug
     app.secret_key = SECRET_KEY
