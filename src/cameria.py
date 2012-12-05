@@ -55,10 +55,6 @@ PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
 of the password into an hash value """
 
-MONGO_URL = "mongodb://localhost:27017"
-""" The default url to be used for the connection with
-the mongo database """
-
 MONGO_DATABASE = "cameria"
 """ The default database to be used for the connection with
 the mongo database """
