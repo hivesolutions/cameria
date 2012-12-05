@@ -92,7 +92,7 @@ app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
-@quorum.extras.ensure("index")
+@quorum.ensure("index")
 def index():
     return flask.render_template(
         "index.html.tpl",
@@ -174,7 +174,7 @@ def logout():
     )
 
 @app.route("/import", methods = ("GET",))
-@quorum.extras.ensure("import")
+@quorum.ensure("import")
 def import_d():
     return flask.render_template(
         "import.html.tpl",
@@ -182,7 +182,7 @@ def import_d():
     )
 
 @app.route("/import", methods = ("POST",))
-@quorum.extras.ensure("import")
+@quorum.ensure("import")
 def import_do():
     # retrieves the import file values (reference to the
     # uploaded file) and then validates if it has been
@@ -200,7 +200,7 @@ def import_do():
     fd, file_path = tempfile.mkstemp()
     import_file.save(file_path)
 
-    db = quorum.mongo.get_db()
+    db = quorum.mongodb.get_db()
     manager = quorum.export.ExportManager(
         db,
         single = SINGLE_ENTITIES,
@@ -213,9 +213,9 @@ def import_do():
     )
 
 @app.route("/export", methods = ("GET",))
-@quorum.extras.ensure("export")
+@quorum.ensure("export")
 def export_do():
-    db = quorum.mongo.get_db()
+    db = quorum.mongodb.get_db()
     file = cStringIO.StringIO()
     manager = quorum.export.ExportManager(
         db,
@@ -232,7 +232,7 @@ def export_do():
     )
 
 @app.route("/about", methods = ("GET",))
-@quorum.extras.ensure("about")
+@quorum.ensure("about")
 def about():
     return flask.render_template(
         "about.html.tpl",
@@ -240,7 +240,7 @@ def about():
     )
 
 @app.route("/sets", methods = ("GET",))
-@quorum.extras.ensure("sets.list")
+@quorum.ensure("sets.list")
 def list_set():
     sets = get_sets()
     sets = ensure_sets_f(sets)
@@ -252,7 +252,7 @@ def list_set():
     )
 
 @app.route("/sets/<id>", methods = ("GET",))
-@quorum.extras.ensure("sets.show")
+@quorum.ensure("sets.show")
 def show_set(id):
     set = get_set(id)
     cameras = set.get("cameras", [])
@@ -266,7 +266,7 @@ def show_set(id):
     )
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
-@quorum.extras.ensure("sets.settings")
+@quorum.ensure("sets.settings")
 def settings_set(id):
     set = get_set(id)
 
@@ -278,7 +278,7 @@ def settings_set(id):
     )
 
 @app.route("/cameras", methods = ("GET",))
-@quorum.extras.ensure("cameras.list")
+@quorum.ensure("cameras.list")
 def list_camera():
     cameras = get_cameras()
     cameras = ensure_cameras_f(cameras)
@@ -290,7 +290,7 @@ def list_camera():
     )
 
 @app.route("/cameras/<id>", methods = ("GET",))
-@quorum.extras.ensure("cameras.show")
+@quorum.ensure("cameras.show")
 def show_camera(id):
     camera = get_camera(id)
     filter(camera)
@@ -304,7 +304,7 @@ def show_camera(id):
     )
 
 @app.route("/cameras/<id>/settings", methods = ("GET",))
-@quorum.extras.ensure("cameras.settings")
+@quorum.ensure("cameras.settings")
 def settings_camera(id):
     camera = get_camera(id)
     ensure_camera(camera)
@@ -317,7 +317,7 @@ def settings_camera(id):
     )
 
 @app.route("/devices", methods = ("GET",))
-@quorum.extras.ensure("devices.list")
+@quorum.ensure("devices.list")
 def list_device():
     devices = get_devices()
 
@@ -328,7 +328,7 @@ def list_device():
     )
 
 @app.route("/device/<id>", methods = ("GET",))
-@quorum.extras.ensure("devices.show")
+@quorum.ensure("devices.show")
 def show_device(id):
     device = get_device(id = id)
 
@@ -340,11 +340,11 @@ def show_device(id):
     )
 
 @app.route("/user/<username>", methods = ("GET",))
-@quorum.extras.ensure("users.show")
+@quorum.ensure("users.show")
 def show_user(username):
     user = get_user(username = username)
     username = user["username"]
-    quorum.extras.ensure_user(username)
+    quorum.ensure_user(username)
 
     return flask.render_template(
         "users_show.html.tpl",
@@ -436,7 +436,7 @@ def login_json():
     )
 
 @app.route("/sets.json", methods = ("GET",))
-@quorum.extras.ensure("sets.list", json = True)
+@quorum.ensure("sets.list", json = True)
 def list_set_json():
     sets = get_sets()
     sets = ensure_sets_f(sets)
@@ -449,7 +449,7 @@ def list_set_json():
     )
 
 @app.route("/cameras.json", methods = ("GET",))
-@quorum.extras.ensure("cameras.list", json = True)
+@quorum.ensure("cameras.list", json = True)
 def list_camera_json():
     cameras = get_cameras()
     cameras = ensure_cameras_f(cameras)
@@ -513,8 +513,8 @@ def get_users():
     return users
 
 def get_users_m():
-    db = quorum.mongo.get_db()
-    users = quorum.mongo.MongoMap(db.users, "username")
+    db = quorum.mongodb.get_db()
+    users = quorum.mongodb.MongoMap(db.users, "username")
     return users
 
 def get_user(username):
@@ -666,30 +666,32 @@ def ensure_sets_f(sets):
     return _sets
 
 def load():
+    # runs the loading of the quorum structures, this should
+    # delegate a series of setup operations to quorum
+    quorum.load(redis_session = True)
+
     # sets the global wide application settings and
     # configures the application object according to
     # this settings
     debug = os.environ.get("DEBUG", False) and True or False
-    redis_url = os.getenv("REDISTOGO_URL", None)
     not debug and quorum.extras.SSLify(app)
-    app.session_interface = quorum.extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
     app.secret_key = SECRET_KEY
 
 def run():
+    # runs the loading of the quorum structures, this should
+    # delegate a series of setup operations to quorum
+    quorum.load(redis_session = True)
+
     # sets the debug control in the application
     # then checks the current environment variable
     # for the target port for execution (external)
     # and then start running it (continuous loop)
     debug = os.environ.get("DEBUG", False) and True or False
     reloader = os.environ.get("RELOADER", False) and True or False
-    redis_url = os.getenv("REDISTOGO_URL", None)
-    mongo_url = os.getenv("MONGOHQ_URL", MONGO_URL)
     port = int(os.environ.get("PORT", 5000))
-    quorum.mongo.url = mongo_url
-    quorum.mongo.database = MONGO_DATABASE
+    quorum.mongodb.database = MONGO_DATABASE
     not debug and quorum.extras.SSLify(app)
-    app.session_interface = quorum.extras.RedisSessionInterface(url = redis_url)
     app.debug = debug
     app.secret_key = SECRET_KEY
     app.run(
