@@ -200,7 +200,7 @@ def import_do():
     fd, file_path = tempfile.mkstemp()
     import_file.save(file_path)
 
-    db = quorum.mongodb.get_db()
+    db = quorum.get_mongo_db()
     manager = quorum.export.ExportManager(
         db,
         single = SINGLE_ENTITIES,
@@ -215,7 +215,7 @@ def import_do():
 @app.route("/export", methods = ("GET",))
 @quorum.ensure("export")
 def export_do():
-    db = quorum.mongodb.get_db()
+    db = quorum.get_mongo_db()
     file = cStringIO.StringIO()
     manager = quorum.export.ExportManager(
         db,
@@ -513,7 +513,7 @@ def get_users():
     return users
 
 def get_users_m():
-    db = quorum.mongodb.get_db()
+    db = quorum.get_mongo_db()
     users = quorum.mongodb.MongoMap(db.users, "username")
     return users
 
