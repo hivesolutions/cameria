@@ -23,7 +23,7 @@
 // __copyright__ = Copyright (c) 2010-2012 Hive Solutions Lda.
 // __license__   = GNU General Public License (GPL), Version 3
 
-(function($) {
+(function(jQuery) {
     jQuery.fn.ucamera = function(options) {
         // the default values for the data query
         var defaults = {};
@@ -250,7 +250,7 @@
     };
 })(jQuery);
 
-(function($) {
+(function(jQuery) {
     jQuery.fn.ureload = function(options) {
         // the default values for the data query
         var defaults = {};
