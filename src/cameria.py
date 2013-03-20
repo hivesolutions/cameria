@@ -666,33 +666,5 @@ def ensure_sets_f(sets):
         else: _sets.append(set)
     return _sets
 
-def load():
-    # sets the global wide application settings and
-    # configures the application object according to
-    # this settings
-    debug = os.environ.get("DEBUG", False) and True or False
-    not debug and quorum.extras.SSLify(app)
-    app.debug = debug
-    app.secret_key = SECRET_KEY
-
-def run():
-    # sets the debug control in the application
-    # then checks the current environment variable
-    # for the target port for execution (external)
-    # and then start running it (continuous loop)
-    debug = os.environ.get("DEBUG", False) and True or False
-    reloader = os.environ.get("RELOADER", False) and True or False
-    port = int(os.environ.get("PORT", 5000))
-    not debug and quorum.extras.SSLify(app)
-    app.debug = debug
-    app.secret_key = SECRET_KEY
-    app.run(
-        use_debugger = debug,
-        debug = debug,
-        use_reloader = reloader,
-        host = "0.0.0.0",
-        port = port
-    )
-
-if __name__ == "__main__": run()
-else: load()
+if __name__ == "__main__":
+    quorum.run()

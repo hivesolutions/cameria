@@ -8,6 +8,6 @@
     </div>
     <div class="separator-horizontal"></div>
     <div class="quote error">
-        <h3>{{ error }}</h3>
+        {{ error }}
     </div>
 {% endblock %}
