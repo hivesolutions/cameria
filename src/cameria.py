@@ -87,6 +87,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 quorum.load(
     app,
+    secret_key = SECRET_KEY,
     redis_session = True,
     mongo_database = MONGO_DATABASE
 )
