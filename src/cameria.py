@@ -668,4 +668,4 @@ def ensure_sets_f(sets):
     return _sets
 
 if __name__ == "__main__":
-    quorum.run()
+    quorum.run(server = "waitress")
