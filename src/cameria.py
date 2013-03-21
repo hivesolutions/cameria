@@ -82,14 +82,14 @@ DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 app = flask.Flask(__name__)
-app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(365)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["MAX_CONTENT_LENGTH"] = 1024 ** 3
 quorum.load(
     app,
     secret_key = SECRET_KEY,
     redis_session = True,
-    mongo_database = MONGO_DATABASE
+    mongo_database = MONGO_DATABASE,
+    PERMANENT_SESSION_LIFETIME = datetime.timedelta(365),
+    UPLOAD_FOLDER = UPLOAD_FOLDER,
+    MAX_CONTENT_LENGTH = 1024 ** 3
 )
 
 @app.route("/", methods = ("GET",))
