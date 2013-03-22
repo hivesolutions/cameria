@@ -81,9 +81,8 @@ CAMERAS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "cameras")
 DEVICES_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "devices")
 SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
-app = flask.Flask(__name__)
-quorum.load(
-    app,
+app = quorum.load(
+    name = __name__,
     secret_key = SECRET_KEY,
     redis_session = True,
     mongo_database = MONGO_DATABASE,
