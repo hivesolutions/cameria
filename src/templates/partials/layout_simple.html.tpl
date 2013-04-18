@@ -7,7 +7,7 @@
     {% endblock %}
 </head>
 <body class="ux">
-    <div id="overlay"></div>
+    <div id="overlay" class="overlay"></div>
     <div id="header">
         {% block header %}
             <h1>{% block name %}{% endblock %}</h1>
