@@ -12,9 +12,9 @@
         {% if acl("cameras.new") %}
             //
             {% if sub_link == "create" %}
-                <a href="#" class="active">create</a>
+                <a href="{{ url_for('new_camera') }}" class="active">create</a>
             {% else %}
-                <a href="#">create</a>
+                <a href="{{ url_for('new_camera') }}">create</a>
             {% endif %}
         {% endif %}
     </div>
