@@ -254,17 +254,17 @@ def settings_set(id):
         set = set
     )
 
-@app.route("/cameras", methods = ("GET",))
-@quorum.ensure("cameras.list")
-def list_camera():
-    cameras = get_cameras()
-    cameras = ensure_cameras_f(cameras)
-
-    return flask.render_template(
-        "cameras_list.html.tpl",
-        link = "cameras",
-        cameras = cameras
-    )
+#@app.route("/cameras", methods = ("GET",))
+#@quorum.ensure("cameras.list")
+#def list_camera():
+#    cameras = get_cameras()
+#    cameras = ensure_cameras_f(cameras)
+#
+#    return flask.render_template(
+#        "cameras_list.html.tpl",
+#        link = "cameras",
+#        cameras = cameras
+#    )
 
 @app.route("/cameras/<id>", methods = ("GET",))
 @quorum.ensure("cameras.show")
@@ -425,18 +425,18 @@ def list_set_json():
         mimetype = "application/json"
     )
 
-@app.route("/cameras.json", methods = ("GET",))
-@quorum.ensure("cameras.list", json = True)
-def list_camera_json():
-    cameras = get_cameras()
-    cameras = ensure_cameras_f(cameras)
-
-    return flask.Response(
-        json.dumps({
-            "cameras" : cameras
-        }),
-        mimetype = "application/json"
-    )
+#@app.route("/cameras.json", methods = ("GET",))
+#@quorum.ensure("cameras.list", json = True)
+#def list_camera_json():
+#    cameras = get_cameras()
+#    cameras = ensure_cameras_f(cameras)
+#
+#    return flask.Response(
+#        json.dumps({
+#            "cameras" : cameras
+#        }),
+#        mimetype = "application/json"
+#    )
 
 @app.route("/session.json", methods = ("GET",))
 def session_json():

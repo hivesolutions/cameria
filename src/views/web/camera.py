@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Hive Cameria System. If not, see <http://www.gnu.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,8 +37,27 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import base
-import camera
+import models
 
-from base import *
-from camera import *
+from cameria import app
+from cameria import flask
+from cameria import quorum
+
+@app.route("/cameras", methods = ("GET",))
+@quorum.ensure("cameras.list")
+def list_cameras():
+    return flask.render_template(
+        "camera/list.html.tpl",
+        link = "cameras",
+        sub_link = "list"
+    )
+
+@app.route("/cameras.json", methods = ("GET",))
+@quorum.ensure("cameras.list")
+def list_cameras_json():
+    object = quorum.get_object(alias = True, find = True)
+    builds = models.Camera.find(map = True, sort = [("id", -1)], **object)
+    return flask.Response(
+        quorum.dumps_mongo(builds),
+        mimetype = "application/json"
+    )
