@@ -10,4 +10,14 @@
     <div class="quote error">
         {{ error }}
     </div>
+    {% if traceback %}
+        <div class="quote">
+            <a class="link replacer" data-target=".traceback" data-no_auto="1">show traceback</a>
+           </div>
+        <ul class="traceback replacer-target">
+            {% for line in traceback %}
+                <li>{{ line }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
