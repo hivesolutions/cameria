@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Hive Cameria System. If not, see <http://www.gnu.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,12 +37,34 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import account
-import base
-import camera
-import set
+import quorum
 
-from account import *
-from base import *
-from camera import *
-from set import *
+import base
+
+class Set(base.Base):
+
+    set_id = dict(
+        index = True
+    )
+
+    name = dict(
+        index = True
+    )
+
+    camera = dict(
+        type = dict
+    )
+
+    cameras = dict(
+        type = list
+    )
+
+    @classmethod
+    def validate_new(cls):
+        return super(Set, cls).validate_new() + [
+            quorum.not_null("set_id"),
+            quorum.not_empty("set_id"),
+            quorum.string_gt("set_id", 2),
+            quorum.string_lt("set_id", 64),
+            quorum.not_duplicate("set_id", cls._name())
+        ]
