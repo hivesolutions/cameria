@@ -42,6 +42,7 @@ import datetime
 
 import flask #@UnusedImport
 
+import models
 import quorum
 
 SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
@@ -61,6 +62,8 @@ app = quorum.load(
     secret_key = SECRET_KEY,
     redis_session = True,
     mongo_database = MONGO_DATABASE,
+    logger = "cameria.debug",
+    models = models,
     PERMANENT_SESSION_LIFETIME = datetime.timedelta(365),
     UPLOAD_FOLDER = UPLOAD_FOLDER,
     MAX_CONTENT_LENGTH = 1024 ** 3
