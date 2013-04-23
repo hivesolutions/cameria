@@ -41,6 +41,7 @@ import os
 import json
 import hashlib
 import tempfile
+import traceback
 import cStringIO
 
 import models
@@ -472,10 +473,14 @@ def handler_413(error):
 
 @app.errorhandler(BaseException)
 def handler_exception(error):
+    formatted = traceback.format_exc()
+    lines = formatted.splitlines()
+
     return flask.Response(
         flask.render_template(
             "error.html.tpl",
-            error = str(error)
+            error = str(error),
+            traceback = lines
         ),
         status = 500
     )
