@@ -85,5 +85,5 @@ class Camera(base.Base):
             quorum.not_duplicate("camera_id", cls._name()),
 
             quorum.validation.not_null("url"),
-            quorum.validation.not_empty("url"),
+            quorum.validation.not_empty("url")
         ]
