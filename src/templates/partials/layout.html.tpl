@@ -30,9 +30,9 @@
                 {% if acl("cameras.list") %}
                     //
                     {% if link == "cameras" %}
-                        <a href="{{ url_for('list_camera') }}" class="active">cameras</a>
+                        <a href="{{ url_for('list_cameras') }}" class="active">cameras</a>
                     {% else %}
-                        <a href="{{ url_for('list_camera') }}">cameras</a>
+                        <a href="{{ url_for('list_cameras') }}">cameras</a>
                     {% endif %}
                 {% endif %}
                 {% if acl("devices.list") %}
