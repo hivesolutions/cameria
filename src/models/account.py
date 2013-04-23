@@ -86,6 +86,14 @@ class Account(base.Base):
         private = True
     )
 
+    confirmation = dict(
+        private = True
+    )
+
+    email = dict(
+        index = True
+    )
+
     login_count = dict(
         type = int
     )
@@ -133,6 +141,11 @@ class Account(base.Base):
 
             quorum.validation.not_null("password_confirm"),
             quorum.validation.not_empty("password_confirm"),
+
+            quorum.not_null("email"),
+            quorum.not_empty("email"),
+            quorum.is_email("email"),
+            quorum.not_duplicate("email", cls._name()),
 
             quorum.validation.not_null("type"),
             quorum.validation.not_empty("type"),
@@ -200,6 +213,7 @@ class Account(base.Base):
             "enabled" : True,
             "username" : username,
             "password" : password,
+            "email" : "%s@cameria.com" % username,
             "login_count" : 0,
             "last_login" : None,
             "type" : type,
