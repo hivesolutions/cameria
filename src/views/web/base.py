@@ -91,6 +91,10 @@ SETTINGS_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "settings")
 
 #### THIS IS TEMPORARY !!!!!
 
+@app.context_processor
+def utility_processor():
+    return dict(acl = quorum.check_login)
+
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
 @quorum.ensure("index")
@@ -111,50 +115,22 @@ def login():
     # retrieves both the username and the password from
     # the flask request form, these are the values that
     # are going to be used in the username validation
-    username = flask.request.form.get("username", None)
-    password = flask.request.form.get("password", None)
-
-    # in case any of the mandatory arguments is not provided
-    # an error is set in the current page
-    if not username or not password:
+    username = quorum.get_field("username")
+    password = quorum.get_field("password")
+    try: account = models.Account.login(username, password)
+    except quorum.OperationalError, error:
         return flask.render_template(
             "signin.html.tpl",
             username = username,
-            error = "Both username and password must be provided"
+            error = error.message
         )
-
-    # retrieves the structure containing the information
-    # on the currently available users and unpacks the
-    # various attributes from it (defaulting to base values)
-    users = get_users_m()
-    user = users.get(username, {})
-    _password = user.get("password", None)
-
-    # encodes the provided password into an sha1 hash appending
-    # the salt value to it before the encoding
-    password_sha1 = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
-
-    # checks that both the user structure and the password values
-    # are present and that the password matched, if one of these
-    # values fails the login process fails and the user is redirected
-    # to the signin page with an error string
-    if not user or not _password or not password_sha1 == _password:
-        return flask.render_template(
-            "signin.html.tpl",
-            username = username,
-            error = "Invalid username and/or password"
-        )
-
-    # retrieves the tokens and cameras sequence from the user to set
-    # them in the current session
-    tokens = user.get("tokens", ())
-    cameras = user.get("cameras", None)
 
     # updates the current user (name) in session with
     # the username that has just be accepted in the login
-    flask.session["username"] = username
-    flask.session["tokens"] = tokens
-    flask.session["cameras"] = cameras
+    flask.session["username"] = account.username
+    flask.session["cameras"] = account.cameras
+    flask.session["tokens"] = account.tokens
+    flask.session["acl"] = quorum.check_login
 
     # makes the current session permanent this will allow
     # the session to persist along multiple browser initialization
