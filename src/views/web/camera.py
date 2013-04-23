@@ -56,9 +56,9 @@ def list_cameras():
 @quorum.ensure("cameras.list")
 def list_cameras_json():
     object = quorum.get_object(alias = True, find = True)
-    builds = models.Camera.find(map = True, sort = [("id", -1)], **object)
+    cameras = models.Camera.find(map = True, sort = [("id", -1)], **object)
     return flask.Response(
-        quorum.dumps_mongo(builds),
+        quorum.dumps_mongo(cameras),
         mimetype = "application/json"
     )
 
