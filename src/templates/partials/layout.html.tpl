@@ -12,14 +12,14 @@
         {% block header %}
             <h1>{% block name %}{% endblock %}</h1>
             <div class="links">
-                {% if "index" in session.tokens %}
+                 {% if acl("index") %}
                     {% if link == "home" %}
                         <a href="{{ url_for('index') }}" class="active">home</a>
                     {% else %}
                         <a href="{{ url_for('index') }}">home</a>
                     {% endif %}
                 {% endif %}
-                {% if "sets.list" in session.tokens %}
+                 {% if acl("sets.list") %}
                     //
                     {% if link == "sets" %}
                         <a href="{{ url_for('list_set') }}" class="active">sets</a>
@@ -27,7 +27,7 @@
                         <a href="{{ url_for('list_set') }}">sets</a>
                     {% endif %}
                 {% endif %}
-                {% if "cameras.list" in session.tokens %}
+                {% if acl("cameras.list") %}
                     //
                     {% if link == "cameras" %}
                         <a href="{{ url_for('list_camera') }}" class="active">cameras</a>
@@ -35,7 +35,7 @@
                         <a href="{{ url_for('list_camera') }}">cameras</a>
                     {% endif %}
                 {% endif %}
-                {% if "devices.list" in session.tokens %}
+                {% if acl("devices.list") %}
                     //
                     {% if link == "devices" %}
                         <a href="{{ url_for('list_device') }}" class="active">devices</a>
@@ -43,7 +43,7 @@
                         <a href="{{ url_for('list_device') }}">devices</a>
                     {% endif %}
                 {% endif %}
-                {% if "about" in session.tokens %}
+                {% if acl("about") %}
                     //
                     {% if link == "about" %}
                         <a href="{{ url_for('about') }}" class="active">about</a>

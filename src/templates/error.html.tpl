@@ -1,4 +1,4 @@
-{% extends "partials/layout.html.tpl" %}
+{% extends "partials/layout_simple.html.tpl" %}
 {% block title %}Error{% endblock %}
 {% block name %}Error{% endblock %}
 {% block content %}
