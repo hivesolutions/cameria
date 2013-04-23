@@ -65,6 +65,7 @@ USER_ACL = {
         "sets.list",
         "sets.show",
         "cameras.list",
+        "cameras.new",
         "cameras.show",
         "users.show"
     ),
@@ -104,9 +105,6 @@ class Account(base.Base):
     cameras = dict(
         type = list
     )
-
-    def __init__(self):
-        base.Base.__init__(self)
 
     @classmethod
     def setup(cls):
