@@ -61,3 +61,38 @@ def list_cameras_json():
         quorum.dumps_mongo(builds),
         mimetype = "application/json"
     )
+
+@app.route("/camera/new", methods = ("GET",))
+@quorum.ensure("cameras.new")
+def new_camera():
+    return flask.render_template(
+        "camera/new.html.tpl",
+        link = "cameras",
+        sub_link = "create",
+        camera = {},
+        errors = {}
+    )
+
+@app.route("/cameras", methods = ("POST",))
+@quorum.ensure("cameras.new")
+def create_camera():
+    # creates the new camera, using the provided arguments and
+    # then saves it into the data source, all the validations
+    # should be ran upon the save operation
+    camera = models.Camera.new()
+    try: camera.save()
+    except quorum.ValidationError, error:
+        return flask.render_template(
+            "camera/new.html.tpl",
+            link = "accounts",
+            sub_link = "create",
+            account = error.model,
+            errors = error.errors
+        )
+
+    # redirects the user to the pending page, indicating that
+    # the account is not yet activated and is pending the email
+    # confirmation action
+    return flask.redirect(
+        flask.url_for("pending", camera_id = camera.camera_id)
+    )
