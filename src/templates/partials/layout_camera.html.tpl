@@ -9,6 +9,14 @@
                 <a href="{{ url_for('show_camera', camera_id = camera.camera_id) }}">show</a>
             {% endif %}
         {% endif %}
+        {% if acl("cameras.edit") %}
+            //
+            {% if sub_link == "edit" %}
+                <a href="{{ url_for('edit_camera', camera_id = camera.camera_id) }}" class="active">edit</a>
+            {% else %}
+                <a href="{{ url_for('edit_camera', camera_id = camera.camera_id) }}">edit</a>
+            {% endif %}
+        {% endif %}
         {% if acl("cameras.settings") %}
             //
             {% if sub_link == "settings" %}
@@ -21,10 +29,10 @@
             //
             {% if sub_link == "delete" %}
                 <a href="{{ url_for('delete_camera', camera_id = camera.camera_id) }}" class="active warning link-confirm"
-                   data-message="Do you really want to delete ?">delete</a>
+                   data-message="Do you really want to delete {{ camera.camera_id }}  ?">delete</a>
             {% else %}
                 <a href="{{ url_for('delete_camera', camera_id = camera.camera_id) }}" class="warning link-confirm"
-                   data-message="Do you really want to delete ?">delete</a>
+                   data-message="Do you really want to delete {{ camera.camera_id }} ?">delete</a>
             {% endif %}
         {% endif %}
     </div>

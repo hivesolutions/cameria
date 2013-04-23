@@ -1,8 +1,8 @@
 {% extends "partials/layout_camera.html.tpl" %}
 {% block title %}Cameras{% endblock %}
-{% block name %}Cameras :: {{ camera.id }}{% endblock %}
+{% block name %}Cameras :: {{ camera.camera_id }}{% endblock %}
 {% block content %}
-    <div class="quote">{{ camera.id }}</div>
+    <div class="quote">{{ camera.camera_id }}</div>
     <div class="separator-horizontal"></div>
     <table>
         <tbody>

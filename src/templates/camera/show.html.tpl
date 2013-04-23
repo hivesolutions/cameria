@@ -1,6 +1,6 @@
 {% extends "partials/layout_camera_f.html.tpl" %}
 {% block title %}Cameras{% endblock %}
-{% block name %}Cameras :: {{ camera.id }}{% endblock %}
+{% block name %}Cameras :: {{ camera.camera_id }}{% endblock %}
 {% block content %}
     <div class="cameras single reload" data-timeout="300000">
         {% if camera.resolution %}

@@ -108,6 +108,42 @@ def show_camera(camera_id):
         camera = camera
     )
 
+@app.route("/cameras/<camera_id>/edit", methods = ("GET",))
+@quorum.ensure("cameras.edit")
+def edit_camera(camera_id):
+    camera = models.Camera.get(camera_id = camera_id)
+    return flask.render_template(
+        "camera/edit.html.tpl",
+        link = "cameras",
+        sub_link = "edit",
+        camera = camera,
+        errors = {}
+    )
+
+@app.route("/cameras/<camera_id>/edit", methods = ("POST",))
+@quorum.ensure("cameras.edit")
+def update_camera(camera_id):
+    # finds the current camera and applies the provided
+    # arguments and then saves it into the data source,
+    # all the validations should be ran upon the save operation
+    camera = models.Camera.get(camera_id = camera_id)
+    camera.apply()
+    try: camera.save()
+    except quorum.ValidationError, error:
+        return flask.render_template(
+            "camera_edit.html.tpl",
+            link = "cameras",
+            sub_link = "edit",
+            camera = error.model,
+            errors = error.errors
+        )
+
+    # redirects the user to the show page of the camera that
+    # was just updated
+    return flask.redirect(
+        flask.url_for("show_camera", camera_id = camera_id)
+    )
+
 @app.route("/cameras/<camera_id>/delete", methods = ("GET",))
 @quorum.ensure("cameras.delete")
 def delete_camera(camera_id):

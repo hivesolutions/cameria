@@ -1,8 +1,8 @@
-{% extends "partials/layout_camera_l.html.tpl" %}
+{% extends "partials/layout_camera.html.tpl" %}
 {% block title %}Cameras{% endblock %}
-{% block name %}{{ camera.id }} :: edit{% endblock %}
+{% block name %}Cameras :: {{ camera.camera_id }}{% endblock %}
 {% block content %}
-    <form action="{{ url_for('create_camera') }}" method="post" class="form">
+    <form action="{{ url_for('update_camera', camera_id = camera.camera_id) }}" method="post" class="form">
         <div class="label">
             <label>Camera ID</label>
         </div>
@@ -15,28 +15,28 @@
         </div>
         <div class="input">
             <input class="text-field" name="url" placeholder="eg: http://cameria.com/cam_xz" value="{{ camera.url }}"
-                   data-error="{{ camera.url }}" />
+                   data-error="{{ errors.url }}" />
         </div>
         <div class="label">
             <label>Camera</label>
         </div>
         <div class="input">
             <input class="text-field" name="camera" placeholder="eg: 1" value="{{ camera.camera }}"
-                   data-error="{{ camera.camera }}" />
+                   data-error="{{ errors.camera }}" />
         </div>
         <div class="label">
             <label>Username</label>
         </div>
         <div class="input">
             <input class="text-field" name="username" placeholder="eg: johndoe" value="{{ camera.username }}"
-                   data-error="{{ camera.username }}" />
+                   data-error="{{ errors.username }}" />
         </div>
         <div class="label">
             <label>Password</label>
         </div>
         <div class="input">
             <input type="password" class="text-field" name="password" value="{{ camera.password }}"
-                   data-error="{{ camera.password }}" />
+                   data-error="{{ errors.password }}" />
         </div>
         <div class="label">
             <label>Protocol</label>
@@ -55,40 +55,31 @@
         </div>
         <div class="input">
             <input class="text-field" name="compression" placeholder="eg: 30" value="{{ camera.compression }}"
-                   data-error="{{ camera.compression }}" />
+                   data-error="{{ errors.compression }}" />
         </div>
         <div class="label">
             <label>FPS</label>
         </div>
         <div class="input">
             <input class="text-field" name="fps" placeholder="eg: 4" value="{{ camera.fps }}"
-                   data-error="{{ camera.fps }}" />
+                   data-error="{{ errors.fps }}" />
         </div>
         <div class="label">
             <label>Type</label>
         </div>
         <div class="input">
             <input class="text-field" name="type" placeholder="eg: axis" value="{{ camera.type }}"
-                   data-error="{{ camera.type }}" />
+                   data-error="{{ errors.type }}" />
         </div>
         <div class="label">
             <label>Model</label>
         </div>
         <div class="input">
             <input class="text-field" name="model_" placeholder="eg: m1114" value="{{ camera.model_ }}"
-                   data-error="{{ camera.model_ }}" />
+                   data-error="{{ errors.model_ }}" />
         </div>
-        <div class="label">
-            <label>Description</label>
-        </div>
-        <div class="input">
-            <textarea class="text-area" name="description" placeholder="eg: some words about the camera"
-                      data-error="{{ camera.description }}">{{ camera.description }}</textarea>
-        </div>
-        <div class="quote">
-            By clicking Submit Camera, you agree to our Service Agreement and that you have
-            read and understand our Privacy Policy.
-        </div>
-        <span class="button" data-submit="true">Submit Camera</span>
+        <span class="button" data-link="{{ url_for('show_camera', camera_id = camera.camera_id) }}">Cancel</span>
+        //
+        <span class="button" data-submit="true">Update</span>
     </form>
 {% endblock %}
