@@ -71,7 +71,7 @@ class Camera(base.Base):
         index = True
     )
 
-    model = dict(
+    model_ = dict(
         index = True
     )
 
