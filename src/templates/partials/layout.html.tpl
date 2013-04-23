@@ -22,9 +22,9 @@
                  {% if acl("sets.list") %}
                     //
                     {% if link == "sets" %}
-                        <a href="{{ url_for('list_set') }}" class="active">sets</a>
+                        <a href="{{ url_for('list_sets') }}" class="active">sets</a>
                     {% else %}
-                        <a href="{{ url_for('list_set') }}">sets</a>
+                        <a href="{{ url_for('list_sets') }}">sets</a>
                     {% endif %}
                 {% endif %}
                 {% if acl("cameras.list") %}
