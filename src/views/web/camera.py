@@ -84,15 +84,46 @@ def create_camera():
     except quorum.ValidationError, error:
         return flask.render_template(
             "camera/new.html.tpl",
-            link = "accounts",
+            link = "cameras",
             sub_link = "create",
-            account = error.model,
+            camera = error.model,
             errors = error.errors
         )
 
     # redirects the user to the pending page, indicating that
-    # the account is not yet activated and is pending the email
+    # the camera is not yet activated and is pending the email
     # confirmation action
     return flask.redirect(
-        flask.url_for("pending", camera_id = camera.camera_id)
+        flask.url_for("show_camera", camera_id = camera.camera_id)
+    )
+
+@app.route("/cameras/<camera_id>", methods = ("GET",))
+@quorum.ensure("cameras.show")
+def show_camera(camera_id):
+    camera = models.Camera.get(camera_id = camera_id)
+    return flask.render_template(
+        "camera/show.html.tpl",
+        link = "cameras",
+        sub_link = "show",
+        camera = camera
+    )
+
+@app.route("/cameras/<camera_id>/delete", methods = ("GET",))
+@quorum.ensure("cameras.delete")
+def delete_camera(camera_id):
+    camera = models.Camera.get(camera_id = camera_id)
+    camera.delete()
+    return flask.redirect(
+        flask.url_for("list_cameras")
+    )
+
+@app.route("/cameras/<camera_id>/settings", methods = ("GET",))
+@quorum.ensure("cameras.show")
+def settings_camera(camera_id):
+    camera = models.Camera.get(camera_id = camera_id)
+    return flask.render_template(
+        "camera/settings.html.tpl",
+        link = "cameras",
+        sub_link = "settings",
+        camera = camera
     )
