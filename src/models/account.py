@@ -101,6 +101,10 @@ class Account(base.Base):
         type = list
     )
 
+    cameras = dict(
+        type = list
+    )
+
     def __init__(self):
         base.Base.__init__(self)
 
@@ -115,7 +119,7 @@ class Account(base.Base):
 
         # creates the various accounts that are going to be used for
         # the default initial access to the data source
-        cls.create_account_d("root", "root", ADMIN_TYPE)
+        cls.create_account_d("root", "root", ADMIN_TYPE, ("*",))
 
     @classmethod
     def validate_new(cls):
@@ -131,6 +135,8 @@ class Account(base.Base):
 
             quorum.validation.not_null("password_confirm"),
             quorum.validation.not_empty("password_confirm"),
+
+            quorum.not_null("cameras"),
 
             quorum.equals("password_confirm", "password")
         ]
@@ -181,7 +187,7 @@ class Account(base.Base):
         return account
 
     @classmethod
-    def create_account_d(cls, username, password, type):
+    def create_account_d(cls, username, password, type, cameras):
         # encodes the provided password into an sha1 hash appending
         # the salt value to it before the encoding
         password = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
@@ -195,7 +201,8 @@ class Account(base.Base):
             "login_count" : 0,
             "last_login" : None,
             "type" : type,
-            "tokens" : USER_ACL.get(type, ())
+            "tokens" : USER_ACL.get(type, ()),
+            "cameras" : cameras
         }
 
         # saves the account instance into the data source, ensures
