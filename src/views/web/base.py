@@ -267,32 +267,32 @@ def settings_set(id):
 #        cameras = cameras
 #    )
 
-@app.route("/cameras/<id>", methods = ("GET",))
-@quorum.ensure("cameras.show")
-def show_camera(id):
-    camera = get_camera(id)
-    filter(camera)
-    ensure_camera(camera)
-
-    return flask.render_template(
-        "cameras_show.html.tpl",
-        link = "cameras",
-        sub_link = "show",
-        camera = camera
-    )
-
-@app.route("/cameras/<id>/settings", methods = ("GET",))
-@quorum.ensure("cameras.settings")
-def settings_camera(id):
-    camera = get_camera(id)
-    ensure_camera(camera)
-
-    return flask.render_template(
-        "cameras_settings.html.tpl",
-        link = "cameras",
-        sub_link = "settings",
-        camera = camera
-    )
+#@app.route("/cameras/<id>", methods = ("GET",))
+#@quorum.ensure("cameras.show")
+#def show_camera(id):
+#    camera = get_camera(id)
+#    filter(camera)
+#    ensure_camera(camera)
+#
+#    return flask.render_template(
+#        "cameras_show.html.tpl",
+#        link = "cameras",
+#        sub_link = "show",
+#        camera = camera
+#    )
+#
+#@app.route("/cameras/<id>/settings", methods = ("GET",))
+#@quorum.ensure("cameras.settings")
+#def settings_camera(id):
+#    camera = get_camera(id)
+#    ensure_camera(camera)
+#
+#    return flask.render_template(
+#        "cameras_settings.html.tpl",
+#        link = "cameras",
+#        sub_link = "settings",
+#        camera = camera
+#    )
 
 @app.route("/devices", methods = ("GET",))
 @quorum.ensure("devices.list")
