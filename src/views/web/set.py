@@ -106,3 +106,8 @@ def show_set(set_id):
         sub_link = "show",
         set = set
     )
+
+@app.route("/sets/<set_id>/settings", methods = ("GET",))
+@quorum.ensure("sets.settings")
+def settings_set(set_id):
+    pass

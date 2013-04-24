@@ -243,17 +243,17 @@ def about():
 #        set = set
 #    )
 
-@app.route("/sets/<id>/settings", methods = ("GET",))
-@quorum.ensure("sets.settings")
-def settings_set(id):
-    set = get_set(id)
-
-    return flask.render_template(
-        "sets_settings.html.tpl",
-        link = "sets",
-        sub_link = "settings",
-        set = set
-    )
+#@app.route("/sets/<id>/settings", methods = ("GET",))
+#@quorum.ensure("sets.settings")
+#def settings_set(id):
+#    set = get_set(id)
+#
+#    return flask.render_template(
+#        "sets_settings.html.tpl",
+#        link = "sets",
+#        sub_link = "settings",
+#        set = set
+#    )
 
 #@app.route("/cameras", methods = ("GET",))
 #@quorum.ensure("cameras.list")

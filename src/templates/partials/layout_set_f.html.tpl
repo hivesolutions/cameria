@@ -2,19 +2,19 @@
 {% block header %}
     {{ super() }}
     <div class="links sub-links">
-        {% if "sets.show" in session.tokens %}
+        {% if acl("sets.show") %}
             {% if sub_link == "show" %}
-                <a href="{{ url_for('show_set', id = set.id) }}" class="active">show</a>
+                <a href="{{ url_for('show_set', set_id = set.set_id) }}" class="active">show</a>
             {% else %}
-                <a href="{{ url_for('show_set', id = set.id) }}">show</a>
+                <a href="{{ url_for('show_set', set_id = set.set_id) }}">show</a>
             {% endif %}
         {% endif %}
-        {% if "sets.settings" in session.tokens %}
+        {% if acl("sets.settings") %}
             //
             {% if sub_link == "settings" %}
-                <a href="{{ url_for('settings_set', id = set.id) }}" class="active">settings</a>
+                <a href="{{ url_for('settings_set', set_id = set.set_id) }}" class="active">settings</a>
             {% else %}
-                <a href="{{ url_for('settings_set', id = set.id) }}">settings</a>
+                <a href="{{ url_for('settings_set', set_id = set.set_id) }}">settings</a>
             {% endif %}
         {% endif %}
     </div>
