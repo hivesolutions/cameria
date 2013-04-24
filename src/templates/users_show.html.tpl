@@ -21,7 +21,7 @@
                         all
                     {% else %}
                         {% for camera in user.cameras %}
-                            <a href="{{ url_for('show_camera', id = camera) }}">{{ camera }}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ url_for('show_camera', camera_id = camera.camera_id) }}">{{ camera }}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                     {% endif %}
                 </td>
