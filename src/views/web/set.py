@@ -90,9 +90,8 @@ def create_set():
             errors = error.errors
         )
 
-    # redirects the user to the pending page, indicating that
-    # the set is not yet activated and is pending the email
-    # confirmation action
+    # redirects the user to the show page of the set that
+    # was just created (normal workflow)
     return flask.redirect(
         flask.url_for("show_set", set_id = set.set_id)
     )
