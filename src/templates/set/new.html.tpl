@@ -17,6 +17,21 @@
             <input class="text-field" name="name" placeholder="eg: The office set" value="{{ set.name }}"
                    data-error="{{ errors.name }}" />
         </div>
+        <div class="label">
+            <label>Cameras</label>
+        </div>
+        <div class="input">
+            <div name="cameras" class="tag-field" data-display_attribute="camera_id"
+                 data-value_attribute="id" data-error="{{ errors.cameras }}">
+                <input name="cameras[][id]" type="hidden" class="tag-empty-field" />
+                <ul class="tags">
+                    {% for camera in cameras %}
+                        <li>{{ camera.camera_id }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="data-source" data-url="{{ url_for('list_cameras_json') }}" data-type="json"></ul>
+            </div>
+        </div>
         <div class="quote">
             By clicking Submit Set, you agree to our Service Agreement and that you have
             read and understand our Privacy Policy.
