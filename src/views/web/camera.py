@@ -52,7 +52,7 @@ def list_cameras():
         sub_link = "list"
     )
 
-@app.route("/cameras.json", methods = ("GET",))
+@app.route("/cameras.json", methods = ("GET",), json = True)
 @quorum.ensure("cameras.list")
 def list_cameras_json():
     object = quorum.get_object(alias = True, find = True)
