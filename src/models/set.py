@@ -66,5 +66,8 @@ class Set(base.Base):
             quorum.not_empty("set_id"),
             quorum.string_gt("set_id", 2),
             quorum.string_lt("set_id", 64),
-            quorum.not_duplicate("set_id", cls._name())
+            quorum.not_duplicate("set_id", cls._name()),
+
+            quorum.not_null("name"),
+            quorum.not_empty("name")
         ]
