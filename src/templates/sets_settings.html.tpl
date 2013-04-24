@@ -34,7 +34,7 @@
                 <td class="right label" width="50%">cameras</td>
                 <td class="left value" width="50%">
                     {% for camera in set.cameras %}
-                        <a href="{{ url_for('show_camera', id = camera.id) }}">{{ camera.id }}</a>{% if not loop.last %},{% endif %}
+                        <a href="{{ url_for('show_camera', camera_id = camera.camera_id) }}">{{ camera.id }}</a>{% if not loop.last %},{% endif %}
                     {% endfor %}
                 </td>
             </tr>
