@@ -52,7 +52,7 @@ def list_sets():
         sub_link = "list"
     )
 
-@app.route("/sets.json", methods = ("GET",))
+@app.route("/sets.json", methods = ("GET",), json = True)
 @quorum.ensure("sets.list")
 def list_sets_json():
     object = quorum.get_object(alias = True, find = True)
