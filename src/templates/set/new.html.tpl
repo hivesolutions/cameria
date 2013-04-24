@@ -22,8 +22,8 @@
         </div>
         <div class="input">
             <div name="cameras" class="tag-field" data-display_attribute="camera_id"
-                 data-value_attribute="id" data-error="{{ errors.cameras }}">
-                <input name="cameras[][id]" type="hidden" class="tag-empty-field" />
+                 data-value_attribute="camera_id" data-error="{{ errors.cameras }}">
+                <input name="cameras" type="hidden" class="tag-empty-field" />
                 <ul class="tags">
                     {% for camera in cameras %}
                         <li>{{ camera.camera_id }}</li>
