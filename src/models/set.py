@@ -40,6 +40,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 import quorum
 
 import base
+import camera
 
 class Set(base.Base):
 
@@ -51,12 +52,14 @@ class Set(base.Base):
         index = True
     )
 
-    camera = dict(
+    spec = dict(
         type = dict
     )
 
     cameras = dict(
-        type = list
+        type = quorum.references(
+            camera.Camera, name = "camera_id"
+        )
     )
 
     @classmethod
