@@ -217,31 +217,31 @@ def about():
         link = "about"
     )
 
-@app.route("/sets", methods = ("GET",))
-@quorum.ensure("sets.list")
-def list_set():
-    sets = get_sets()
-    sets = ensure_sets_f(sets)
-
-    return flask.render_template(
-        "sets_list.html.tpl",
-        link = "sets",
-        sets = sets
-    )
-
-@app.route("/sets/<id>", methods = ("GET",))
-@quorum.ensure("sets.show")
-def show_set(id):
-    set = get_set(id)
-    cameras = set.get("cameras", [])
-    ensure_cameras(cameras)
-
-    return flask.render_template(
-        "sets_show.html.tpl",
-        link = "sets",
-        sub_link = "show",
-        set = set
-    )
+#@app.route("/sets", methods = ("GET",))
+#@quorum.ensure("sets.list")
+#def list_set():
+#    sets = get_sets()
+#    sets = ensure_sets_f(sets)
+#
+#    return flask.render_template(
+#        "sets_list.html.tpl",
+#        link = "sets",
+#        sets = sets
+#    )
+#
+#@app.route("/sets/<id>", methods = ("GET",))
+#@quorum.ensure("sets.show")
+#def show_set(id):
+#    set = get_set(id)
+#    cameras = set.get("cameras", [])
+#    ensure_cameras(cameras)
+#
+#    return flask.render_template(
+#        "sets_show.html.tpl",
+#        link = "sets",
+#        sub_link = "show",
+#        set = set
+#    )
 
 @app.route("/sets/<id>/settings", methods = ("GET",))
 @quorum.ensure("sets.settings")
@@ -413,18 +413,18 @@ def login_json():
         mimetype = "application/json"
     )
 
-@app.route("/sets.json", methods = ("GET",))
-@quorum.ensure("sets.list", json = True)
-def list_set_json():
-    sets = get_sets()
-    sets = ensure_sets_f(sets)
-
-    return flask.Response(
-        json.dumps({
-            "sets" : sets
-        }),
-        mimetype = "application/json"
-    )
+#@app.route("/sets.json", methods = ("GET",))
+#@quorum.ensure("sets.list", json = True)
+#def list_set_json():
+#    sets = get_sets()
+#    sets = ensure_sets_f(sets)
+#
+#    return flask.Response(
+#        json.dumps({
+#            "sets" : sets
+#        }),
+#        mimetype = "application/json"
+#    )
 
 #@app.route("/cameras.json", methods = ("GET",))
 #@quorum.ensure("cameras.list", json = True)
