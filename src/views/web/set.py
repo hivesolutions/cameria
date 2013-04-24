@@ -69,7 +69,9 @@ def new_set():
         "set/new.html.tpl",
         link = "sets",
         sub_link = "create",
-        set = {},
+        set = {
+            "spec" : {}
+        },
         errors = {}
     )
 

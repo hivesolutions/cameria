@@ -1,4 +1,4 @@
-{% extends "partials/layout_camera_l.html.tpl" %}
+{% extends "partials/layout_set_l.html.tpl" %}
 {% block title %}Sets{% endblock %}
 {% block name %}New Set{% endblock %}
 {% block content %}
@@ -16,6 +16,42 @@
         <div class="input">
             <input class="text-field" name="name" placeholder="eg: The office set" value="{{ set.name }}"
                    data-error="{{ errors.name }}" />
+        </div>
+        <div class="label">
+            <label>Resolution</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.resolution" placeholder="eg: 320x240" value="{{ set.spec.resolution }}" />
+        </div>
+        <div class="label">
+            <label>Width</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.width" placeholder="eg: 320" value="{{ set.spec.width }}" />
+        </div>
+        <div class="label">
+            <label>Height</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.height" placeholder="eg: 240" value="{{ set.spec.height }}" />
+        </div>
+        <div class="label">
+            <label>Compression</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.compression" placeholder="eg: 50" value="{{ set.spec.compression }}" />
+        </div>
+        <div class="label">
+            <label>Fps</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.fps" placeholder="eg: 1" value="{{ set.spec.fps }}" />
+        </div>
+        <div class="label">
+            <label>Clock</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="spec.clock" placeholder="eg: 0" value="{{ set.spec.clock }}" />
         </div>
         <div class="label">
             <label>Cameras</label>
