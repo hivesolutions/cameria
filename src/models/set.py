@@ -39,10 +39,10 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import quorum
 
-import base
+import spec
 import camera
 
-class Set(base.Base):
+class Set(spec.Spec):
 
     set_id = dict(
         index = True
@@ -50,10 +50,6 @@ class Set(base.Base):
 
     name = dict(
         index = True
-    )
-
-    spec = dict(
-        type = dict
     )
 
     cameras = dict(

@@ -39,9 +39,10 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import quorum
 
-import base
+import spec
+import device
 
-class Camera(base.Base):
+class Camera(spec.Spec):
 
     camera_id = dict(
         index = True
@@ -59,20 +60,10 @@ class Camera(base.Base):
 
     protocol = dict()
 
-    compression = dict(
-        type = int
-    )
-
-    fps = dict(
-        type = int
-    )
-
-    type = dict(
-        index = True
-    )
-
-    model_ = dict(
-        index = True
+    device = dict(
+        type = quorum.reference(
+            device.Device, name = "device_id"
+        )
     )
 
     @classmethod

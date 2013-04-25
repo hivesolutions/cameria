@@ -37,30 +37,44 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import base
+import quorum
 
-class Spec(base.Base):
+import spec
 
-    resolution = dict(
+class Device(spec.Spec):
+
+    device_id = dict(
         index = True
     )
 
-    width = dict(
-        type = int
+    type = dict(
+        index = True
     )
 
-    height = dict(
-        type = int
+    model = dict(
+        index= True
     )
 
-    compression = dict(
-        type = int
+    device = dict(
+        index = True
     )
 
-    fps = dict(
-        type = int
+    resolution = dict(
+        type = bool
     )
 
-    clock = dict(
-        type = int
-    )
+    @classmethod
+    def validate_new(cls):
+        return super(Device, cls).validate_new() + [
+            quorum.not_null("device_id"),
+            quorum.not_empty("device_id"),
+            quorum.string_gt("device_id", 2),
+            quorum.string_lt("device_id", 64),
+            quorum.not_duplicate("device_id", cls._name()),
+
+            quorum.not_null("type"),
+            quorum.not_empty("type"),
+
+            quorum.not_null("model"),
+            quorum.not_empty("model")
+        ]
