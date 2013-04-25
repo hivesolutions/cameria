@@ -45,6 +45,7 @@ import datetime
 import quorum
 
 import base
+import camera
 
 PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
@@ -111,7 +112,9 @@ class Account(base.Base):
     )
 
     cameras = dict(
-        type = list
+        type = quorum.references(
+            camera.Camera, name = "camera_id"
+        )
     )
 
     @classmethod
