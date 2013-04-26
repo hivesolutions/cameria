@@ -57,10 +57,7 @@ def list_sets():
 def list_sets_json():
     object = quorum.get_object(alias = True, find = True)
     sets = models.Set.find(map = True, sort = [("id", -1)], **object)
-    return flask.Response(
-        quorum.dumps_mongo(sets),
-        mimetype = "application/json"
-    )
+    return sets
 
 @app.route("/set/new", methods = ("GET",))
 @quorum.ensure("sets.new")
