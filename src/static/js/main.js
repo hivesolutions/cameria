@@ -86,6 +86,31 @@
                 _window.scrollTop(0);
             };
 
+            // registers for the load event on the camera so that if the
+            // width and height of the camera needs update it's updated
+            // in accordance with the current size
+            matchedObject.load(function() {
+                        // retrieves the current context as the camera component
+                        // and uses it to retrieve the currently set width and
+                        // height to be verified
+                        var camera = jQuery(this);
+                        var cameraWidth = camera.data("width");
+                        var cameraHeight = camera.data("height");
+
+                        // verifies if the current values are valid and in
+                        // case they're not updates them with the current
+                        // visual sizes then updates the values in the camera
+                        // data structure
+                        cameraWidth = cameraWidth > 0
+                                ? cameraWidth
+                                : camera.outerWidth();
+                        cameraHeight = cameraHeight > 0
+                                ? cameraHeight
+                                : camera.outerHeight();
+                        camera.data("width", cameraWidth);
+                        camera.data("height", cameraHeight);
+                    });
+
             // registers for the key down on the window so that
             // we can handle the fullscreen trigger
             matchedObject.length && _window.keydown(function(event) {
@@ -181,6 +206,11 @@
                 camera.height(windowHeight);
             }
 
+            // updates the z index value of the camera to the
+            // maximum possible one so that it stays on top of
+            // every other component in the screen
+            camera.css("z-index", "99999");
+
             // scrolls the window to the top position so that
             // the camera is correctly viewed
             _window.scrollTop(0);
@@ -190,6 +220,7 @@
             overlay.height(windowHeight);
             overlay.width(windowWidth);
             overlay.css("background", "#000000");
+            overlay.css("opacity", "1.0");
             overlay.show();
 
             // centers the camera window on the screen to provide
@@ -230,15 +261,17 @@
             camera.css("position", null);
             camera.css("top", null);
             camera.css("left", null);
+            camera.css("z-index", null);
 
             // sets the original dimentsions on the camera, resets
             // its values (to the original values)
             camera.width(cameraWidth);
             camera.height(cameraHeight);
 
-            // removes the background from the overlay and hides
-            // it avoid any more display of it
+            // removes the background and opacity from the overlay
+            // and hides it avoid any more display of it
             overlay.css("background", null);
+            overlay.css("opacity", null);
             overlay.hide();
         };
 
