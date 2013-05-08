@@ -106,7 +106,58 @@ def show_set(set_id):
         set = set
     )
 
+@app.route("/sets/<set_id>/edit", methods = ("GET",))
+@quorum.ensure("sets.edit")
+def edit_set(set_id):
+    set = models.Set.get(set_id = set_id)
+    return flask.render_template(
+        "set/edit.html.tpl",
+        link = "sets",
+        sub_link = "edit",
+        set = set,
+        errors = {}
+    )
+
+@app.route("/sets/<set_id>/edit", methods = ("POST",))
+@quorum.ensure("sets.edit")
+def update_set(set_id):
+    # finds the current set and applies the provided
+    # arguments and then saves it into the data source,
+    # all the validations should be ran upon the save operation
+    set = models.Set.get(set_id = set_id)
+    set.apply()
+    try: set.save()
+    except quorum.ValidationError, error:
+        return flask.render_template(
+            "set_edit.html.tpl",
+            link = "sets",
+            sub_link = "edit",
+            set = error.model,
+            errors = error.errors
+        )
+
+    # redirects the user to the show page of the set that
+    # was just updated
+    return flask.redirect(
+        flask.url_for("show_set", set_id = set_id)
+    )
+
+@app.route("/sets/<set_id>/delete", methods = ("GET",))
+@quorum.ensure("sets.delete")
+def delete_set(set_id):
+    set = models.Set.get(set_id = set_id)
+    set.delete()
+    return flask.redirect(
+        flask.url_for("list_sets")
+    )
+
 @app.route("/sets/<set_id>/settings", methods = ("GET",))
 @quorum.ensure("sets.settings")
 def settings_set(set_id):
-    pass
+    set = models.Set.get(set_id = set_id)
+    return flask.render_template(
+        "set/settings.html.tpl",
+        link = "sets",
+        sub_link = "settings",
+        set = set
+    )
