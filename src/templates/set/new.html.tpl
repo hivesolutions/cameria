@@ -21,37 +21,43 @@
             <label>Resolution</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.resolution" placeholder="eg: 320x240" value="{{ set.spec.resolution }}" />
+            <input class="text-field" name="resolution" placeholder="eg: 320x240" value="{{ set.resolution }}"
+                   data-error="{{ errors.resolution }}" />
         </div>
         <div class="label">
             <label>Width</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.width" placeholder="eg: 320" value="{{ set.spec.width }}" />
+            <input class="text-field" name="width" placeholder="eg: 320" value="{{ set.width }}"
+                   data-error="{{ errors.width }}" />
         </div>
         <div class="label">
             <label>Height</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.height" placeholder="eg: 240" value="{{ set.spec.height }}" />
+            <input class="text-field" name="height" placeholder="eg: 240" value="{{ set.height }}"
+                   data-error="{{ errors.height }}" />
         </div>
         <div class="label">
             <label>Compression</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.compression" placeholder="eg: 50" value="{{ set.spec.compression }}" />
+            <input class="text-field" name="compression" placeholder="eg: 50" value="{{ set.compression }}"
+                   data-error="{{ errors.compression }}" />
         </div>
         <div class="label">
             <label>Fps</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.fps" placeholder="eg: 1" value="{{ set.spec.fps }}" />
+            <input class="text-field" name="fps" placeholder="eg: 1" value="{{ set.fps }}"
+                   data-error="{{ errors.fps }}" />
         </div>
         <div class="label">
             <label>Clock</label>
         </div>
         <div class="input">
-            <input class="text-field" name="spec.clock" placeholder="eg: 0" value="{{ set.spec.clock }}" />
+            <input class="text-field" name="clock" placeholder="eg: 0" value="{{ set.clock }}"
+                   data-error="{{ errors.clock }}" />
         </div>
         <div class="label">
             <label>Cameras</label>
