@@ -67,7 +67,7 @@ def new_set():
         link = "sets",
         sub_link = "create",
         set = {
-            "spec" : {}
+            "cameras" : {}
         },
         errors = {}
     )
@@ -129,7 +129,7 @@ def update_set(set_id):
     try: set.save()
     except quorum.ValidationError, error:
         return flask.render_template(
-            "set_edit.html.tpl",
+            "set/edit.html.tpl",
             link = "sets",
             sub_link = "edit",
             set = error.model,
