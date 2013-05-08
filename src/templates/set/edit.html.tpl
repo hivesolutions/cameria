@@ -67,7 +67,7 @@
                  data-value_attribute="camera_id" data-error="{{ errors.cameras }}">
                 <input name="cameras" type="hidden" class="tag-empty-field" />
                 <ul class="tags">
-                    {% for camera in cameras %}
+                    {% for camera in set.cameras.objects %}
                         <li>{{ camera.camera_id }}</li>
                     {% endfor %}
                 </ul>
