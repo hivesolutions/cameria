@@ -127,7 +127,7 @@ def update_camera(camera_id):
     try: camera.save()
     except quorum.ValidationError, error:
         return flask.render_template(
-            "camera_edit.html.tpl",
+            "camera/edit.html.tpl",
             link = "cameras",
             sub_link = "edit",
             camera = error.model,
