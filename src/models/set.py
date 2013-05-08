@@ -59,14 +59,18 @@ class Set(spec.Spec):
     )
 
     @classmethod
+    def validate(cls):
+        return super(Set, cls).validate() + [
+            quorum.not_null("name"),
+            quorum.not_empty("name")
+        ]
+    
+    @classmethod
     def validate_new(cls):
         return super(Set, cls).validate_new() + [
             quorum.not_null("set_id"),
             quorum.not_empty("set_id"),
             quorum.string_gt("set_id", 2),
             quorum.string_lt("set_id", 64),
-            quorum.not_duplicate("set_id", cls._name()),
-
-            quorum.not_null("name"),
-            quorum.not_empty("name")
+            quorum.not_duplicate("set_id", cls._name())
         ]

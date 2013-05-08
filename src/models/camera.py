@@ -67,14 +67,18 @@ class Camera(spec.Spec):
     )
 
     @classmethod
+    def validate(cls):
+        return super(Camera, cls).validate() + [
+            quorum.not_null("url"),
+            quorum.not_empty("url")
+        ]
+
+    @classmethod
     def validate_new(cls):
         return super(Camera, cls).validate_new() + [
             quorum.not_null("camera_id"),
             quorum.not_empty("camera_id"),
             quorum.string_gt("camera_id", 2),
             quorum.string_lt("camera_id", 64),
-            quorum.not_duplicate("camera_id", cls._name()),
-
-            quorum.validation.not_null("url"),
-            quorum.validation.not_empty("url")
+            quorum.not_duplicate("camera_id", cls._name())
         ]
