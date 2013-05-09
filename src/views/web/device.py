@@ -103,3 +103,48 @@ def show_device(device_id):
         sub_link = "show",
         device = device
     )
+
+@app.route("/devices/<device_id>/edit", methods = ("GET",))
+@quorum.ensure("devices.edit")
+def edit_device(device_id):
+    device = models.Device.get(device_id = device_id)
+    return flask.render_template(
+        "device/edit.html.tpl",
+        link = "devices",
+        sub_link = "edit",
+        device = device,
+        errors = {}
+    )
+
+@app.route("/devices/<device_id>/edit", methods = ("POST",))
+@quorum.ensure("devices.edit")
+def update_device(device_id):
+    # finds the current device and applies the provided
+    # arguments and then saves it into the data source,
+    # all the validations should be ran upon the save operation
+    device = models.Device.get(device_id = device_id)
+    device.apply()
+    try: device.save()
+    except quorum.ValidationError, error:
+        return flask.render_template(
+            "device/edit.html.tpl",
+            link = "devices",
+            sub_link = "edit",
+            device = error.model,
+            errors = error.errors
+        )
+
+    # redirects the user to the show page of the device that
+    # was just updated
+    return flask.redirect(
+        flask.url_for("show_device", device_id = device_id)
+    )
+
+@app.route("/devices/<device_id>/delete", methods = ("GET",))
+@quorum.ensure("devices.delete")
+def delete_device(device_id):
+    device = models.Device.get(device_id = device_id)
+    device.delete()
+    return flask.redirect(
+        flask.url_for("list_devices")
+    )
