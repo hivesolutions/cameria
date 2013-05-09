@@ -99,7 +99,7 @@ def create_camera():
 @quorum.ensure("cameras.show")
 def show_camera(camera_id):
     camera = models.Camera.get(camera_id = camera_id)
-    camera.apply_device()
+    camera.merge_device()
     return flask.render_template(
         "camera/show.html.tpl",
         link = "cameras",
