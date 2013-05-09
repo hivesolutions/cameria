@@ -506,91 +506,91 @@ def get_user(username):
 
     return user
 
-def get_sets():
-    sets_directory = os.path.join(SETS_FOLDER)
-    if not os.path.exists(sets_directory): raise RuntimeError("Sets directory does not exist")
-    entries = os.listdir(sets_directory)
-    entries.sort()
+#def get_sets():
+#    sets_directory = os.path.join(SETS_FOLDER)
+#    if not os.path.exists(sets_directory): raise RuntimeError("Sets directory does not exist")
+#    entries = os.listdir(sets_directory)
+#    entries.sort()
+#
+#    sets = []
+#
+#    for entry in entries:
+#        base, extension = os.path.splitext(entry)
+#        if not extension == ".json": continue
+#
+#        set = get_set(base)
+#        sets.append(set)
+#
+#    return sets
+#
+#def get_set(id):
+#    # retrieves the path to the (target) set (configuration) file and
+#    # check if it exists then opens it and loads the json configuration
+#    # contained in it to set it in the template
+#    set_path = os.path.join(SETS_FOLDER, "%s.json" % id)
+#    if not os.path.exists(set_path): raise RuntimeError("Set file does not exist")
+#    set_file = open(set_path, "rb")
+#    try: set = json.load(set_file)
+#    finally: set_file.close()
+#
+#    cameras = set.get("cameras", [])
+#    _camera = set.get("camera", {})
+#
+#    for camera in cameras:
+#        id = camera["id"]
+#        __camera = get_camera(id)
+#
+#        merge(camera, __camera)
+#        merge(camera, _camera)
+#
+#        filter(camera)
+#
+#    return set
+#
+#def get_cameras():
+#    cameras_directory = os.path.join(CAMERAS_FOLDER)
+#    if not os.path.exists(cameras_directory): raise RuntimeError("Cameras directory does not exist")
+#    entries = os.listdir(cameras_directory)
+#    entries.sort()
+#
+#    cameras = []
+#
+#    for camera in entries:
+#        base, extension = os.path.splitext(camera)
+#        if not extension == ".json": continue
+#
+#        camera = get_camera(base)
+#        cameras.append(camera)
+#
+#    return cameras
 
-    sets = []
+#def get_camera(id):
+#    camera_path = os.path.join(CAMERAS_FOLDER, "%s.json" % id)
+#    if not os.path.exists(camera_path): raise RuntimeError("Camera file does not exist")
+#    camera_file = open(camera_path, "rb")
+#    try: camera = json.load(camera_file)
+#    finally: camera_file.close()
+#
+#    return camera
 
-    for entry in entries:
-        base, extension = os.path.splitext(entry)
-        if not extension == ".json": continue
-
-        set = get_set(base)
-        sets.append(set)
-
-    return sets
-
-def get_set(id):
-    # retrieves the path to the (target) set (configuration) file and
-    # check if it exists then opens it and loads the json configuration
-    # contained in it to set it in the template
-    set_path = os.path.join(SETS_FOLDER, "%s.json" % id)
-    if not os.path.exists(set_path): raise RuntimeError("Set file does not exist")
-    set_file = open(set_path, "rb")
-    try: set = json.load(set_file)
-    finally: set_file.close()
-
-    cameras = set.get("cameras", [])
-    _camera = set.get("camera", {})
-
-    for camera in cameras:
-        id = camera["id"]
-        __camera = get_camera(id)
-
-        merge(camera, __camera)
-        merge(camera, _camera)
-
-        filter(camera)
-
-    return set
-
-def get_cameras():
-    cameras_directory = os.path.join(CAMERAS_FOLDER)
-    if not os.path.exists(cameras_directory): raise RuntimeError("Cameras directory does not exist")
-    entries = os.listdir(cameras_directory)
-    entries.sort()
-
-    cameras = []
-
-    for camera in entries:
-        base, extension = os.path.splitext(camera)
-        if not extension == ".json": continue
-
-        camera = get_camera(base)
-        cameras.append(camera)
-
-    return cameras
-
-def get_camera(id):
-    camera_path = os.path.join(CAMERAS_FOLDER, "%s.json" % id)
-    if not os.path.exists(camera_path): raise RuntimeError("Camera file does not exist")
-    camera_file = open(camera_path, "rb")
-    try: camera = json.load(camera_file)
-    finally: camera_file.close()
-
-    return camera
-
-def get_devices():
-    devices_directory = os.path.join(DEVICES_FOLDER)
-    if not os.path.exists(devices_directory): raise RuntimeError("Devices directory does not exist")
-    entries = os.listdir(devices_directory)
-    entries.sort()
-
-    devices = []
-
-    for device in entries:
-        base, extension = os.path.splitext(device)
-        if not extension == ".json": continue
-
-        type, model = base.split("_", 1)
-
-        device = get_device(type, model)
-        devices.append(device)
-
-    return devices
+#def get_devices():
+#    devices_directory = os.path.join(DEVICES_FOLDER)
+#    if not os.path.exists(devices_directory): raise RuntimeError("Devices directory does not exist")
+#    entries = os.listdir(devices_directory)
+#    entries.sort()
+#
+#    devices = []
+#
+#    for device in entries:
+#        base, extension = os.path.splitext(device)
+#        if not extension == ".json": continue
+#
+#        type, model = base.split("_", 1)
+#
+#        device = get_device(type, model)
+#        devices.append(device)
+#
+#    return devices
 
 def get_device(type = None, model = None, id = None):
     id = id or "%s_%s" % (type, model)
