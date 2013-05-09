@@ -51,7 +51,7 @@ class Device(spec.Spec):
         index = True
     )
 
-    _model = dict(
+    model_d = dict(
         index= True
     )
 
@@ -75,6 +75,9 @@ class Device(spec.Spec):
             quorum.not_null("type"),
             quorum.not_empty("type"),
 
-            quorum.not_null("_model"),
-            quorum.not_empty("_model")
+            quorum.not_null("model_d"),
+            quorum.not_empty("model_d")
         ]
+
+    def name(self):
+        return "%s %s" % (self.model_d, self.device)
