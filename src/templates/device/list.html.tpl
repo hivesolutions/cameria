@@ -6,7 +6,7 @@
         <div class="data-source" data-url="{{ url_for('list_devices_json') }}" data-type="json" data-timeout="0"></div>
         <li class="template">
             <div class="name">
-                <a href="{{ url_for('show_device', device_id = '') }}%[device_id]">%[type] %[model_d]</a>
+                <a href="{{ url_for('show_device', device_id = '') }}%[device_id]">%[name]</a>
             </div>
         </li>
         <div class="filter-no-results quote">

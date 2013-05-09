@@ -79,5 +79,12 @@ class Device(spec.Spec):
             quorum.not_empty("model_d")
         ]
 
-    def name(self):
+    @classmethod
+    def _build(cls, model, map):
+        spec.Spec._build(model, map)
+        type = model.get("type", "")
+        model_d = model.get("model_d", "")
+        model["name"] = "%s %s" % (type, model_d)
+
+    def get_name(self):
         return "%s %s" % (self.type, self.model_d)

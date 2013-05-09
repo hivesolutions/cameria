@@ -1,8 +1,8 @@
 {% extends "partials/layout_device.html.tpl" %}
 {% block title %}Devices{% endblock %}
-{% block name %}Devices :: {{ device.name() }}{% endblock %}
+{% block name %}Devices :: {{ device.name }}{% endblock %}
 {% block content %}
-    <div class="quote">{{ device.name() }}</div>
+    <div class="quote">{{ device.name }}</div>
     <div class="separator-horizontal"></div>
     <table>
         <tbody>
