@@ -21,8 +21,8 @@
             <label>Model</label>
         </div>
         <div class="input">
-            <input class="text-field" name="model" placeholder="eg: 211" value="{{ device.model }}"
-                   data-error="{{ errors.model }}" />
+            <input class="text-field" name="_model" placeholder="eg: 211" value="{{ device._model }}"
+                   data-error="{{ errors._model }}" />
         </div>
         <div class="label">
             <label>Device</label>
@@ -36,12 +36,61 @@
                 </ul>
             </div>
         </div>
+        <div class="label">
+            <label>Random</label>
+        </div>
         <div class="input">
             <div class="option">
                 <span class="float-left">Provide resolution support ?</span>
-                <input class="float-right" type="checkbox" name="resolution" checked="1" />
+                {%if device.has_resolution %}
+                    <input class="float-right" type="checkbox" name="has_resolution" checked="1" />
+                {% else %}
+                    <input class="float-right" type="checkbox" name="has_resolution" />
+                {% endif %}
                 <div class="clear"></div>
             </div>
+        </div>
+        <div class="label">
+            <label>Resolution</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="resolution" placeholder="eg: 320x240" value="{{ device.resolution }}"
+                   data-error="{{ errors.resolution }}" />
+        </div>
+        <div class="label">
+            <label>Width</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="width" placeholder="eg: 320" value="{{ device.width }}"
+                   data-error="{{ errors.width }}" />
+        </div>
+        <div class="label">
+            <label>Height</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="height" placeholder="eg: 240" value="{{ device.height }}"
+                   data-error="{{ errors.height }}" />
+        </div>
+        <div class="label">
+            <label>Compression</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="compression" placeholder="eg: 50" value="{{ device.compression }}"
+                   data-error="{{ errors.compression }}" />
+        </div>
+        <div class="label">
+            <label>Fps</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="fps" placeholder="eg: 1" value="{{ device.fps }}"
+                   data-error="{{ errors.fps }}" />
+        </div>
+        <div class="label">
+            <label>Clock</label>
+        </div>
+        <div class="input">
+            <input class="text-field" name="clock" placeholder="eg: 0" value="{{ device.clock }}"
+                   data-error="{{ errors.clock }}" />
         </div>
         <div class="quote">
             By clicking Submit Device, you agree to our Service Agreement and that you have
