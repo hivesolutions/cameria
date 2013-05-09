@@ -65,18 +65,17 @@
                    data-error="{{ errors.fps }}" />
         </div>
         <div class="label">
-            <label>Type</label>
+            <label>Device</label>
         </div>
         <div class="input">
-            <input class="text-field" name="type" placeholder="eg: axis" value="{{ camera.type }}"
-                   data-error="{{ errors.type }}" />
-        </div>
-        <div class="label">
-            <label>Model</label>
-        </div>
-        <div class="input">
-            <input class="text-field" name="model_" placeholder="eg: m1114" value="{{ camera.model_ }}"
-                   data-error="{{ errors.model_ }}" />
+            <div class="input">
+                <div class="drop-field" value="{{ camera.device.name }}" placeholder="eg: axis m1114"
+                     data-display_attribute="name" data-value_attribute="device_id" data-error="{{ errors.device }}">
+                    <input name="device" type="hidden" class="hidden-field" value="{{ camera.device.device_id }}" />
+                    <ul class="data-source" data-url="{{ url_for('list_devices_json') }}"
+                        data-type="json"></ul>
+                </div>
+            </div>
         </div>
         <span class="button" data-link="{{ url_for('show_camera', camera_id = camera.camera_id) }}">Cancel</span>
         //
