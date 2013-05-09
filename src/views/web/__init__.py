@@ -36,8 +36,10 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import base
 import camera
+import device
 import set
 
 from base import *
 from camera import *
+from device import *
 from set import *
