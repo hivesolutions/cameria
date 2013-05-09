@@ -82,3 +82,6 @@ class Camera(spec.Spec):
             quorum.string_lt("camera_id", 64),
             quorum.not_duplicate("camera_id", cls._name())
         ]
+
+    def apply_device(self):
+        self.merge(self.device, override = False)
