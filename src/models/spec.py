@@ -64,3 +64,36 @@ class Spec(base.Base):
     clock = dict(
         type = int
     )
+
+    @classmethod
+    def get_spec(cls):
+        return (
+            "resolution",
+            "width",
+            "height",
+            "compression",
+            "fps",
+            "clock"
+        )
+
+    def merge(self, spec, override = True):
+        # retrieves the complete set of names that are considered
+        # to belong to the spec and then iterates over them to try
+        # to merge the current spec with the provided one
+        names = Spec.get_spec()
+        for name in names:
+            # in case the spec object does not contain the current
+            # spec name must continue the loop (not possible to
+            # merge a non existent value)
+            if not hasattr(spec, name): continue
+
+            # verifies if the current instance already contains a set
+            # and valid value and in case the override flag is not
+            # set overrides the current loop (already set value)
+            is_set = hasattr(self, name) and not getattr(self, name) == None
+            if is_set and not override: continue
+
+            # retrieves thre value for the current name in the spec
+            # object and then sets it in the current instance
+            value = getattr(spec, name)
+            setattr(self, name, value)
