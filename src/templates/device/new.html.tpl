@@ -21,8 +21,8 @@
             <label>Model</label>
         </div>
         <div class="input">
-            <input class="text-field" name="_model" placeholder="eg: 211" value="{{ device._model }}"
-                   data-error="{{ errors._model }}" />
+            <input class="text-field" name="model_d" placeholder="eg: 211" value="{{ device.model_d }}"
+                   data-error="{{ errors.model_d }}" />
         </div>
         <div class="label">
             <label>Device</label>
