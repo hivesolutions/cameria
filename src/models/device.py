@@ -80,4 +80,4 @@ class Device(spec.Spec):
         ]
 
     def name(self):
-        return "%s %s" % (self.model_d, self.device)
+        return "%s %s" % (self.type, self.model_d)
