@@ -70,7 +70,12 @@ class Set(spec.Spec):
         return super(Set, cls).validate_new() + [
             quorum.not_null("set_id"),
             quorum.not_empty("set_id"),
-            quorum.string_gt("set_id", 2),
+            quorum.string_gt("set_id", 1),
             quorum.string_lt("set_id", 64),
             quorum.not_duplicate("set_id", cls._name())
         ]
+
+    def merge_cameras(self):
+        for camera in self.cameras.objects:
+            camera.merge_device()
+            camera.merge(self)
