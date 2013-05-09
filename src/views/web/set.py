@@ -99,6 +99,7 @@ def create_set():
 @quorum.ensure("sets.show")
 def show_set(set_id):
     set = models.Set.get(set_id = set_id)
+    set.merge_cameras()
     return flask.render_template(
         "set/show.html.tpl",
         link = "sets",
