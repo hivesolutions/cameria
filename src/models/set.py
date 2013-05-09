@@ -64,7 +64,7 @@ class Set(spec.Spec):
             quorum.not_null("name"),
             quorum.not_empty("name")
         ]
-    
+
     @classmethod
     def validate_new(cls):
         return super(Set, cls).validate_new() + [
