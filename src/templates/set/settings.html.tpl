@@ -2,7 +2,7 @@
 {% block title %}Sets{% endblock %}
 {% block name %}Sets :: {{ set.name }}{% endblock %}
 {% block content %}
-    <div class="quote">{{ set.id }}</div>
+    <div class="quote">{{ set.set_id }}</div>
     <div class="separator-horizontal"></div>
     <table>
         <tbody>
