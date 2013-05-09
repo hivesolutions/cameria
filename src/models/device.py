@@ -51,7 +51,7 @@ class Device(spec.Spec):
         index = True
     )
 
-    model = dict(
+    _model = dict(
         index= True
     )
 
@@ -59,7 +59,7 @@ class Device(spec.Spec):
         index = True
     )
 
-    resolution = dict(
+    has_resolution = dict(
         type = bool
     )
 
@@ -75,6 +75,6 @@ class Device(spec.Spec):
             quorum.not_null("type"),
             quorum.not_empty("type"),
 
-            quorum.not_null("model"),
-            quorum.not_empty("model")
+            quorum.not_null("_model"),
+            quorum.not_empty("_model")
         ]
