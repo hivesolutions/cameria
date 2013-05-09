@@ -293,29 +293,29 @@ def about():
 #        sub_link = "settings",
 #        camera = camera
 #    )
+#
+#@app.route("/devices", methods = ("GET",))
+#@quorum.ensure("devices.list")
+#def list_device():
+#    devices = get_devices()
+#
+#    return flask.render_template(
+#        "devices_list.html.tpl",
+#        link = "devices",
+#        devices = devices
+#    )
 
-@app.route("/devices", methods = ("GET",))
-@quorum.ensure("devices.list")
-def list_device():
-    devices = get_devices()
-
-    return flask.render_template(
-        "devices_list.html.tpl",
-        link = "devices",
-        devices = devices
-    )
-
-@app.route("/device/<id>", methods = ("GET",))
-@quorum.ensure("devices.show")
-def show_device(id):
-    device = get_device(id = id)
-
-    return flask.render_template(
-        "devices_show.html.tpl",
-        link = "devices",
-        sub_link = "show",
-        device = device
-    )
+#@app.route("/device/<id>", methods = ("GET",))
+#@quorum.ensure("devices.show")
+#def show_device(id):
+#    device = get_device(id = id)
+#
+#    return flask.render_template(
+#        "devices_show.html.tpl",
+#        link = "devices",
+#        sub_link = "show",
+#        device = device
+#    )
 
 @app.route("/user/<username>", methods = ("GET",))
 @quorum.ensure("users.show")
