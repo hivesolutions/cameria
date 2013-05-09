@@ -7,14 +7,6 @@
     <table>
         <tbody>
             <tr>
-                <td class="right label" width="50%">type</td>
-                <td class="left value" width="50%">{{ camera.type }}</td>
-            </tr>
-            <tr>
-                <td class="right label" width="50%">model</td>
-                <td class="left value" width="50%">{{ camera.model_ }}</td>
-            </tr>
-            <tr>
                 <td class="right label" width="50%">url</td>
                 <td class="left value" width="50%">{{ camera.url }}</td>
             </tr>
@@ -37,6 +29,14 @@
             <tr>
                 <td class="right label" width="50%">fps</td>
                 <td class="left value" width="50%">{{ camera.fps }}</td>
+            </tr>
+            <tr>
+                <td class="right label" width="50%">device</td>
+                <td class="left value" width="50%">
+                    <a href="{{ url_for('show_device', device_id = camera.device.device_id) }}">
+                        {{ camera.device.name }}
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
