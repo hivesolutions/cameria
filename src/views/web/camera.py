@@ -66,7 +66,9 @@ def new_camera():
         "camera/new.html.tpl",
         link = "cameras",
         sub_link = "create",
-        camera = {},
+        camera = {
+            "device" : {}
+        },
         errors = {}
     )
 
@@ -97,6 +99,7 @@ def create_camera():
 @quorum.ensure("cameras.show")
 def show_camera(camera_id):
     camera = models.Camera.get(camera_id = camera_id)
+    camera.apply_device()
     return flask.render_template(
         "camera/show.html.tpl",
         link = "cameras",
