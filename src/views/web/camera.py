@@ -100,6 +100,7 @@ def create_camera():
 def show_camera(camera_id):
     camera = models.Camera.get(camera_id = camera_id)
     camera.merge_device()
+    camera.filter_device()
     return flask.render_template(
         "camera/show.html.tpl",
         link = "cameras",

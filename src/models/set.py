@@ -81,3 +81,4 @@ class Set(spec.Spec):
         for camera in self.cameras.objects:
             camera.merge_device()
             camera.merge(self)
+            camera.filter_device()

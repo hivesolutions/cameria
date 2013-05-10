@@ -87,3 +87,6 @@ class Camera(spec.Spec):
 
     def merge_device(self):
         self.merge(self.device, override = False)
+
+    def filter_device(self):
+        self.device.filter_camera(self)
