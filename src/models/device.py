@@ -48,6 +48,11 @@ class Device(spec.Spec):
         immutable = True
     )
 
+    name = dict(
+        index = True,
+        default = True
+    )
+
     type = dict(
         index = True
     )
@@ -76,12 +81,19 @@ class Device(spec.Spec):
             quorum.not_empty("model_d")
         ]
 
-    @classmethod
-    def _build(cls, model, map):
-        spec.Spec._build(model, map)
-        type = model.get("type", "")
-        model_d = model.get("model_d", "")
-        model["name"] = "%s %s" % (type, model_d)
+    def pre_create(self):
+        spec.Spec.pre_create(self)
+
+        # creates the device's name from the joining of the type
+        # and the model identifier of the current device
+        self.name = self.get_name()
+
+    def pre_update(self):
+        spec.Spec.pre_create(self)
+
+        # creates the device's name from the joining of the type
+        # and the model identifier of the current device
+        self.name = self.get_name()
 
     def get_name(self):
         return "%s %s" % (self.type, self.model_d)
