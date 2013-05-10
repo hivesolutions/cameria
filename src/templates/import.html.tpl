@@ -12,9 +12,6 @@
         {{ error }}
     </div>
     <form enctype="multipart/form-data" action="import" method="post" class="form small">
-        <div class="label">
-            <label>Import File</label>
-        </div>
          <div class="input">
              <a data-name="import_file" class="uploader">Select & Upload the import file</a>
         </div>
