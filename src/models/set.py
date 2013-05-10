@@ -50,7 +50,8 @@ class Set(spec.Spec):
     )
 
     name = dict(
-        index = True
+        index = True,
+        default = True
     )
 
     cameras = dict(

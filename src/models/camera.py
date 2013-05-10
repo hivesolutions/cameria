@@ -46,7 +46,8 @@ class Camera(spec.Spec):
 
     camera_id = dict(
         index = True,
-        immutable = True
+        immutable = True,
+        default = True
     )
 
     url = dict(
