@@ -46,22 +46,22 @@ from cameria import flask
 from cameria import quorum
 
 SINGLE_ENTITIES = (
-    ("users", "username"),
+    ("account", "username"),
 )
 """ The set of entities to be considered single file
 oriented (exports to one file per complete set) """
 
 MULTIPLE_ENTITIES = (
-    ("sets", "id"),
-    ("cameras", "id"),
-    ("devices", "id")
+    ("set", "set_id"),
+    ("camera", "camera_id"),
+    ("device", "device_id")
 )
 """ The set of entities to be considered multiple file
 oriented (exports to one file per entity) """
 
 @app.route("/import", methods = ("GET",))
 @quorum.ensure("import")
-def import_d():
+def import_a():
     return flask.render_template(
         "import.html.tpl",
         link = "import"
@@ -86,9 +86,12 @@ def import_do():
     fd, file_path = tempfile.mkstemp()
     import_file.save(file_path)
 
-    db = quorum.get_mongo_db()
+    # retrieves the database and creates a new export manager for
+    # the currently defined entities then imports the data defined
+    # in the current temporary path
+    database = quorum.get_mongo_db()
     manager = quorum.export.ExportManager(
-        db,
+        database,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
     )
@@ -101,10 +104,10 @@ def import_do():
 @app.route("/export", methods = ("GET",))
 @quorum.ensure("export")
 def export_do():
-    db = quorum.get_mongo_db()
+    database = quorum.get_mongo_db()
     file = cStringIO.StringIO()
     manager = quorum.export.ExportManager(
-        db,
+        database,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
     )
