@@ -45,6 +45,7 @@ class Base(quorum.Model):
         type = int,
         index = True,
         increment = True,
+        immutable = True
     )
 
     enabled = dict(

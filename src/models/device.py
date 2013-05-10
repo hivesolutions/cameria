@@ -44,7 +44,8 @@ import spec
 class Device(spec.Spec):
 
     device_id = dict(
-        index = True
+        index = True,
+        immutable = True
     )
 
     type = dict(

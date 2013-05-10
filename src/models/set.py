@@ -45,7 +45,8 @@ import camera
 class Set(spec.Spec):
 
     set_id = dict(
-        index = True
+        index = True,
+        immutable = True
     )
 
     name = dict(

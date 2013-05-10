@@ -45,7 +45,8 @@ import device
 class Camera(spec.Spec):
 
     camera_id = dict(
-        index = True
+        index = True,
+        immutable = True
     )
 
     url = dict(

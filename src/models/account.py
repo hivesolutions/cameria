@@ -80,7 +80,8 @@ list (sequence) of access control tokens """
 class Account(base.Base):
 
     username = dict(
-        index = True
+        index = True,
+        immutable = True
     )
 
     password = dict(
@@ -92,7 +93,8 @@ class Account(base.Base):
     )
 
     email = dict(
-        index = True
+        index = True,
+        immutable = True
     )
 
     login_count = dict(
