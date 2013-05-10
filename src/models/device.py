@@ -58,11 +58,27 @@ class Device(spec.Spec):
     )
 
     model_d = dict(
-        index= True
+        index = True
     )
 
     device = dict(
         index = True
+    )
+    
+    has_resolution = dict(
+        type = bool
+    )
+    
+    has_compression = dict(
+        type = bool
+    )
+    
+    has_fps = dict(
+        type = bool
+    )
+
+    has_clock = dict(
+        type = bool
     )
 
     @classmethod
