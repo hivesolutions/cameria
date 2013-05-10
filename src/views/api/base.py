@@ -74,6 +74,19 @@ def login_api():
         username = username
     )
 
+@app.route("/api/logout.json", methods = ("GET", "POST"), json = True)
+@app.route("/api/signout.json", methods = ("GET", "POST"), json = True)
+def logout_api():
+    # removes the various session associated values from the
+    # session so that the used is no longer allowed to interact
+    # with the system (at least for private operations)
+    if "username" in flask.session: del flask.session["username"]
+    if "cameras" in flask.session: del flask.session["cameras"]
+    if "tokens" in flask.session: del flask.session["tokens"]
+    if "acl" in flask.session: del flask.session["acl"]
+
+    return dict()
+
 @app.route("/api/session.json", methods = ("GET",))
 def session_api():
     session = flask.session
