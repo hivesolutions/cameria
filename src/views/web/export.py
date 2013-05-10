@@ -38,6 +38,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
 import os
+import datetime
 import tempfile
 import cStringIO
 
@@ -112,10 +113,15 @@ def export_do():
         multiple = MULTIPLE_ENTITIES
     )
     manager.export_data(file)
+
+    date_time = datetime.datetime.utcnow()
+    date_time_s = date_time.strftime("%Y%m%d")
+    file_name = "cameria_%s.dat" % date_time_s
+
     return flask.Response(
         file.getvalue(),
         headers = {
-            "Content-Disposition" : "attachment; filename=database.dat"
+            "Content-Disposition" : "attachment; filename=%s" % file_name
         },
         mimetype = "application/octet-stream"
     )
