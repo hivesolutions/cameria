@@ -65,20 +65,8 @@ class Device(spec.Spec):
         index = True
     )
 
-    has_resolution = dict(
-        type = bool
-    )
-
-    has_compression = dict(
-        type = bool
-    )
-
-    has_fps = dict(
-        type = bool
-    )
-
-    has_clock = dict(
-        type = bool
+    filter_options = dict(
+        type = list
     )
 
     @classmethod
@@ -110,6 +98,11 @@ class Device(spec.Spec):
         # creates the device's name from the joining of the type
         # and the model identifier of the current device
         self.name = self.get_name()
+
+    def filter_camera(self, camera):
+        for filter_option in self.filter_options:
+            if not hasattr(camera, filter_option): continue
+            setattr(camera, filter_option, None)
 
     def get_name(self):
         return "%s %s" % (self.type, self.model_d)
