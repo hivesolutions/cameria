@@ -46,6 +46,10 @@ from cameria import app
 from cameria import flask
 from cameria import quorum
 
+NAME = "cameria"
+""" The default name to be used as prefix for the database
+export file in the export operation """
+
 SINGLE_ENTITIES = (
     ("account", "username"),
 )
@@ -116,7 +120,7 @@ def export_do():
 
     date_time = datetime.datetime.utcnow()
     date_time_s = date_time.strftime("%Y%m%d")
-    file_name = "cameria_%s.dat" % date_time_s
+    file_name = "%s_%s.dat" % (NAME, date_time_s)
 
     return flask.Response(
         file.getvalue(),
