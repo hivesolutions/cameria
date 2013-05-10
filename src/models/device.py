@@ -64,15 +64,15 @@ class Device(spec.Spec):
     device = dict(
         index = True
     )
-    
+
     has_resolution = dict(
         type = bool
     )
-    
+
     has_compression = dict(
         type = bool
     )
-    
+
     has_fps = dict(
         type = bool
     )
