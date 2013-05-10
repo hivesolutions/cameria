@@ -8,27 +8,27 @@
         <tbody>
             <tr>
                 <td class="right label" width="50%">resolution</td>
-                <td class="left value" width="50%">{{ set.resolution }}</td>
+                <td class="left value" width="50%">{{ set.resolution | default('N/A', True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">width</td>
-                <td class="left value" width="50%">{{ set.width }}</td>
+                <td class="left value" width="50%">{{ set.width | default('N/A', True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">height</td>
-                <td class="left value" width="50%">{{ set.height }}</td>
+                <td class="left value" width="50%">{{ set.height | default('N/A', True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">compression</td>
-                <td class="left value" width="50%">{{ set.compression }}</td>
+                <td class="left value" width="50%">{{ set.compression | default('N/A', True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">fps</td>
-                <td class="left value" width="50%">{{ set.fps }}</td>
+                <td class="left value" width="50%">{{ set.fps | default('N/A', True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">clock</td>
-                <td class="left value" width="50%">{{ set.clock }}</td>
+                <td class="left value" width="50%">{{ set.clock | default('N/A') }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">cameras</td>
