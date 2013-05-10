@@ -37,35 +37,13 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import os
-import tempfile
 import traceback
-import cStringIO
 
 import models
 
 from cameria import app
 from cameria import flask
 from cameria import quorum
-
-
-#### THIS IS TEMPORARY !!!!!
-SINGLE_ENTITIES = (
-    ("users", "username"),
-)
-""" The set of entities to be considered single file
-oriented (exports to one file per complete set) """
-
-MULTIPLE_ENTITIES = (
-    ("sets", "id"),
-    ("cameras", "id"),
-    ("devices", "id")
-)
-""" The set of entities to be considered multiple file
-oriented (exports to one file per entity) """
-
-# -------------------------
-
 
 @app.context_processor
 def utility_processor():
@@ -124,64 +102,6 @@ def logout():
 
     return flask.redirect(
         flask.url_for("signin")
-    )
-
-@app.route("/import", methods = ("GET",))
-@quorum.ensure("import")
-def import_d():
-    return flask.render_template(
-        "import.html.tpl",
-        link = "import"
-    )
-
-@app.route("/import", methods = ("POST",))
-@quorum.ensure("import")
-def import_do():
-    # retrieves the import file values (reference to the
-    # uploaded file) and then validates if it has been
-    # defined, in case it fails prints the template with
-    # the appropriate error variable set
-    import_file = flask.request.files.get("import_file", None)
-    if import_file == None or not import_file.filename:
-        return flask.render_template(
-            "import.html.tpl",
-            error = "No file defined"
-        )
-
-    # creates a temporary file path for the storage of the file
-    # and then saves it into that directory
-    fd, file_path = tempfile.mkstemp()
-    import_file.save(file_path)
-
-    db = quorum.get_mongo_db()
-    manager = quorum.export.ExportManager(
-        db,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
-    )
-    try: manager.import_data(file_path)
-    finally: os.close(fd); os.remove(file_path)
-    return flask.redirect(
-        flask.url_for("index")
-    )
-
-@app.route("/export", methods = ("GET",))
-@quorum.ensure("export")
-def export_do():
-    db = quorum.get_mongo_db()
-    file = cStringIO.StringIO()
-    manager = quorum.export.ExportManager(
-        db,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
-    )
-    manager.export_data(file)
-    return flask.Response(
-        file.getvalue(),
-        headers = {
-            "Content-Disposition" : "attachment; filename=database.dat"
-        },
-        mimetype = "application/octet-stream"
     )
 
 @app.route("/about", methods = ("GET",))
