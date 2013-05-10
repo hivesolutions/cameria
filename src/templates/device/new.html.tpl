@@ -37,20 +37,6 @@
             </div>
         </div>
         <div class="label">
-            <label>Random</label>
-        </div>
-        <div class="input">
-            <div class="option">
-                <span class="float-left">Provide resolution support ?</span>
-                {%if device.has_resolution %}
-                    <input class="float-right" type="checkbox" name="has_resolution" checked="1" />
-                {% else %}
-                    <input class="float-right" type="checkbox" name="has_resolution" />
-                {% endif %}
-                <div class="clear"></div>
-            </div>
-        </div>
-        <div class="label">
             <label>Resolution</label>
         </div>
         <div class="input">

@@ -59,10 +59,6 @@ class Device(spec.Spec):
         index = True
     )
 
-    has_resolution = dict(
-        type = bool
-    )
-
     @classmethod
     def validate_new(cls):
         return super(Device, cls).validate_new() + [

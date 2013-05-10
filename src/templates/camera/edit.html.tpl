@@ -7,7 +7,7 @@
             <label>Camera ID</label>
         </div>
         <div class="input">
-            <input class="text-field focus" name="camera_id" placeholder="eg: cam_xz" value="{{ camera.camera_id }}"
+            <input class="text-field" name="camera_id" placeholder="eg: cam_xz" value="{{ camera.camera_id }}"
                    data-disabled="1" data-error="{{ errors.camera_id }}" />
         </div>
         <div class="label">

@@ -1,13 +1,13 @@
 {% extends "partials/layout_device.html.tpl" %}
 {% block title %}Devices{% endblock %}
-{% block name %}Devices :: {{ device.device_id }}{% endblock %}
+{% block name %}Devices :: {{ device.name }}{% endblock %}
 {% block content %}
     <form action="{{ url_for('update_device', device_id = device.device_id) }}" method="post" class="form">
         <div class="label">
             <label>Device ID</label>
         </div>
         <div class="input">
-            <input class="text-field focus" name="device_id" placeholder="eg: cam_xz" value="{{ device.device_id }}"
+            <input class="text-field" name="device_id" placeholder="eg: cam_xz" value="{{ device.device_id }}"
                    data-disabled="1" data-error="{{ errors.device_id }}" />
         </div>
         <div class="label">
@@ -34,20 +34,6 @@
                     <li>camera</li>
                     <li>encoder</li>
                 </ul>
-            </div>
-        </div>
-        <div class="label">
-            <label>Random</label>
-        </div>
-        <div class="input">
-            <div class="option">
-                <span class="float-left">Provide resolution support ?</span>
-                {%if device.has_resolution %}
-                    <input class="float-right" type="checkbox" name="has_resolution" checked="1" />
-                {% else %}
-                    <input class="float-right" type="checkbox" name="has_resolution" />
-                {% endif %}
-                <div class="clear"></div>
             </div>
         </div>
         <div class="label">

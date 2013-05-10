@@ -1,14 +1,14 @@
 {% extends "partials/layout_set.html.tpl" %}
 {% block title %}Sets{% endblock %}
-{% block name %}Sets :: {{ set.set_id }}{% endblock %}
+{% block name %}Sets :: {{ set.name }}{% endblock %}
 {% block content %}
     <form action="{{ url_for('update_set', set_id = set.set_id) }}" method="post" class="form">
         <div class="label">
             <label>Set ID</label>
         </div>
         <div class="input">
-            <input class="text-field focus" name="set_id" placeholder="eg: set_xz" value="{{ set.set_id }}"
-                   data-error="{{ errors.set_id }}" />
+            <input class="text-field" name="set_id" placeholder="eg: set_xz" value="{{ set.set_id }}"
+                   data-disabled="1" data-error="{{ errors.set_id }}" />
         </div>
         <div class="label">
             <label>Name</label>
