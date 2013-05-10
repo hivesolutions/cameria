@@ -42,15 +42,15 @@ import models
 from cameria import app
 from cameria import quorum
 
-@app.route("/api/cameras.json", methods = ("GET",), json = True)
-@quorum.ensure("cameras.list", json = True)
-def list_cameras_api():
+@app.route("/api/devices.json", methods = ("GET",), json = True)
+@quorum.ensure("devices.list", json = True)
+def list_devices_api():
     object = quorum.get_object(alias = True, find = True)
-    cameras = models.Camera.find(map = True, sort = [("id", -1)], **object)
-    return cameras
+    devices = models.Device.find(map = True, sort = [("id", -1)], **object)
+    return devices
 
-@app.route("/api/cameras/<camera_id>.json", methods = ("GET",), json = True)
-@quorum.ensure("cameras.show", json = True)
-def show_camera_api(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
-    return camera
+@app.route("/api/devices/<device_id>.json", methods = ("GET",), json = True)
+@quorum.ensure("devices.show", json = True)
+def show_device_api(device_id):
+    device = models.Device.get(device_id = device_id)
+    return device

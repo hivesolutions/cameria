@@ -42,15 +42,15 @@ import models
 from cameria import app
 from cameria import quorum
 
-@app.route("/api/cameras.json", methods = ("GET",), json = True)
-@quorum.ensure("cameras.list", json = True)
-def list_cameras_api():
+@app.route("/api/sets.json", methods = ("GET",), json = True)
+@quorum.ensure("sets.list", json = True)
+def list_sets_api():
     object = quorum.get_object(alias = True, find = True)
-    cameras = models.Camera.find(map = True, sort = [("id", -1)], **object)
-    return cameras
+    sets = models.Set.find(map = True, sort = [("id", -1)], **object)
+    return sets
 
-@app.route("/api/cameras/<camera_id>.json", methods = ("GET",), json = True)
-@quorum.ensure("cameras.show", json = True)
-def show_camera_api(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
-    return camera
+@app.route("/api/sets/<set_id>.json", methods = ("GET",), json = True)
+@quorum.ensure("sets.show", json = True)
+def show_set_api(set_id):
+    set = models.Set.get(set_id = set_id)
+    return set
