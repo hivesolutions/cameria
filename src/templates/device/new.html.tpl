@@ -40,7 +40,7 @@
             <label>Filtering</label>
         </div>
         <div class="input">
-        	<input type="hidden" name="filter_options" value="" />
+            <input type="hidden" name="filter_options" value="" />
             <div class="option">
                 <span class="float-left">Filter <strong>resolution</strong> setting ?</span>
                 {% if "resolution" in device.filter_options %}
