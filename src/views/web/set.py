@@ -56,7 +56,7 @@ def list_sets():
 @quorum.ensure("sets.list", json = True)
 def list_sets_json():
     object = quorum.get_object(alias = True, find = True)
-    sets = models.Set.find(map = True, sort = [("id", -1)], **object)
+    sets = models.Set.find(map = True, sort = [("name", 1)], **object)
     return sets
 
 @app.route("/set/new", methods = ("GET",))

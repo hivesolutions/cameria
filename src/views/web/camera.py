@@ -56,7 +56,7 @@ def list_cameras():
 @quorum.ensure("cameras.list", json = True)
 def list_cameras_json():
     object = quorum.get_object(alias = True, find = True)
-    cameras = models.Camera.find(map = True, sort = [("id", -1)], **object)
+    cameras = models.Camera.find(map = True, sort = [("camera_id", 1)], **object)
     return cameras
 
 @app.route("/camera/new", methods = ("GET",))
