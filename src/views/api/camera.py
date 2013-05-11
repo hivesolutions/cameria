@@ -46,7 +46,7 @@ from cameria import quorum
 @quorum.ensure("cameras.list", json = True)
 def list_cameras_api():
     object = quorum.get_object(alias = True, find = True)
-    cameras = models.Camera.find(map = True, sort = [("id", -1)], **object)
+    cameras = models.Camera.find(map = True, sort = [("camera_id", 1)], **object)
     return cameras
 
 @app.route("/api/cameras/<camera_id>.json", methods = ("GET",), json = True)
