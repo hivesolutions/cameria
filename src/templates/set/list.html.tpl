@@ -2,7 +2,7 @@
 {% block title %}Sets{% endblock %}
 {% block name %}Sets{% endblock %}
 {% block content %}
-    <ul class="filter" data-no_input="1">
+    <ul class="filter" data-infinite="1" data-no_input="1">
         <div class="data-source" data-url="{{ url_for('list_sets_json') }}" data-type="json" data-timeout="0"></div>
         <li class="template">
             <div class="name">
