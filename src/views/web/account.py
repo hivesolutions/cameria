@@ -43,6 +43,35 @@ from cameria import app
 from cameria import flask
 from cameria import quorum
 
+@app.route("/accounts", methods = ("GET",))
+@quorum.ensure("accounts.list")
+def list_accounts():
+    return flask.render_template(
+        "account/list.html.tpl",
+        link = "accounts",
+        sub_link = "list"
+    )
+
+@app.route("/accounts.json", methods = ("GET",), json = True)
+@quorum.ensure("accounts.list", json = True)
+def list_accounts_json():
+    object = quorum.get_object(alias = True, find = True)
+    accounts = models.Account.find(map = True, sort = [("username", 1)], **object)
+    return accounts
+
+@app.route("/account/new", methods = ("GET",))
+@quorum.ensure("accounts.new")
+def new_account():
+    return flask.render_template(
+        "account/new.html.tpl",
+        link = "accounts",
+        sub_link = "create",
+        account = {
+            "device" : {}
+        },
+        errors = {}
+    )
+
 @app.route("/accounts/<username>", methods = ("GET",))
 @quorum.ensure("accounts.show")
 def show_account(username):

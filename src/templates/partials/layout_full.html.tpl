@@ -43,6 +43,14 @@
                         <a href="{{ url_for('list_devices') }}">devices</a>
                     {% endif %}
                 {% endif %}
+                {% if acl("accounts.list") %}
+                    //
+                    {% if link == "accounts" %}
+                        <a href="{{ url_for('list_accounts') }}" class="active">accounts</a>
+                    {% else %}
+                        <a href="{{ url_for('list_accounts') }}">accounts</a>
+                    {% endif %}
+                {% endif %}
                 {% if acl("about") %}
                     //
                     {% if link == "about" %}
