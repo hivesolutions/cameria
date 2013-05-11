@@ -81,7 +81,8 @@ class Account(base.Base):
 
     username = dict(
         index = True,
-        immutable = True
+        immutable = True,
+        default = True
     )
 
     password = dict(
