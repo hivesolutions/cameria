@@ -53,3 +53,15 @@ def show_account(username):
         sub_link = "show",
         account = account
     )
+
+@app.route("/account", methods = ("GET",))
+@quorum.ensure("accounts.show_s")
+def show_account_s():
+    username = flask.session["username"]
+    account = models.Account.get(username = username)
+    return flask.render_template(
+        "account/show.html.tpl",
+        link = "accounts",
+        sub_link = "show",
+        account = account
+    )
