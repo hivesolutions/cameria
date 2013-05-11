@@ -37,6 +37,55 @@
             </div>
         </div>
         <div class="label">
+            <label>Filtering</label>
+        </div>
+        <div class="input">
+            <div class="option">
+                <span class="float-left">Filter <strong>resolution</strong> setting ?</span>
+                {% if "resolution" in device.filter_options %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="resolution" checked="1" />
+                {% else %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="resolution" />
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+            <div class="option">
+                <span class="float-left">Filter <strong>compression</strong> setting ?</span>
+                {% if "compression" in device.filter_options %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="compression" checked="1" />
+                {% else %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="compression" />
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+            <div class="option">
+                <span class="float-left">Filter <strong>fps</strong> setting ?</span>
+                {% if "fps" in device.filter_options %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="fps" checked="1" />
+                {% else %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="fps" />
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+            <div class="option">
+                <span class="float-left">Filter <strong>clock</strong> setting ?</span>
+                {% if "clock" in device.filter_options %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="clock" checked="1" />
+                {% else %}
+                    <input class="float-right" type="checkbox" name="filter_options"
+                           value="clock" />
+                {% endif %}
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="label">
             <label>Resolution</label>
         </div>
         <div class="input">
