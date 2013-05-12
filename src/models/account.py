@@ -75,7 +75,7 @@ USER_ACL = {
         "cameras.list",
         "cameras.new",
         "cameras.show",
-        "users.show"
+        "accounts.show_s"
     ),
     ADMIN_TYPE : (
         "*",
