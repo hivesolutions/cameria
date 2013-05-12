@@ -82,7 +82,7 @@ def login():
     # updates the current user (name) in session with
     # the username that has just be accepted in the login
     flask.session["username"] = account.username
-    flask.session["cameras"] = account.cameras
+    flask.session["cameras"] = account.cameras and account.cameras.list()
     flask.session["tokens"] = account.tokens
     flask.session["acl"] = quorum.check_login
 
@@ -102,6 +102,14 @@ def logout():
 
     return flask.redirect(
         flask.url_for("signin")
+    )
+
+@app.route("/settings", methods = ("GET",))
+@quorum.ensure("settings")
+def settings():
+    return flask.render_template(
+        "settings.html.tpl",
+        link = "settings"
     )
 
 @app.route("/about", methods = ("GET",))
