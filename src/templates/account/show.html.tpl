@@ -11,6 +11,10 @@
                 <td class="left value" width="50%">{{ account.email }}</td>
             </tr>
             <tr>
+                <td class="right label" width="50%">type</td>
+                <td class="left value" width="50%">{{ account.type_s() }}</td>
+            </tr>
+            <tr>
                 <td class="right label" width="50%">tokens</td>
                 <td class="left value" width="50%">
                     {% for token in account.tokens %}

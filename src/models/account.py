@@ -59,6 +59,13 @@ ADMIN_TYPE = 2
 """ The identifier (integer) to be used to represent an user
 of type admin (administrator) """
 
+TYPE_NAMES = {
+    USER_TYPE : "user",
+    ADMIN_TYPE : "admin"
+}
+""" The map associating the various values for the user types
+with the appropriate string values that represent them """
+
 USER_ACL = {
     USER_TYPE : (
         "index",
@@ -154,10 +161,8 @@ class Account(base.Base):
             quorum.not_duplicate("email", cls._name()),
 
             quorum.validation.not_null("type"),
-            quorum.validation.not_empty("type"),
 
-            quorum.validation.not_null("tokens"),
-            quorum.validation.not_empty("tokens"),
+            quorum.validation.not_null("cameras"),
 
             quorum.equals("password_confirm", "password")
         ]
@@ -273,7 +278,7 @@ class Account(base.Base):
         self.login_count = 0
         self.last_login = None
         self.type = USER_TYPE
-        self.tokens =  USER_ACL.get(USER_TYPE, ())
+        self.tokens = USER_ACL.get(self.type, ())
 
     def pre_update(self):
         base.Base.pre_update(self)
@@ -309,3 +314,6 @@ class Account(base.Base):
                 "account" : account
             }
         )
+
+    def type_s(self):
+        return TYPE_NAMES.get(self.type, None)

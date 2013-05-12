@@ -67,9 +67,32 @@ def new_account():
         link = "accounts",
         sub_link = "create",
         account = {
-            "device" : {}
+            "cameras" : {}
         },
         errors = {}
+    )
+
+@app.route("/accounts", methods = ("POST",))
+@quorum.ensure("accounts.new")
+def create_account():
+    # creates the new account, using the provided arguments and
+    # then saves it into the data source, all the validations
+    # should be ran upon the save operation
+    account = models.Account.new()
+    try: account.save()
+    except quorum.ValidationError, error:
+        return flask.render_template(
+            "account/new.html.tpl",
+            link = "accounts",
+            sub_link = "create",
+            account = error.model,
+            errors = error.errors
+        )
+
+    # redirects the user to the show page of the set that
+    # was just created (normal workflow)
+    return flask.redirect(
+        flask.url_for("show_account", username = account.username)
     )
 
 @app.route("/accounts/<username>", methods = ("GET",))
