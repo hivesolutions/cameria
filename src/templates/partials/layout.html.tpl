@@ -51,6 +51,14 @@
                         <a href="{{ url_for('list_accounts') }}">accounts</a>
                     {% endif %}
                 {% endif %}
+                {% if acl("settings") %}
+                    //
+                    {% if link == "settings" %}
+                        <a href="{{ url_for('settings') }}" class="active">settings</a>
+                    {% else %}
+                        <a href="{{ url_for('settings') }}">settings</a>
+                    {% endif %}
+                {% endif %}
                 {% if acl("about") %}
                     //
                     {% if link == "about" %}
