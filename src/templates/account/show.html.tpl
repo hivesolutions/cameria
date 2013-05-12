@@ -1,4 +1,4 @@
-{% extends "partials/layout.html.tpl" %}
+{% extends "partials/layout_account.html.tpl" %}
 {% block title %}Accounts{% endblock %}
 {% block name %}Accounts :: {{ account.username }}{% endblock %}
 {% block content %}
