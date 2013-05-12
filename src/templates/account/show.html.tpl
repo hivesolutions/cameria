@@ -15,23 +15,11 @@
                 <td class="left value" width="50%">{{ account.type_s() }}</td>
             </tr>
             <tr>
-                <td class="right label" width="50%">tokens</td>
-                <td class="left value" width="50%">
-                    {% for token in account.tokens %}
-                        {{ token }}{% if not loop.last %},{% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
                 <td class="right label" width="50%">cameras</td>
                 <td class="left value" width="50%">
-                    {% if account.cameras == None %}
-                        all
-                    {% else %}
-                        {% for camera in account.cameras.objects %}
-                            <a href="{{ url_for('show_camera', camera_id = camera.camera_id) }}">{{ camera }}</a>{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    {% endif %}
+                    {% for camera in account.cameras.objects %}
+                        <a href="{{ url_for('show_camera', camera_id = camera.camera_id) }}">{{ camera.id }}</a>{% if not loop.last %},{% endif %}
+                    {% endfor %}
                 </td>
             </tr>
         </tbody>
