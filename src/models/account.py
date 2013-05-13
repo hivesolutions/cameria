@@ -289,9 +289,11 @@ class Account(base.Base):
         base.Base.pre_update(self)
 
         # in case the currently set password is empty it must
-        # be removed (not meant to be updated)
+        # be removed (not meant to be updated), otherwise it
+        # must be correctly encrypted using the current approach
         has_password = hasattr(self, "password")
         if has_password and self.password == "": del self.password
+        else: self.password = hashlib.sha1(self.password + PASSWORD_SALT).hexdigest()
 
     def post_create(self):
         base.Base.post_create(self)
