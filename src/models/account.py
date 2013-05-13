@@ -164,7 +164,7 @@ class Account(base.Base):
         return super(Account, cls).validate_new() + [
             quorum.not_null("username"),
             quorum.not_empty("username"),
-            quorum.string_gt("username", 4),
+            quorum.string_gt("username", 1),
             quorum.string_lt("username", 64),
             quorum.not_duplicate("username", cls._name()),
 
