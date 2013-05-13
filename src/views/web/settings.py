@@ -115,7 +115,10 @@ def import_do():
     try: manager.import_data(file_path)
     finally: os.close(fd); os.remove(file_path)
     return flask.redirect(
-        flask.url_for("index")
+        flask.url_for(
+            "import_a",
+            message = "Database file imported with success"
+        )
     )
 
 @app.route("/export", methods = ("GET",))
