@@ -37,6 +37,8 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
+import flask
+
 import quorum
 
 import spec
@@ -84,6 +86,20 @@ class Camera(spec.Spec):
             quorum.string_lt("camera_id", 64),
             quorum.not_duplicate("camera_id", cls._name())
         ]
+
+    @classmethod
+    def find_a(cls, cameras = None, *args, **kwargs):
+        cameras = cameras or flask.session.get("cameras", [])
+        if not cameras == None:
+            cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
+        return cls.find(*args, **kwargs)
+
+    @classmethod
+    def get_a(cls, cameras = None, *args, **kwargs):
+        cameras = cameras or flask.session.get("cameras", [])
+        if not cameras == None:
+            cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
+        return cls.get(*args, **kwargs)
 
     def merge_device(self):
         self.merge(self.device, override = False)
