@@ -71,6 +71,7 @@
         {% endblock %}
     </div>
     <div id="content">{% block content %}{% endblock %}</div>
+    {% include "partials/messages.html.tpl" %}
     {% include "partials/footer.html.tpl" %}
 </body>
 {% include "partials/end_doctype.html.tpl" %}
