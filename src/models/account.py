@@ -265,6 +265,11 @@ class Account(base.Base):
     def pre_create(self):
         base.Base.pre_create(self)
 
+        # in case the type of the account to be created is admin
+        # the camera attribute should be set as invalid, indicating
+        # that all the cameras should be displayed
+        if self.type == ADMIN_TYPE: self.cameras = None
+
         # "encrypts" the password into the target format defined
         # by the salt and the sha1 hash function and then creates
         # the api key for the current account
