@@ -104,14 +104,6 @@ def logout():
         flask.url_for("signin")
     )
 
-@app.route("/settings", methods = ("GET",))
-@quorum.ensure("settings")
-def settings():
-    return flask.render_template(
-        "settings.html.tpl",
-        link = "settings"
-    )
-
 @app.route("/about", methods = ("GET",))
 @quorum.ensure("about")
 def about():

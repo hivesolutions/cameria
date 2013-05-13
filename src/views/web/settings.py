@@ -64,12 +64,22 @@ MULTIPLE_ENTITIES = (
 """ The set of entities to be considered multiple file
 oriented (exports to one file per entity) """
 
+@app.route("/settings", methods = ("GET",))
+@quorum.ensure("settings")
+def settings():
+    return flask.render_template(
+        "settings/show.html.tpl",
+        link = "settings",
+        sub_link = "show"
+    )
+
 @app.route("/import", methods = ("GET",))
 @quorum.ensure("import")
 def import_a():
     return flask.render_template(
-        "import.html.tpl",
-        link = "import"
+        "settings/import.html.tpl",
+        link = "settings",
+        sub_link = "import"
     )
 
 @app.route("/import", methods = ("POST",))
@@ -82,7 +92,9 @@ def import_do():
     import_file = flask.request.files.get("import_file", None)
     if import_file == None or not import_file.filename:
         return flask.render_template(
-            "import.html.tpl",
+            "settings/import.html.tpl",
+            link = "settings",
+            sub_link = "import",
             error = "No file defined"
         )
 
