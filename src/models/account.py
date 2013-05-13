@@ -141,6 +141,12 @@ class Account(base.Base):
         cls.create_account_d("root", "root", ADMIN_TYPE)
 
     @classmethod
+    def validate(cls):
+        return super(Account, cls).validate() + [
+            quorum.equals("password_confirm", "password")
+        ]
+
+    @classmethod
     def validate_new(cls):
         return super(Account, cls).validate_new() + [
             quorum.not_null("username"),
@@ -162,9 +168,7 @@ class Account(base.Base):
 
             quorum.validation.not_null("type"),
 
-            quorum.validation.not_null("cameras"),
-
-            quorum.equals("password_confirm", "password")
+            quorum.validation.not_null("cameras")
         ]
 
     @classmethod
@@ -288,12 +292,19 @@ class Account(base.Base):
     def pre_update(self):
         base.Base.pre_update(self)
 
+        # in case the type of the account to be created is admin
+        # the camera attribute should be set as invalid, indicating
+        # that all the cameras should be displayed
+        if self.type == ADMIN_TYPE: self.cameras = None
+
         # in case the currently set password is empty it must
         # be removed (not meant to be updated), otherwise it
         # must be correctly encrypted using the current approach
         has_password = hasattr(self, "password")
+        has_password_confirm = hasattr(self, "password_confirm")
         if has_password and self.password == "": del self.password
-        else: self.password = hashlib.sha1(self.password + PASSWORD_SALT).hexdigest()
+        elif has_password_confirm:
+            self.password = hashlib.sha1(self.password + PASSWORD_SALT).hexdigest()
 
     def post_create(self):
         base.Base.post_create(self)
