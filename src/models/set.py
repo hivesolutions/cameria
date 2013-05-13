@@ -37,10 +37,22 @@ __copyright__ = "Copyright (c) 2008-2012 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
+import flask
+
 import quorum
 
 import spec
 import camera
+
+FILTER_FUNCTION = "function() {\
+    for(var index = 0; index < this.cameras.length; index++) {\
+        var camera = this.cameras[index];\
+        if(%s.indexOf(camera) == -1) { return false; }\
+    }\
+    return true;\
+}"
+""" Javascript based function that filters the sets that contain
+the cameras that are currently defined """
 
 class Set(spec.Spec):
 
@@ -76,6 +88,22 @@ class Set(spec.Spec):
             quorum.string_lt("set_id", 64),
             quorum.not_duplicate("set_id", cls._name())
         ]
+
+    @classmethod
+    def find_a(cls, cameras = None, *args, **kwargs):
+        cameras = cameras or flask.session.get("cameras", [])
+        if not cameras == None:
+            function = FILTER_FUNCTION % cameras
+            cls.filter_merge("$where", function, kwargs)
+        return cls.find(*args, **kwargs)
+
+    @classmethod
+    def get_a(cls, cameras = None, *args, **kwargs):
+        cameras = cameras or flask.session.get("cameras", [])
+        if not cameras == None:
+            function = FILTER_FUNCTION % cameras
+            cls.filter_merge("$where", function, kwargs)
+        return cls.get(*args, **kwargs)
 
     def merge_cameras(self):
         for camera in self.cameras.objects:
