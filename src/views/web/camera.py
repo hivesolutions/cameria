@@ -56,7 +56,7 @@ def list_cameras():
 @quorum.ensure("cameras.list", json = True)
 def list_cameras_json():
     object = quorum.get_object(alias = True, find = True)
-    cameras = models.Camera.find(map = True, sort = [("camera_id", 1)], **object)
+    cameras = models.Camera.find_a(map = True, sort = [("camera_id", 1)], **object)
     return cameras
 
 @app.route("/camera/new", methods = ("GET",))
@@ -98,7 +98,7 @@ def create_camera():
 @app.route("/cameras/<camera_id>", methods = ("GET",))
 @quorum.ensure("cameras.show")
 def show_camera(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
+    camera = models.Camera.get_a(camera_id = camera_id)
     camera.merge_device()
     camera.filter_device()
     return flask.render_template(
@@ -111,7 +111,7 @@ def show_camera(camera_id):
 @app.route("/cameras/<camera_id>/edit", methods = ("GET",))
 @quorum.ensure("cameras.edit")
 def edit_camera(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
+    camera = models.Camera.get_a(camera_id = camera_id)
     return flask.render_template(
         "camera/edit.html.tpl",
         link = "cameras",
@@ -126,7 +126,7 @@ def update_camera(camera_id):
     # finds the current camera and applies the provided
     # arguments and then saves it into the data source,
     # all the validations should be ran upon the save operation
-    camera = models.Camera.get(camera_id = camera_id)
+    camera = models.Camera.get_a(camera_id = camera_id)
     camera.apply()
     try: camera.save()
     except quorum.ValidationError, error:
@@ -147,7 +147,7 @@ def update_camera(camera_id):
 @app.route("/cameras/<camera_id>/delete", methods = ("GET",))
 @quorum.ensure("cameras.delete")
 def delete_camera(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
+    camera = models.Camera.get_a(camera_id = camera_id)
     camera.delete()
     return flask.redirect(
         flask.url_for("list_cameras")
@@ -156,7 +156,7 @@ def delete_camera(camera_id):
 @app.route("/cameras/<camera_id>/settings", methods = ("GET",))
 @quorum.ensure("cameras.show")
 def settings_camera(camera_id):
-    camera = models.Camera.get(camera_id = camera_id)
+    camera = models.Camera.get_a(camera_id = camera_id)
     return flask.render_template(
         "camera/settings.html.tpl",
         link = "cameras",
