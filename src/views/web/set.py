@@ -56,7 +56,7 @@ def list_sets():
 @quorum.ensure("sets.list", json = True)
 def list_sets_json():
     object = quorum.get_object(alias = True, find = True)
-    sets = models.Set.find(map = True, sort = [("name", 1)], **object)
+    sets = models.Set.find_a(map = True, sort = [("name", 1)], **object)
     return sets
 
 @app.route("/set/new", methods = ("GET",))
@@ -98,7 +98,7 @@ def create_set():
 @app.route("/sets/<set_id>", methods = ("GET",))
 @quorum.ensure("sets.show")
 def show_set(set_id):
-    set = models.Set.get(set_id = set_id)
+    set = models.Set.get_a(set_id = set_id)
     set.merge_cameras()
     return flask.render_template(
         "set/show.html.tpl",
@@ -110,7 +110,7 @@ def show_set(set_id):
 @app.route("/sets/<set_id>/edit", methods = ("GET",))
 @quorum.ensure("sets.edit")
 def edit_set(set_id):
-    set = models.Set.get(set_id = set_id)
+    set = models.Set.get_a(set_id = set_id)
     return flask.render_template(
         "set/edit.html.tpl",
         link = "sets",
@@ -125,7 +125,7 @@ def update_set(set_id):
     # finds the current set and applies the provided
     # arguments and then saves it into the data source,
     # all the validations should be ran upon the save operation
-    set = models.Set.get(set_id = set_id)
+    set = models.Set.get_a(set_id = set_id)
     set.apply()
     try: set.save()
     except quorum.ValidationError, error:
@@ -146,7 +146,7 @@ def update_set(set_id):
 @app.route("/sets/<set_id>/delete", methods = ("GET",))
 @quorum.ensure("sets.delete")
 def delete_set(set_id):
-    set = models.Set.get(set_id = set_id)
+    set = models.Set.get_a(set_id = set_id)
     set.delete()
     return flask.redirect(
         flask.url_for("list_sets")
@@ -155,7 +155,7 @@ def delete_set(set_id):
 @app.route("/sets/<set_id>/settings", methods = ("GET",))
 @quorum.ensure("sets.settings")
 def settings_set(set_id):
-    set = models.Set.get(set_id = set_id)
+    set = models.Set.get_a(set_id = set_id)
     return flask.render_template(
         "set/settings.html.tpl",
         link = "sets",
