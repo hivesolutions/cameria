@@ -55,12 +55,17 @@ USER_TYPE = 1
 """ The identifier (integer) to be used to represent an user
 of type (normal) user """
 
-ADMIN_TYPE = 2
+SUPER_USER_TYPE = 2
+""" The identifier (integer) to be used to represent a user
+of type (super) user """
+
+ADMIN_TYPE = 3
 """ The identifier (integer) to be used to represent an user
 of type admin (administrator) """
 
 TYPE_NAMES = {
     USER_TYPE : "user",
+    SUPER_USER_TYPE : "super user",
     ADMIN_TYPE : "admin"
 }
 """ The map associating the various values for the user types
@@ -73,7 +78,15 @@ USER_ACL = {
         "sets.list",
         "sets.show",
         "cameras.list",
-        "cameras.new",
+        "cameras.show",
+        "accounts.show_s"
+    ),
+    SUPER_USER_TYPE : (
+        "index",
+        "about",
+        "sets.list",
+        "sets.show",
+        "cameras.list",
         "cameras.show",
         "accounts.show_s"
     ),
@@ -272,7 +285,7 @@ class Account(base.Base):
         # in case the type of the account to be created is admin
         # the camera attribute should be set as invalid, indicating
         # that all the cameras should be displayed
-        if self.type == ADMIN_TYPE: self.cameras = None
+        if self.type in (SUPER_USER_TYPE, ADMIN_TYPE): self.cameras = None
 
         # "encrypts" the password into the target format defined
         # by the salt and the sha1 hash function and then creates
@@ -295,7 +308,7 @@ class Account(base.Base):
         # in case the type of the account to be created is admin
         # the camera attribute should be set as invalid, indicating
         # that all the cameras should be displayed
-        if self.type == ADMIN_TYPE: self.cameras = None
+        if self.type in (SUPER_USER_TYPE, ADMIN_TYPE): self.cameras = None
 
         # in case the currently set password is empty it must
         # be removed (not meant to be updated), otherwise it
