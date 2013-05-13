@@ -42,9 +42,15 @@
             {% endif %}
             <label class="radio-label" for="user">User</label>
             {% if account.type == 2 %}
-                <input type="radio" name="type" id="admin" value="2" checked="1" />
+                <input type="radio" name="type" id="super_user" value="2" checked="1" />
             {% else %}
-                <input type="radio" name="type" id="admin" value="2" />
+                <input type="radio" name="type" id="super_user" value="2" />
+            {% endif %}
+            <label class="radio-label" for="super_user">Super User</label>
+            {% if account.type == 3 %}
+                <input type="radio" name="type" id="admin" value="3" checked="1" />
+            {% else %}
+                <input type="radio" name="type" id="admin" value="3" />
             {% endif %}
             <label class="radio-label" for="admin">Admin</label>
         </div>
