@@ -136,7 +136,8 @@ class Account(base.Base):
 
     cameras = dict(
         type = quorum.references(
-            camera.Camera, name = "camera_id"
+            camera.Camera,
+            name = "camera_id"
         )
     )
 

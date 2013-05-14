@@ -66,7 +66,8 @@ class Camera(spec.Spec):
 
     device = dict(
         type = quorum.reference(
-            device.Device, name = "device_id"
+            device.Device,
+            name = "device_id"
         )
     )
 
