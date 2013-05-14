@@ -54,3 +54,13 @@ def list_cameras_api():
 def show_camera_api(camera_id):
     camera = models.Camera.get_a(map = True, camera_id = camera_id)
     return camera
+
+@app.route("/api/cameras_m.json", methods = ("GET",), json = True)
+@quorum.ensure("cameras.list", json = True)
+def list_cameras_m_api():
+    object = quorum.get_object(alias = True, find = True)
+    cameras = models.Camera.find_a(sort = [("camera_id", 1)], **object)
+    for camera in cameras:
+        camera.merge_device()
+        camera.filter_device()
+    return dict(cameras = cameras)
