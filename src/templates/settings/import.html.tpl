@@ -15,7 +15,7 @@
          <div class="input">
              <a data-name="import_file" class="uploader">Select & Upload the import file</a>
         </div>
-        <span class="button" data-link="{{ url_for('index') }}">Cancel</span>
+        <span class="button" data-link="{{ url_for('settings') }}">Cancel</span>
         //
         <span class="button" data-submit="true">Upload</span>
     </form>
