@@ -92,6 +92,4 @@ def session_api():
     session = flask.session
     id = hasattr(session, "sid") and session.sid or None
 
-    return dict(
-        id = id
-    )
+    return dict(id = id)

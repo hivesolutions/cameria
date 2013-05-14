@@ -47,7 +47,7 @@ from cameria import quorum
 def list_sets_api():
     object = quorum.get_object(alias = True, find = True)
     sets = models.Set.find_a(map = True, sort = [("name", 1)], **object)
-    return sets
+    return dict(sets = sets)
 
 @app.route("/api/sets/<set_id>.json", methods = ("GET",), json = True)
 @quorum.ensure("sets.show", json = True)
