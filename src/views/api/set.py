@@ -52,5 +52,13 @@ def list_sets_api():
 @app.route("/api/sets/<set_id>.json", methods = ("GET",), json = True)
 @quorum.ensure("sets.show", json = True)
 def show_set_api(set_id):
-    set = models.Set.get_a(set_id = set_id)
+    set = models.Set.get_a(map = True, set_id = set_id)
     return set
+
+@app.route("/api/sets_m.json", methods = ("GET",), json = True)
+@quorum.ensure("sets.list", json = True)
+def list_sets_m_api():
+    object = quorum.get_object(alias = True, find = True)
+    sets = models.Set.find_a(sort = [("name", 1)], **object)
+    for set in sets: set.merge_cameras()
+    return dict(sets = sets)

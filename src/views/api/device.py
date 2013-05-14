@@ -52,5 +52,5 @@ def list_devices_api():
 @app.route("/api/devices/<device_id>.json", methods = ("GET",), json = True)
 @quorum.ensure("devices.show", json = True)
 def show_device_api(device_id):
-    device = models.Device.get(device_id = device_id)
+    device = models.Device.get(map = True, device_id = device_id)
     return device

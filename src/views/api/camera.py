@@ -52,5 +52,5 @@ def list_cameras_api():
 @app.route("/api/cameras/<camera_id>.json", methods = ("GET",), json = True)
 @quorum.ensure("cameras.show", json = True)
 def show_camera_api(camera_id):
-    camera = models.Camera.get_a(camera_id = camera_id)
+    camera = models.Camera.get_a(map = True, camera_id = camera_id)
     return camera
