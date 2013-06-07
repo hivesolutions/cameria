@@ -70,9 +70,9 @@
             </div>
         </div>
         <div class="quote">
-            By clicking Submit Sccount, you agree to our Service Agreement and that you have
+            By clicking Submit Account, you agree to our Service Agreement and that you have
             read and understand our Privacy Policy.
         </div>
-        <span class="button" data-submit="true">Submit Sccount</span>
+        <span class="button" data-submit="true">Submit Account</span>
     </form>
 {% endblock %}
