@@ -11,8 +11,8 @@
     <div class="quote error">
         {{ error }}
     </div>
-    <form enctype="multipart/form-data" action="import" method="post" class="form small">
-         <div class="input">
+    <form enctype="multipart/form-data" action="{{ url_for('import_do') }}" method="post" class="form small">
+        <div class="input">
              <a data-name="import_file" class="uploader">Select & Upload the import file</a>
         </div>
         <span class="button" data-link="{{ url_for('settings') }}">Cancel</span>
