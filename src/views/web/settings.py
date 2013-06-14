@@ -89,7 +89,7 @@ def import_do():
     # uploaded file) and then validates if it has been
     # defined, in case it fails prints the template with
     # the appropriate error variable set
-    import_file = flask.request.files.get("import_file", None)
+    import_file = quorum.get_field("import_file", None)
     if import_file == None or not import_file.filename:
         return flask.render_template(
             "settings/import.html.tpl",
