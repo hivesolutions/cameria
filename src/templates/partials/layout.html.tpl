@@ -12,14 +12,14 @@
         {% block header %}
             <h1>{% block name %}{% endblock %}</h1>
             <div class="links">
-                 {% if acl("index") %}
+                {% if acl("index") %}
                     {% if link == "home" %}
                         <a href="{{ url_for('index') }}" class="active">home</a>
                     {% else %}
                         <a href="{{ url_for('index') }}">home</a>
                     {% endif %}
                 {% endif %}
-                 {% if acl("sets.list") %}
+                {% if acl("sets.list") %}
                     //
                     {% if link == "sets" %}
                         <a href="{{ url_for('list_sets') }}" class="active">sets</a>
