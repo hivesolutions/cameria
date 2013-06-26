@@ -68,13 +68,11 @@
             <label>Device</label>
         </div>
         <div class="input">
-            <div class="input">
-                <div class="drop-field" value="{{ camera.device.name }}" placeholder="eg: axis m1114"
-                     data-display_attribute="name" data-value_attribute="device_id" data-error="{{ errors.device }}">
-                    <input name="device" type="hidden" class="hidden-field" value="{{ camera.device.device_id }}" />
-                    <ul class="data-source" data-url="{{ url_for('list_devices_json') }}"
-                        data-type="json"></ul>
-                </div>
+            <div class="drop-field" value="{{ camera.device.name }}" placeholder="eg: axis m1114"
+                 data-display_attribute="name" data-value_attribute="device_id" data-error="{{ errors.device }}">
+                <input name="device" type="hidden" class="hidden-field" value="{{ camera.device.device_id }}" />
+                <ul class="data-source" data-url="{{ url_for('list_devices_json') }}"
+                    data-type="json"></ul>
             </div>
         </div>
         <div class="quote">
