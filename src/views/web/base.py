@@ -45,10 +45,6 @@ from cameria import app
 from cameria import flask
 from cameria import quorum
 
-@app.context_processor
-def utility_processor():
-    return dict(acl = quorum.check_login)
-
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))
 @quorum.ensure("index")
