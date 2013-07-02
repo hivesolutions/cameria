@@ -107,4 +107,5 @@ class Camera(spec.Spec):
         self.merge(self.device, override = False)
 
     def filter_device(self):
+        if not self.device: return
         self.device.filter_camera(self)
