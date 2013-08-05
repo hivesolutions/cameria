@@ -80,7 +80,6 @@ def login():
     flask.session["username"] = account.username
     flask.session["cameras"] = account.cameras and account.cameras.list()
     flask.session["tokens"] = account.tokens
-    flask.session["acl"] = quorum.check_login
 
     # makes the current session permanent this will allow
     # the session to persist along multiple browser initialization
