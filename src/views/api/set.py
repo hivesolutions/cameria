@@ -46,7 +46,8 @@ from cameria import quorum
 @quorum.ensure("sets.list", json = True)
 def list_sets_api():
     object = quorum.get_object(alias = True, find = True)
-    sets = models.Set.find_a(map = True, sort = [("name", 1)], **object)
+    object["sort"] = object.get("sort", [("name", 1)])
+    sets = models.Set.find_a(map = True, **object)
     return dict(sets = sets)
 
 @app.route("/api/sets/<set_id>.json", methods = ("GET",), json = True)
@@ -59,6 +60,7 @@ def show_set_api(set_id):
 @quorum.ensure("sets.list", json = True)
 def list_sets_m_api():
     object = quorum.get_object(alias = True, find = True)
-    sets = models.Set.find_a(sort = [("name", 1)], **object)
+    object["sort"] = object.get("sort", [("name", 1)])
+    sets = models.Set.find_a(**object)
     for set in sets: set.merge_cameras()
     return dict(sets = sets)

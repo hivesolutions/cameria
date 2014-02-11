@@ -56,7 +56,8 @@ def list_devices():
 @quorum.ensure("devices.list", json = True)
 def list_devices_json():
     object = quorum.get_object(alias = True, find = True)
-    devices = models.Device.find(map = True, sort = [("name", 1)], **object)
+    object["sort"] = object.get("sort", [("name", 1)])
+    devices = models.Device.find(map = True, **object)
     return devices
 
 @app.route("/device/new", methods = ("GET",))

@@ -56,7 +56,8 @@ def list_accounts():
 @quorum.ensure("accounts.list", json = True)
 def list_accounts_json():
     object = quorum.get_object(alias = True, find = True)
-    accounts = models.Account.find(map = True, sort = [("username", 1)], **object)
+    object["sort"] = object.get("sort", [("username", 1)])
+    accounts = models.Account.find(map = True, **object)
     return accounts
 
 @app.route("/account/new", methods = ("GET",))
