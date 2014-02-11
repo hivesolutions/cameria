@@ -77,6 +77,13 @@ class Spec(base.Base):
         )
 
     def merge(self, spec, override = True):
+        # verifies that the current instance contains an origin reference
+        # and in case it does not creates a new one and then retrieves the
+        # reference to it so that it may be used latter for setting
+        has_origin = hasattr(self, "origin")
+        origin = getattr(self, "origin") if has_origin else dict()
+        setattr(self, "origin", origin)
+
         # retrieves the complete set of names that are considered
         # to belong to the spec and then iterates over them to try
         # to merge the current spec with the provided one
@@ -93,7 +100,13 @@ class Spec(base.Base):
             is_set = hasattr(self, name) and not getattr(self, name) == None
             if is_set and not override: continue
 
-            # retrieves thre value for the current name in the spec
+            # retrieves the current value (considered to be the original) and in
+            # case the value already exists and is going to be replaced saves it
+            # under the map of original values (as defined by spec)
+            value = getattr(self, name) if is_set else None
+            if is_set and override: origin[name] = value
+
+            # retrieves the value for the current name in the spec
             # object and then sets it in the current instance
             value = getattr(spec, name)
             setattr(self, name, value)
