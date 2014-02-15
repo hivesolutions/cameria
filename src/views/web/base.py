@@ -131,6 +131,7 @@ def handler_413(error):
 def handler_exception(error):
     formatted = traceback.format_exc()
     lines = formatted.splitlines()
+    status = error.code if hasattr(error, "code") else 500
 
     return flask.Response(
         flask.render_template(
@@ -138,5 +139,5 @@ def handler_exception(error):
             error = str(error),
             traceback = lines
         ),
-        status = 500
+        status = status
     )
