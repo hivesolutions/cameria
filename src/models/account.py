@@ -238,17 +238,18 @@ class Account(base.Base):
 
         # creates the structure to be used as the server description
         # using the values provided as parameters
-        account = {
-            "enabled" : True,
-            "username" : username,
-            "password" : password,
-            "email" : "%s@cameria.com" % username,
-            "login_count" : 0,
-            "last_login" : None,
-            "type" : type,
-            "tokens" : USER_ACL.get(type, ()),
-            "cameras" : cameras
-        }
+        account = dict(
+            id = -1,
+            enabled = True,
+            username = username,
+            password = password,
+            email = "%s@cameria.com" % username,
+            login_count = 0,
+            last_login = None,
+            type = type,
+            tokens = USER_ACL.get(type, ()),
+            cameras =  cameras
+        )
 
         # saves the account instance into the data source, ensures
         # that the account is ready for login
