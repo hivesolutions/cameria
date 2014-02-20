@@ -109,8 +109,7 @@ def import_do():
     database = quorum.get_mongo_db()
     manager = quorum.export.ExportManager(
         database,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
+        single = quorum.resolve(identifier = "id")
     )
     try: manager.import_data(file_path)
     finally: os.close(fd); os.remove(file_path)
@@ -128,8 +127,7 @@ def export_do():
     file = cStringIO.StringIO()
     manager = quorum.export.ExportManager(
         database,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
+        single = quorum.resolve(identifier = "id")
     )
     manager.export_data(file)
 
@@ -143,4 +141,12 @@ def export_do():
             "Content-Disposition" : "attachment; filename=%s" % file_name
         },
         mimetype = "application/octet-stream"
+    )
+
+@app.route("/reset", methods = ("GET",))
+@quorum.ensure("reset")
+def reset_do():
+    quorum.drop_mongo_db()
+    return flask.redirect(
+        flask.url_for("settings")
     )
