@@ -109,7 +109,7 @@ def import_do():
     database = quorum.get_mongo_db()
     manager = quorum.export.ExportManager(
         database,
-        single = quorum.resolve(identifier = "id")
+        multiple = quorum.resolve(identifier = "_id")
     )
     try: manager.import_data(file_path)
     finally: os.close(fd); os.remove(file_path)
@@ -127,7 +127,7 @@ def export_do():
     file = cStringIO.StringIO()
     manager = quorum.export.ExportManager(
         database,
-        single = quorum.resolve(identifier = "id")
+        multiple = quorum.resolve(identifier = "_id")
     )
     manager.export_data(file)
 
