@@ -117,7 +117,6 @@
             // unregistered to avoid double registration
             matchedObject.length
                     && _window.keydown(onKeyDown = function(event) {
-                        console.info("cenas");
                         // retrieves the key value
                         var keyValue = event.keyCode
                                 ? event.keyCode
