@@ -112,8 +112,12 @@
                     });
 
             // registers for the key down on the window so that
-            // we can handle the fullscreen trigger
-            matchedObject.length && _window.keydown(function(event) {
+            // we can handle the fullscreen trigger, note that once
+            // the current object is destroyed the event is
+            // unregistered to avoid double registration
+            matchedObject.length
+                    && _window.keydown(onKeyDown = function(event) {
+                        console.info("cenas");
                         // retrieves the key value
                         var keyValue = event.keyCode
                                 ? event.keyCode
@@ -133,6 +137,9 @@
                                 camera.data("maximized", true);
                             }
                         }
+                    });
+            matchedObject.bind("destroyed", function() {
+                        _document.unbind("keydown", onKeyDown);
                     });
         };
 
