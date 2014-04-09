@@ -138,7 +138,7 @@
                         }
                     });
             matchedObject.bind("destroyed", function() {
-                        _document.unbind("keydown", onKeyDown);
+                        _window.unbind("keydown", onKeyDown);
                     });
         };
 
@@ -322,6 +322,19 @@
                 return;
             }
 
+            // retrieves the global reference to the body element
+            // that is going to be used to "store" global information
+            var _body = jQuery("body");
+
+            // tries to retrieve a previously registered interval
+            // for the reloading of the current structure and in
+            // case it already exists clear it in order to avoid
+            // any kind of doubl registration (would create issues)
+            var interval = _body.data("interval");
+            if (interval) {
+                clearInterval(interval);
+            }
+
             // retrieves the timetout information from the
             // matched object and parses it as an integer
             var timeout = matchedObject.attr("data-timeout");
@@ -330,9 +343,10 @@
             // registers for the reload of the page for every
             // timeout that has passed (in case no connection
             // is available no refresh is done)
-            setInterval(function() {
+            interval = setInterval(function() {
                         _update();
                     }, timeout);
+            _body.data("interval", interval);
         };
 
         /**
