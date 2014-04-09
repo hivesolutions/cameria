@@ -369,12 +369,24 @@
     };
 })(jQuery);
 
-jQuery(document).ready(function() {
-            // registers the camera object in the target elements
-            // (should enable normal functionality)
-            jQuery(".cameras img.single").ucamera();
+(function(jQuery) {
+    jQuery.fn.uapply = function(options) {
+        // sets the jquery matched object
+        var matchedObject = this;
 
-            // registers for the reload operations in the target elements
-            // (should reload page from time to time)
-            jQuery(".reload").ureload();
+        // registers the camera object in the target elements
+        // (should enable normal functionality)
+        jQuery(".cameras img.single", matchedObject).ucamera();
+
+        // registers for the reload operations in the target elements
+        // (should reload page from time to time)
+        jQuery(".reload", matchedObject).ureload();
+    };
+})(jQuery);
+
+jQuery(document).ready(function() {
+            var _body = jQuery("body");
+            _body.bind("applied", function(event, base) {
+                        base.uapply();
+                    });
         });
