@@ -93,7 +93,7 @@ class Device(spec.Spec):
         self.name = self.get_name()
 
     def pre_update(self):
-        spec.Spec.pre_create(self)
+        spec.Spec.pre_update(self)
 
         # creates the device's name from the joining of the type
         # and the model identifier of the current device
