@@ -139,7 +139,8 @@ setuptools.setup(
     },
     data_files = data_files,
     install_requires = [
-        "flask"
+        "flask",
+        "quorum"
     ],
     classifiers = [
         "Development Status :: 3 - Alpha",
