@@ -44,8 +44,8 @@ import datetime
 
 import quorum
 
-import base
-import camera
+from models import base
+from models import camera
 
 PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding

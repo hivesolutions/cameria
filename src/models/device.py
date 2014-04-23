@@ -39,7 +39,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import quorum
 
-import spec
+from models import spec
 
 class Device(spec.Spec):
 

@@ -41,8 +41,8 @@ import flask
 
 import quorum
 
-import spec
-import camera
+from models import spec
+from models import camera
 
 FILTER_FUNCTION = "function() {\
     for(var index = 0; index < this.cameras.length; index++) {\
