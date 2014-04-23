@@ -1,4 +1,4 @@
 *.pyc
 *.debug
 
-redis.shelve
+redis.shelve*
