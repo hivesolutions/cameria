@@ -40,7 +40,6 @@ __license__ = "GNU General Public License (GPL), Version 3"
 import os
 import datetime
 import tempfile
-import cStringIO
 
 from cameria import app
 from cameria import flask
@@ -125,7 +124,7 @@ def import_do():
 @quorum.ensure("export")
 def export_do():
     database = quorum.get_mongo_db()
-    file = cStringIO.StringIO()
+    file = quorum.StringIO()
     manager = quorum.export.ExportManager(
         database,
         single = SINGLE_ENTITIES,
