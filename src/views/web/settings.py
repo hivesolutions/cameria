@@ -124,7 +124,7 @@ def import_do():
 @quorum.ensure("export")
 def export_do():
     database = quorum.get_mongo_db()
-    file = quorum.StringIO()
+    file = quorum.BytesIO()
     manager = quorum.export.ExportManager(
         database,
         single = SINGLE_ENTITIES,
