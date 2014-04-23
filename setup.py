@@ -132,7 +132,8 @@ setuptools.setup(
         "quorum"
     ],
     py_modules = [
-        "cameria"
+        "models",
+        "view"
     ],
     package_dir = {
         "" : os.path.normpath("src")
