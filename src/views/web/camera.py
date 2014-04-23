@@ -81,7 +81,7 @@ def create_camera():
     # should be ran upon the save operation
     camera = models.Camera.new()
     try: camera.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "camera/new.html.tpl",
             link = "cameras",
@@ -130,7 +130,7 @@ def update_camera(camera_id):
     camera = models.Camera.get_a(camera_id = camera_id)
     camera.apply()
     try: camera.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "camera/edit.html.tpl",
             link = "cameras",

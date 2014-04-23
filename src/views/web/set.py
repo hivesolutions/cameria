@@ -81,7 +81,7 @@ def create_set():
     # should be ran upon the save operation
     set = models.Set.new()
     try: set.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "set/new.html.tpl",
             link = "sets",
@@ -129,7 +129,7 @@ def update_set(set_id):
     set = models.Set.get_a(set_id = set_id)
     set.apply()
     try: set.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "set/edit.html.tpl",
             link = "sets",

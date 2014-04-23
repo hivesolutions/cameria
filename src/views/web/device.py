@@ -79,7 +79,7 @@ def create_device():
     # should be ran upon the save operation
     device = models.Device.new()
     try: device.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "device/new.html.tpl",
             link = "devices",
@@ -126,7 +126,7 @@ def update_device(device_id):
     device = models.Device.get(device_id = device_id)
     device.apply()
     try: device.save()
-    except quorum.ValidationError, error:
+    except quorum.ValidationError as error:
         return flask.render_template(
             "device/edit.html.tpl",
             link = "devices",
