@@ -211,7 +211,9 @@ class Account(base.Base):
 
         # creates the sha1 hash value for the password and verifies that
         # the provided password is the expected
-        password_sha1 = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
+        password = password + PASSWORD_SALT
+        password = quorum.bytes(password)
+        password_sha1 = hashlib.sha1(password).hexdigest()
         _password = account.password
         if not password_sha1 == _password:
             raise quorum.OperationalError(
@@ -234,7 +236,9 @@ class Account(base.Base):
     def create_account_d(cls, username, password, type, cameras = None):
         # encodes the provided password into an sha1 hash appending
         # the salt value to it before the encoding
-        password = hashlib.sha1(password + PASSWORD_SALT).hexdigest()
+        password = password + PASSWORD_SALT
+        password = quorum.bytes(password)
+        password = hashlib.sha1(password).hexdigest()
 
         # creates the structure to be used as the server description
         # using the values provided as parameters
@@ -292,9 +296,9 @@ class Account(base.Base):
         # "encrypts" the password into the target format defined
         # by the salt and the sha1 hash function and then creates
         # the api key for the current account
-        self.password = hashlib.sha1(self.password + PASSWORD_SALT).hexdigest()
-        self.api_key = hashlib.sha1(str(uuid.uuid4())).hexdigest()
-        self.confirmation = hashlib.sha1(str(uuid.uuid4())).hexdigest()
+        self.password = hashlib.sha1(quorum.bytes(self.password + PASSWORD_SALT)).hexdigest()
+        self.api_key = hashlib.sha1(quorum.bytes(str(uuid.uuid4()))).hexdigest()
+        self.confirmation = hashlib.sha1(quorum.bytes(str(uuid.uuid4()))).hexdigest()
 
         # updates the various default values for the current account
         # user to be created
@@ -319,7 +323,7 @@ class Account(base.Base):
         has_password_confirm = hasattr(self, "password_confirm")
         if has_password and self.password == "": del self.password
         elif has_password_confirm:
-            self.password = hashlib.sha1(self.password + PASSWORD_SALT).hexdigest()
+            self.password = hashlib.sha1(quorum.bytes(self.password + PASSWORD_SALT)).hexdigest()
 
     def post_create(self):
         base.Base.post_create(self)
