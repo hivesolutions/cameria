@@ -242,10 +242,7 @@ class Account(base.Base):
             username = username,
             password = password,
             email = "%s@cameria.com" % username,
-            login_count = 0,
-            last_login = None,
             type = type,
-            tokens = USER_ACL.get(type, ()),
             cameras =  cameras
         )
         account.save(validate = False)
@@ -297,7 +294,7 @@ class Account(base.Base):
         self.enabled = False
         self.login_count = 0
         self.last_login = None
-        self.type = USER_TYPE
+        if not hasattr(self, "type") or not self.type: self.type = USER_TYPE
         self.tokens = USER_ACL.get(self.type, ())
 
     def pre_update(self):
