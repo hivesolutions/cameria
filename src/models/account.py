@@ -243,7 +243,7 @@ class Account(base.Base):
             password = password,
             email = "%s@cameria.com" % username,
             type = type,
-            cameras =  cameras
+            cameras = cameras
         )
         account.save(validate = False)
         account.enabled = True
