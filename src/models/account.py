@@ -234,16 +234,10 @@ class Account(base.Base):
 
     @classmethod
     def create_account_d(cls, username, password, type, cameras = None):
-        # encodes the provided password into an sha1 hash appending
-        # the salt value to it before the encoding
-        password = password + PASSWORD_SALT
-        password = quorum.bytes(password)
-        password = hashlib.sha1(password).hexdigest()
-
-        # creates the structure to be used as the server description
-        # using the values provided as parameters
-        account = dict(
-            id = -1,
+        # creates the structure to be used as the root account description
+        # using the default value and then stores the account as it's going
+        # to be used as the default root entity (for administration)
+        account = cls(
             enabled = True,
             username = username,
             password = password,
@@ -254,11 +248,9 @@ class Account(base.Base):
             tokens = USER_ACL.get(type, ()),
             cameras =  cameras
         )
-
-        # saves the account instance into the data source, ensures
-        # that the account is ready for login
-        collection = cls._collection()
-        collection.save(account)
+        account.save(validate = False)
+        account.enabled = True
+        account.save()
 
     @classmethod
     def confirmed(cls, confirmation):
