@@ -6,7 +6,7 @@
         <title>Cameria / {% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
-<body class="ux full romantic">
+<body class="ux romantic full">
     <div id="overlay" class="overlay"></div>
     <div id="header">
         {% block header %}
