@@ -2,3 +2,7 @@
 *.debug
 
 redis.shelve*
+
+/dist/
+/build/
+/src/cameria.egg-info/
