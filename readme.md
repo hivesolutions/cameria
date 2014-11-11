@@ -1,4 +1,4 @@
-# Cameria, web cameras infra-structure
+# [![Cameria](res/logo.png)](http://cameria.hive.pt)
 
 Simplified web based camera visualization system, developed using both [quorum](https://github.com/hivesolutions/flask_quorum)
 and [uxf](https://github.com/hivesolutions/uxf).
