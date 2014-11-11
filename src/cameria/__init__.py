@@ -19,9 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Hive Cameria System. If not, see <http://www.gnu.org/licenses/>.
 
-__author__ = "João Magalhães <joamag@hive.pt>"
-""" The author(s) of the module """
-
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -37,39 +34,16 @@ __copyright__ = "Copyright (c) 2008-2014 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import os
-import datetime
+from . import account
+from . import base
+from . import camera
+from . import device
+from . import set
+from . import spec
 
-import flask #@UnusedImport
-
-import models
-import quorum
-
-SECRET_KEY = "dzhneqksmwtuinay5dfdljec19pi765p"
-""" The "secret" key to be at the internal encryption
-processes handled by flask (eg: sessions) """
-
-MONGO_DATABASE = "cameria"
-""" The default database to be used for the connection with
-the mongo database """
-
-CURRENT_DIRECTORY = os.path.dirname(__file__)
-CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
-UPLOAD_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "uploads")
-
-app = quorum.load(
-    name = __name__,
-    secret_key = SECRET_KEY,
-    redis_session = True,
-    mongo_database = MONGO_DATABASE,
-    logger = "cameria.debug",
-    models = models,
-    PERMANENT_SESSION_LIFETIME = datetime.timedelta(365),
-    UPLOAD_FOLDER = UPLOAD_FOLDER,
-    MAX_CONTENT_LENGTH = 1024 ** 3
-)
-
-from views import * #@UnusedWildImport
-
-if __name__ == "__main__":
-    quorum.run(server = "netius")
+from .account import *
+from .base import *
+from .camera import *
+from .device import *
+from .set import *
+from .spec import *

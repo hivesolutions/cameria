@@ -1,1 +1,1 @@
-web: python src/cameria.py
+web: python src/cameria/main.py

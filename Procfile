@@ -1,1 +1,1 @@
-web: cd src && python cameria.py
+web: cd src && python cameria/main.py
