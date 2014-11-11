@@ -1,4 +1,11 @@
-include src/cameria.wsgi
-include src/projects/README.md
-recursive-include src/static *
-recursive-include src/templates *
+include src/cameria/cameria.wsgi
+recursive-include src/cameria/static/css *
+recursive-include src/cameria/static/images *
+recursive-include src/cameria/static/js *
+recursive-include src/cameria/templates *.tpl
+recursive-include src/cameria/templates/account *.tpl
+recursive-include src/cameria/templates/camera *.tpl
+recursive-include src/cameria/templates/device *.tpl
+recursive-include src/cameria/templates/partials *.tpl
+recursive-include src/cameria/templates/set *.tpl
+recursive-include src/cameria/templates/settings *.tpl
