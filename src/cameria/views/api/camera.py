@@ -37,10 +37,10 @@ __copyright__ = "Copyright (c) 2008-2014 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-import models
+from cameria import models
 
-from cameria import app
-from cameria import quorum
+from cameria.main import app
+from cameria.main import quorum
 
 @app.route("/api/cameras.json", methods = ("GET",), json = True)
 @quorum.ensure("cameras.list", json = True)

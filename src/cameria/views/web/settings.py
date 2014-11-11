@@ -41,9 +41,9 @@ import os
 import datetime
 import tempfile
 
-from cameria import app
-from cameria import flask
-from cameria import quorum
+from cameria.main import app
+from cameria.main import flask
+from cameria.main import quorum
 
 NAME = "cameria"
 """ The default name to be used as prefix for the database
@@ -124,7 +124,7 @@ def import_do():
 @quorum.ensure("export")
 def export_do():
     database = quorum.get_mongo_db()
-    file = quorum.BytesIO()
+    file = quorum.legacy.BytesIO()
     manager = quorum.export.ExportManager(
         database,
         single = SINGLE_ENTITIES,

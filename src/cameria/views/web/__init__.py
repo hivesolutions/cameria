@@ -39,11 +39,17 @@ from . import base
 from . import camera
 from . import device
 from . import set
-from . import settings
 
-from .account import *
-from .base import *
-from .camera import *
-from .device import *
-from .set import *
-from .settings import *
+from . import settings as _settings
+
+from .account import list_accounts, list_accounts_json, new_account, create_account,\
+    show_account, show_account_s, edit_account, update_account, delete_account
+from .base import index, signin, login, logout, about, handler_404, handler_413,\
+    handler_exception
+from .camera import list_cameras, list_cameras_json, new_camera, create_camera, show_camera,\
+    edit_camera, update_camera, delete_camera, settings_camera
+from .device import list_devices, list_devices_json, new_device, create_device, show_device,\
+    edit_device, update_device, delete_device
+from .set import list_sets, list_sets_json, new_set, create_set, show_set, edit_set,\
+    update_set, delete_set
+from .settings import settings, import_a, import_do, export_do, reset_do

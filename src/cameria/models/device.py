@@ -39,7 +39,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import quorum
 
-from models import spec
+from cameria.models import spec
 
 class Device(spec.Spec):
 

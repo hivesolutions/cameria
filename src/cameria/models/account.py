@@ -44,8 +44,8 @@ import datetime
 
 import quorum
 
-from models import base
-from models import camera
+from cameria.models import base
+from cameria.models import camera
 
 PASSWORD_SALT = "cameria"
 """ The salt suffix to be used during the encoding
@@ -213,7 +213,7 @@ class Account(base.Base):
         # creates the sha1 hash value for the password and verifies that
         # the provided password is the expected
         password = password + PASSWORD_SALT
-        password = quorum.bytes(password)
+        password = quorum.legacy.bytes(password)
         password_sha1 = hashlib.sha1(password).hexdigest()
         _password = account.password
         if not password_sha1 == _password:
@@ -286,9 +286,9 @@ class Account(base.Base):
         # "encrypts" the password into the target format defined
         # by the salt and the sha1 hash function and then creates
         # the api key for the current account
-        self.password = hashlib.sha1(quorum.bytes(self.password + PASSWORD_SALT)).hexdigest()
-        self.api_key = hashlib.sha1(quorum.bytes(str(uuid.uuid4()))).hexdigest()
-        self.confirmation = hashlib.sha1(quorum.bytes(str(uuid.uuid4()))).hexdigest()
+        self.password = hashlib.sha1(quorum.legacy.bytes(self.password + PASSWORD_SALT)).hexdigest()
+        self.api_key = hashlib.sha1(quorum.legacy.bytes(str(uuid.uuid4()))).hexdigest()
+        self.confirmation = hashlib.sha1(quorum.legacy.bytes(str(uuid.uuid4()))).hexdigest()
 
         # updates the various default values for the current account
         # user to be created
@@ -313,7 +313,7 @@ class Account(base.Base):
         has_password_confirm = hasattr(self, "password_confirm")
         if has_password and self.password == "": del self.password
         elif has_password_confirm:
-            self.password = hashlib.sha1(quorum.bytes(self.password + PASSWORD_SALT)).hexdigest()
+            self.password = hashlib.sha1(quorum.legacy.bytes(self.password + PASSWORD_SALT)).hexdigest()
 
     def post_create(self):
         base.Base.post_create(self)

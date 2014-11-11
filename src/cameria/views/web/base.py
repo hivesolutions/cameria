@@ -39,11 +39,11 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import traceback
 
-import models
+from cameria import models
 
-from cameria import app
-from cameria import flask
-from cameria import quorum
+from cameria.main import app
+from cameria.main import flask
+from cameria.main import quorum
 
 @app.route("/", methods = ("GET",))
 @app.route("/index", methods = ("GET",))

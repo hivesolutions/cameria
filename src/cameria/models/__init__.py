@@ -41,9 +41,9 @@ from . import device
 from . import set
 from . import spec
 
-from .account import *
-from .base import *
-from .camera import *
-from .device import *
-from .set import *
-from .spec import *
+from .account import Account
+from .base import Base
+from .camera import Camera
+from .device import Device
+from .set import Set
+from .spec import Spec
