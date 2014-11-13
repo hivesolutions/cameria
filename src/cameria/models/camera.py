@@ -41,8 +41,8 @@ import flask
 
 import quorum
 
-from cameria.models import spec
-from cameria.models import device
+from . import spec
+from . import device
 
 class Camera(spec.Spec):
 
