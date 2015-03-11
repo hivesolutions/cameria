@@ -95,7 +95,7 @@ class Set(spec.Spec):
     def find_a(cls, cameras = None, *args, **kwargs):
         cameras = cameras or flask.session.get("cameras", [])
         if not cameras == None:
-            function = FILTER_FUNCTION % cameras
+            function = FILTER_FUNCTION % cls.to_cameras_s(cameras)
             cls.filter_merge("$where", function, kwargs)
         return cls.find(*args, **kwargs)
 
@@ -103,9 +103,14 @@ class Set(spec.Spec):
     def get_a(cls, cameras = None, *args, **kwargs):
         cameras = cameras or flask.session.get("cameras", [])
         if not cameras == None:
-            function = FILTER_FUNCTION % cameras
+            function = FILTER_FUNCTION % cls.to_cameras_s(cameras)
             cls.filter_merge("$where", function, kwargs)
         return cls.get(*args, **kwargs)
+
+    @classmethod
+    def to_cameras_s(cls, cameras):
+        cameras = ["'%s'" % camera for camera in cameras]
+        return "[%s]" % ",".join(cameras)
 
     def merge_cameras(self):
         for camera in self.cameras.objects:
