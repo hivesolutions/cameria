@@ -252,9 +252,9 @@
 
             // resets the global attributes for the html
             // and the body elements (removes them)
-            _html.css("overflow-y", null);
-            _body.css("margin", null);
-            _body.css("padding", null);
+            _html.css("overflow-y", "");
+            _body.css("margin", "");
+            _body.css("padding", "");
 
             // retrieves the original dimenstions of the camera
             // to restore them in the attributes
@@ -263,11 +263,11 @@
 
             // resets the camera style to avoid any extra width
             // or height into it (or event margins)
-            camera.css("margin", null);
-            camera.css("position", null);
-            camera.css("top", null);
-            camera.css("left", null);
-            camera.css("z-index", null);
+            camera.css("margin", "");
+            camera.css("position", "");
+            camera.css("top", "");
+            camera.css("left", "");
+            camera.css("z-index", "");
 
             // sets the original dimentsions on the camera, resets
             // its values (to the original values)
@@ -276,8 +276,8 @@
 
             // removes the background and opacity from the overlay
             // and hides it avoid any more display of it
-            overlay.css("background", null);
-            overlay.css("opacity", null);
+            overlay.css("background", "");
+            overlay.css("opacity", "");
             overlay.hide();
         };
 
