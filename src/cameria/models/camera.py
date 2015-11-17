@@ -103,6 +103,12 @@ class Camera(spec.Spec):
             cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
         return cls.get(*args, **kwargs)
 
+    @classmethod
+    def _build(cls, model, map):
+        super(Camera, cls)._build(model, map)
+        device = model.get("device", {})
+        model["suffix"] = device.suffix
+
     @property
     def suffix(self):
         return self.device.suffix

@@ -85,10 +85,20 @@ class Device(spec.Spec):
             quorum.not_empty("model_d")
         ]
 
+    @classmethod
+    def _build(cls, model, map):
+        super(Device, cls)._build(model, map)
+        type = model.get("type", None)
+        model["suffix"] = cls._suffix_g(type = type)
+
+    @classmethod
+    def _suffix_g(cls, type = None):
+        if type == "axis": return "/axis-cgi/mjpg/video.cgi"
+        else: return "/video.cgi"
+
     @property
     def suffix(self):
-        if self.type == "axis": return "/axis-cgi/mjpg/video.cgi"
-        else: return "/video.cgi"
+        return self.__class__._suffix_g(type = self.type)
 
     def pre_create(self):
         spec.Spec.pre_create(self)
