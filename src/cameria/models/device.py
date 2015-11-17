@@ -85,6 +85,11 @@ class Device(spec.Spec):
             quorum.not_empty("model_d")
         ]
 
+    @property
+    def suffix(self):
+        if self.type == "axis": return "/axis-cgi/mjpg/video.cgi"
+        else: return "/video.cgi"
+
     def pre_create(self):
         spec.Spec.pre_create(self)
 

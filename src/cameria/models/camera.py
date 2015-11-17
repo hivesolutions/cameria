@@ -103,6 +103,10 @@ class Camera(spec.Spec):
             cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
         return cls.get(*args, **kwargs)
 
+    @property
+    def suffix(self):
+        return self.device.suffix
+
     def merge_device(self):
         self.merge(self.device, override = False)
 
