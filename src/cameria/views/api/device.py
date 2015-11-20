@@ -45,8 +45,12 @@ from cameria.main import quorum
 @app.route("/api/devices.json", methods = ("GET",), json = True)
 @quorum.ensure("devices.list", json = True)
 def list_devices_api():
-    object = quorum.get_object(alias = True, find = True)
-    object["sort"] = object.get("sort", [("name", 1)])
+    object = quorum.get_object(
+        alias = True,
+        find = True,
+        limit = 0,
+        sort = [("name", 1)]
+    )
     devices = models.Device.find(map = True, **object)
     return dict(devices = devices)
 

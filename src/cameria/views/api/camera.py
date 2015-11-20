@@ -45,8 +45,12 @@ from cameria.main import quorum
 @app.route("/api/cameras.json", methods = ("GET",), json = True)
 @quorum.ensure("cameras.list", json = True)
 def list_cameras_api():
-    object = quorum.get_object(alias = True, find = True)
-    object["sort"] = object.get("sort", [("camera_id", 1)])
+    object = quorum.get_object(
+        alias = True,
+        find = True,
+        limit = 0,
+        sort = [("camera_id", 1)]
+    )
     cameras = models.Camera.find_a(map = True, **object)
     return dict(cameras = cameras)
 
@@ -59,8 +63,12 @@ def show_camera_api(camera_id):
 @app.route("/api/cameras_m.json", methods = ("GET",), json = True)
 @quorum.ensure("cameras.list", json = True)
 def list_cameras_m_api():
-    object = quorum.get_object(alias = True, find = True)
-    object["sort"] = object.get("sort", [("camera_id", 1)])
+    object = quorum.get_object(
+        alias = True,
+        find = True,
+        limit = 0,
+        sort = [("camera_id", 1)]
+    )
     cameras = models.Camera.find_a(**object)
     for camera in cameras:
         camera.merge_device()
