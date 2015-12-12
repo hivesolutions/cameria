@@ -76,7 +76,10 @@ class Camera(spec.Spec):
     def validate(cls):
         return super(Camera, cls).validate() + [
             quorum.not_null("url"),
-            quorum.not_empty("url")
+            quorum.not_empty("url"),
+
+            quorum.not_null("device"),
+            quorum.not_empty("device")
         ]
 
     @classmethod
@@ -107,7 +110,7 @@ class Camera(spec.Spec):
     def _build(cls, model, map):
         super(Camera, cls)._build(model, map)
         device = model.get("device", {})
-        model["suffix"] = device.suffix
+        if device: model["suffix"] = device.suffix
 
     @property
     def suffix(self):
