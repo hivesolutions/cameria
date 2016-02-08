@@ -17,7 +17,7 @@ Example configuration for viriatum:
 
 ## iOS
 
-Please refer to the proper [cameria for ios](https://github.com/hivesolutions/cameria_ios) page.
+Please refer to the proper [Cameria for iOS](https://github.com/hivesolutions/cameria_ios) page.
 
 ## License
 
