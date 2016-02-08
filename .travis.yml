@@ -15,8 +15,8 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install twine
-script: if [[ "$TRAVIS_PYTHON_VERSION" != "3.2" ]]; then echo "aaa$TRAVIS_PYTHON_VERSIONaaa" && coverage run --source=cameria setup.py test; else python setup.py test; fi
-after_success: coveralls
+script: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coverage run --source=cameria setup.py test; else python setup.py test; fi
+after_success: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coveralls; fi
 deploy:
   provider: pypi
   user: joamag
