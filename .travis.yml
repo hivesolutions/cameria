@@ -1,0 +1,28 @@
+sudo: false
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "nightly"
+  - "pypy"
+  - "pypy3"
+services: mongodb
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install twine
+script: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coverage run --source=cameria setup.py test; else python setup.py test; fi
+after_success: coveralls
+deploy:
+  provider: pypi
+  user: joamag
+  password:
+    secure: BSmzr9w/iNppLMePRvKcmYVFz2txgHoj1+d3t+GAm2+QfCGFXFKjWge/Hk8cPDP37juxy6jK28c+UZ25dZWrHOLc4hTVU48FwVlPYzN7guxgrjwRpQdpz8lfrjcsPKiAqf0ofYYfH0AFsXDFx5wvkViw2yzkdM/lpVifD2eE+JVbhvDpXeleo/tUAkrdEqq3mf8KHc7XWwebtOZR98NmV9RXSEQkUiTAj/xb3UsZRqvOED6CRRHQtjiCjPUA0hgR+fD5ErZaHklqbEiMZHI1/Ds/PZNDL6ZxU0FAk5O7bBlGvJ+q2u3kx/6XgEwE/A10LfXvhAv+sMkbqv+dtCMHUbhdu9LXnL7nWzxYY4UzMv7phBL6JKqdzeKDBy/E38I4dNGgdGrbAVIbj+VwfL8zkLJ2Oea2R5tMLfEpZTyJu7BbPzH/KFIKsp3AkEu8bOXphjXrXVJRolSrOnJbpNuY+t3LfVBaVFK/X5oL1jfykv/DTusxL/rbgpWXuGWJqZrgP0AFv7KklxVMu519XZL177JFxQgtOF3OI1KaNlg1iTXFCTA4F0YFGgxDhX2ldDinkJ/8rNnX5w82mBC+Yo6VKrpI3TsJnFrUDoHco7aEdMIPjgl03YupiMUbhpFlKhQtxvIkUs2VVB09G0QxRyGlmDTcFYYpdGo5mocWijpiKmc=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: "2.7"
