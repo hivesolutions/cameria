@@ -18,3 +18,13 @@ Example configuration for viriatum:
 ## iOS
 
 Please refer to the proper [cameria for ios](https://github.com/hivesolutions/cameria_ios) page.
+
+## License
+
+Cameria is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
+
+## Build Automation
+
+[![Build Status](https://travis-ci.org/hivesolutions/cameria.svg?branch=master)](https://travis-ci.org/hivesolutions/cameria)
+[![Coverage Status](https://coveralls.io/repos/hivesolutions/cameria/badge.svg?branch=master)](https://coveralls.io/r/hivesolutions/cameria?branch=master)
+[![PyPi Status](https://img.shields.io/pypi/v/cameria.svg)](https://pypi.python.org/pypi/cameria)
