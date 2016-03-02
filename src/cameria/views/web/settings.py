@@ -105,9 +105,9 @@ def import_do():
     # retrieves the database and creates a new export manager for
     # the currently defined entities then imports the data defined
     # in the current temporary path
-    database = quorum.get_mongo_db()
+    adapter = quorum.get_adapter()
     manager = quorum.export.ExportManager(
-        database,
+        adapter,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
     )
@@ -123,10 +123,10 @@ def import_do():
 @app.route("/export", methods = ("GET",))
 @quorum.ensure("export")
 def export_do():
-    database = quorum.get_mongo_db()
+    adapter = quorum.get_adapter()
     file = quorum.legacy.BytesIO()
     manager = quorum.export.ExportManager(
-        database,
+        adapter,
         single = SINGLE_ENTITIES,
         multiple = MULTIPLE_ENTITIES
     )
