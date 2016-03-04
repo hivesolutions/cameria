@@ -20,9 +20,9 @@
         {% if acl("export") %}
             //
             {% if sub_link == "edit" %}
-                <a href="{{ url_for('export_do') }}" class="active">export</a>
+                <a href="{{ url_for('export_do') }}" class="active no-async">export</a>
             {% else %}
-                <a href="{{ url_for('export_do') }}">export</a>
+                <a href="{{ url_for('export_do') }}" class="no-async">export</a>
             {% endif %}
         {% endif %}
     </div>
