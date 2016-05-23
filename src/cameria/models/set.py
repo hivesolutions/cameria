@@ -69,7 +69,8 @@ class Set(spec.Spec):
     cameras = dict(
         type = quorum.references(
             camera.Camera,
-            name = "camera_id"
+            name = "camera_id",
+            dumpall = True
         ),
         eager = True
     )
