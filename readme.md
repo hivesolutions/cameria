@@ -7,7 +7,7 @@ and [uxf](https://github.com/hivesolutions/uxf).
 
 Simply configure a WSGI server pointing to [cameria.wsgi](src/cameria.wsgi).
 
-Example configuration for viriatum:
+Example configuration for [Viriatum](http://viriatum.hive.pt):
 
     [location:cameria]
     path = /cameria
