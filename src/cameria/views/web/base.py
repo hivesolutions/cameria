@@ -127,7 +127,7 @@ def handler_413(error):
         status = 413
     )
 
-@app.errorhandler(BaseException)
+@app.errorhandler(Exception)
 def handler_exception(error):
     formatted = traceback.format_exc()
     lines = formatted.splitlines()
