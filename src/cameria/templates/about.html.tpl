@@ -11,6 +11,6 @@
         Cameria is currently licensed under the much permissive<br />
         <strong>Apache License, Version 2.0</strong>
         and the<br/>
-        current repository is hosted at <a href="https://github.com/hivesolutions/cameria">github</a>.
+        current repository is hosted at <a href="https://github.com/hivesolutions/cameria">GitHub</a>.
     </div>
 {% endblock %}
