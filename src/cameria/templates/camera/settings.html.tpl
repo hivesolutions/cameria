@@ -24,11 +24,11 @@
             </tr>
             <tr>
                 <td class="right label" width="50%">compression</td>
-                <td class="left value" width="50%">{{ camera.compression|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ camera.compression|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">fps</td>
-                <td class="left value" width="50%">{{ camera.fps|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ camera.fps|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">device</td>

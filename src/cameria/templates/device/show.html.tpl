@@ -16,23 +16,23 @@
             </tr>
             <tr>
                 <td class="right label" width="50%">resolution</td>
-                <td class="left value" width="50%">{{ device.resolution|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ device.resolution|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">width</td>
-                <td class="left value" width="50%">{{ device.width|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ device.width|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">height</td>
-                <td class="left value" width="50%">{{ device.height|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ device.height|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">fps</td>
-                <td class="left value" width="50%">{{ device.fps|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ device.fps|default("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">clock</td>
-                <td class="left value" width="50%">{{ device.clock|default('N/A', True) }}</td>
+                <td class="left value" width="50%">{{ device.clock|default("N/A", True) }}</td>
             </tr>
         </tbody>
     </table>
