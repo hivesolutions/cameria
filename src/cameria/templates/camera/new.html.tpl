@@ -42,7 +42,7 @@
             <label>Protocol</label>
         </div>
         <div class="input">
-            <div name="protocol" class="drop-field drop-field-select" value="{{ camera.protocol | default('http') }}"
+            <div name="protocol" class="drop-field drop-field-select" value="{{ camera.protocol|default('http') }}"
                  data-error="{{ errors.protocol }}">
                 <ul class="data-source" data-type="local">
                     <li>http</li>

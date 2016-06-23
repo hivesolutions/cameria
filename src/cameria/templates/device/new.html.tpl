@@ -28,7 +28,7 @@
             <label>Device</label>
         </div>
         <div class="input">
-            <div name="device" class="drop-field drop-field-select" value="{{ device.device | default('camera') }}"
+            <div name="device" class="drop-field drop-field-select" value="{{ device.device|default('camera') }}"
                  data-error="{{ errors.device }}">
                 <ul class="data-source" data-type="local">
                     <li>camera</li>
