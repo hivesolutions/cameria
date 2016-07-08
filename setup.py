@@ -47,7 +47,7 @@ setuptools.setup(
     author_email = "development@hive.pt",
     description = "Cameria Web Interface",
     license = "Apache License, Version 2.0",
-    keywords = "automium build automation",
+    keywords = "cameria cameras iptv control",
     url = "http://cameria.hive.pt",
     zip_safe = False,
     packages = [
