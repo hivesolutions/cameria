@@ -11,7 +11,7 @@
     {% if error %}
         <div class="quote error">{{ error }}</div>
     {% endif %}
-    <form action="{{ url_for('login') }}" method="post" class="form">
+    <form action="{{ url_for('login') }}" method="post" class="form slim">
         <div class="input">
             <input class="small" name="username" value="{{ username }}" placeholder="username" type="text" />
         </div>
