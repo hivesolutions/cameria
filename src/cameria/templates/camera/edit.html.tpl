@@ -1,6 +1,7 @@
 {% extends "partials/layout_camera.html.tpl" %}
 {% block title %}Cameras{% endblock %}
 {% block name %}Cameras :: {{ camera.camera_id }}{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('update_camera', camera_id = camera.camera_id) }}" method="post" class="form">
         <div class="label">

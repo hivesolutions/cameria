@@ -1,6 +1,7 @@
 {% extends "partials/layout_device_l.html.tpl" %}
 {% block title %}Devices{% endblock %}
 {% block name %}New Device{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('create_device') }}" method="post" class="form">
         <div class="label">

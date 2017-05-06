@@ -1,6 +1,7 @@
 {% extends "partials/layout_camera_l.html.tpl" %}
 {% block title %}Cameras{% endblock %}
 {% block name %}New Camera{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('create_camera') }}" method="post" class="form">
         <div class="label">

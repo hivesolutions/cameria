@@ -1,6 +1,7 @@
 {% extends "partials/layout_account_l.html.tpl" %}
 {% block title %}Accounts{% endblock %}
 {% block name %}New Account{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('create_account') }}" method="post" class="form">
         <div class="label">

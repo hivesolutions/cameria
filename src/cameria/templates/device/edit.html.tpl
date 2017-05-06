@@ -1,6 +1,7 @@
 {% extends "partials/layout_device.html.tpl" %}
 {% block title %}Devices{% endblock %}
 {% block name %}Devices :: {{ device.name }}{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('update_device', device_id = device.device_id) }}" method="post" class="form">
         <div class="label">

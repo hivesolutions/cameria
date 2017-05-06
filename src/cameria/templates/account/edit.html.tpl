@@ -1,6 +1,7 @@
 {% extends "partials/layout_account.html.tpl" %}
 {% block title %}Accounts{% endblock %}
 {% block name %}Accounts :: {{ account.username }}{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('update_account', username = account.username) }}" method="post" class="form">
         <div class="label">

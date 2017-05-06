@@ -1,6 +1,7 @@
 {% extends "partials/layout_set_l.html.tpl" %}
 {% block title %}Sets{% endblock %}
 {% block name %}New Set{% endblock %}
+{% block style %}border-box{% endblock %}
 {% block content %}
     <form action="{{ url_for('create_set') }}" method="post" class="form">
         <div class="label">
