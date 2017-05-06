@@ -3,10 +3,11 @@
     {% block head %}
         {% include "partials/content_type.html.tpl" %}
         {% include "partials/includes.html.tpl" %}
+        {% include "partials/meta.html.tpl" %}
         <title>Cameria / {% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
-<body class="ux">
+<body class="ux flat">
     <div id="overlay" class="overlay"></div>
     <div id="header">
         {% block header %}
@@ -70,7 +71,7 @@
             </div>
         {% endblock %}
     </div>
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="content" class="{% block style %}{% endblock %}">{% block content %}{% endblock %}</div>
     {% include "partials/messages.html.tpl" %}
     {% include "partials/footer.html.tpl" %}
 </body>

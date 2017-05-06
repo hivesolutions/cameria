@@ -7,28 +7,28 @@
             <label>Camera ID</label>
         </div>
         <div class="input">
-            <input class="text-field focus" name="camera_id" placeholder="eg: cam_xz" value="{{ camera.camera_id }}"
+            <input type="text" class="text-field focus" name="camera_id" placeholder="eg: cam_xz" value="{{ camera.camera_id }}"
                    data-error="{{ errors.camera_id }}" />
         </div>
         <div class="label">
             <label>URL</label>
         </div>
         <div class="input">
-            <input class="text-field" name="url" placeholder="eg: http://cameria.com/cam_xz" value="{{ camera.url }}"
+            <input type="text" class="text-field" name="url" placeholder="eg: http://cameria.com/cam_xz" value="{{ camera.url }}"
                    data-error="{{ errors.url }}" />
         </div>
         <div class="label">
             <label>Camera</label>
         </div>
         <div class="input">
-            <input class="text-field" name="camera" placeholder="eg: 1" value="{{ camera.camera }}"
+            <input type="text" class="text-field" name="camera" placeholder="eg: 1" value="{{ camera.camera }}"
                    data-error="{{ errors.camera }}" />
         </div>
         <div class="label">
             <label>Username</label>
         </div>
         <div class="input">
-            <input class="text-field" name="username" placeholder="eg: johndoe" value="{{ camera.username }}"
+            <input type="text" class="text-field" name="username" placeholder="eg: johndoe" value="{{ camera.username }}"
                    data-error="{{ errors.username }}" />
         </div>
         <div class="label">
@@ -54,14 +54,14 @@
             <label>Compression</label>
         </div>
         <div class="input">
-            <input class="text-field" name="compression" placeholder="eg: 30" value="{{ camera.compression }}"
+            <input type="text" class="text-field" name="compression" placeholder="eg: 30" value="{{ camera.compression }}"
                    data-error="{{ errors.compression }}" />
         </div>
         <div class="label">
             <label>FPS</label>
         </div>
         <div class="input">
-            <input class="text-field" name="fps" placeholder="eg: 4" value="{{ camera.fps }}"
+            <input type="text" class="text-field" name="fps" placeholder="eg: 4" value="{{ camera.fps }}"
                    data-error="{{ errors.fps }}" />
         </div>
         <div class="label">

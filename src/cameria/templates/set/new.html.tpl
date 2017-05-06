@@ -7,56 +7,56 @@
             <label>Set ID</label>
         </div>
         <div class="input">
-            <input class="text-field focus" name="set_id" placeholder="eg: set_xz" value="{{ set.set_id }}"
+            <input type="text" class="text-field focus" name="set_id" placeholder="eg: set_xz" value="{{ set.set_id }}"
                    data-error="{{ errors.set_id }}" />
         </div>
         <div class="label">
             <label>Name</label>
         </div>
         <div class="input">
-            <input class="text-field" name="name" placeholder="eg: The office set" value="{{ set.name }}"
+            <input type="text" class="text-field" name="name" placeholder="eg: The office set" value="{{ set.name }}"
                    data-error="{{ errors.name }}" />
         </div>
         <div class="label">
             <label>Resolution</label>
         </div>
         <div class="input">
-            <input class="text-field" name="resolution" placeholder="eg: 320x240" value="{{ set.resolution }}"
+            <input type="text" class="text-field" name="resolution" placeholder="eg: 320x240" value="{{ set.resolution }}"
                    data-error="{{ errors.resolution }}" />
         </div>
         <div class="label">
             <label>Width</label>
         </div>
         <div class="input">
-            <input class="text-field" name="width" placeholder="eg: 320" value="{{ set.width }}"
+            <input type="text" class="text-field" name="width" placeholder="eg: 320" value="{{ set.width }}"
                    data-error="{{ errors.width }}" />
         </div>
         <div class="label">
             <label>Height</label>
         </div>
         <div class="input">
-            <input class="text-field" name="height" placeholder="eg: 240" value="{{ set.height }}"
+            <input type="text" class="text-field" name="height" placeholder="eg: 240" value="{{ set.height }}"
                    data-error="{{ errors.height }}" />
         </div>
         <div class="label">
             <label>Compression</label>
         </div>
         <div class="input">
-            <input class="text-field" name="compression" placeholder="eg: 50" value="{{ set.compression }}"
+            <input type="text" class="text-field" name="compression" placeholder="eg: 50" value="{{ set.compression }}"
                    data-error="{{ errors.compression }}" />
         </div>
         <div class="label">
             <label>Fps</label>
         </div>
         <div class="input">
-            <input class="text-field" name="fps" placeholder="eg: 1" value="{{ set.fps }}"
+            <input type="text" class="text-field" name="fps" placeholder="eg: 1" value="{{ set.fps }}"
                    data-error="{{ errors.fps }}" />
         </div>
         <div class="label">
             <label>Clock</label>
         </div>
         <div class="input">
-            <input class="text-field" name="clock" placeholder="eg: 0" value="{{ set.clock }}"
+            <input type="text" class="text-field" name="clock" placeholder="eg: 0" value="{{ set.clock }}"
                    data-error="{{ errors.clock }}" />
         </div>
         <div class="label">
