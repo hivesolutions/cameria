@@ -116,7 +116,7 @@
                 var keyValue = event.keyCode ? event.keyCode : event.charCode ? event.charCode :
                     event.which;
 
-                if (event.shiftKey && keyValue == 70) {
+                if (event.shiftKey && keyValue === 70) {
                     var maximized = camera.data("maximized") || false;
                     if (maximized) {
                         _minimize(camera);
@@ -312,7 +312,7 @@
         var _appendHtml = function() {
             // in case there's no selected elements must
             // return immediately no reload
-            if (matchedObject.length == 0) {
+            if (matchedObject.length === 0) {
                 return;
             }
 
