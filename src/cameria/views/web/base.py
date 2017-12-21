@@ -130,7 +130,7 @@ def handler_413(error):
 @app.errorhandler(Exception)
 def handler_exception(error):
     formatted = traceback.format_exc()
-    lines = formatted.splitlines()
+    lines = formatted.splitlines() if quorum.is_devel else []
     status = error.code if hasattr(error, "code") else 500
 
     return flask.Response(
