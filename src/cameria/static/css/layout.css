@@ -42,6 +42,5 @@ __license__   = Apache License, Version 2.0
 }
 
 .cameras a:hover {
-    border-bottom: none;
-    padding-bottom: none;
+    border-color: transparent;
 }
