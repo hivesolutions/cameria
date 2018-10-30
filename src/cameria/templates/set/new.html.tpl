@@ -47,7 +47,7 @@
                    data-error="{{ errors.compression }}" />
         </div>
         <div class="label">
-            <label>Fps</label>
+            <label>FPS</label>
         </div>
         <div class="input">
             <input type="text" class="text-field" name="fps" placeholder="eg: 1" value="{{ set.fps }}"
