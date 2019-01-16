@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td class="right label" width="50%">width</td>
-                <td class="left value" width="50%">{{ set.width|defaunsetult("N/A", True) }}</td>
+                <td class="left value" width="50%">{{ set.width|unset("N/A", True) }}</td>
             </tr>
             <tr>
                 <td class="right label" width="50%">height</td>
