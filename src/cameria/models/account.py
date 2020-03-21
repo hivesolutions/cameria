@@ -210,7 +210,7 @@ class Account(base.Base):
                 code = 403
             )
 
-        # creates the sha1 hash value for the password and verifies that
+        # creates the SHA1 hash value for the password and verifies that
         # the provided password is the expected
         password = password + PASSWORD_SALT
         password = quorum.legacy.bytes(password)
@@ -284,7 +284,7 @@ class Account(base.Base):
         if self.type in (SUPER_USER_TYPE, ADMIN_TYPE): self.cameras = None
 
         # "encrypts" the password into the target format defined
-        # by the salt and the sha1 hash function and then creates
+        # by the salt and the SHA1 hash function and then creates
         # the API key for the current account
         self.password = hashlib.sha1(quorum.legacy.bytes(self.password + PASSWORD_SALT)).hexdigest()
         self.api_key = hashlib.sha1(quorum.legacy.bytes(str(uuid.uuid4()))).hexdigest()
