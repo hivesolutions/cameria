@@ -32,8 +32,8 @@ jobs:
         if: matrix.python-version == '3.12'
       - run: |
           pip install pytest
-          REDIS_SESSION=0 pytest
-      - run: REDIS_SESSION=0 python setup.py test
+          LOAD_APP=0 pytest
+      - run: LOAD_APP=0 python setup.py test
         if: ${{ !contains(fromJson('["3.9", "3.10", "3.11", "3.12","latest"]'), matrix.python-version) }}
   build-pypy:
     name: Build PyPy
@@ -54,6 +54,6 @@ jobs:
         if: matrix.python-version == '3.12'
       - run: |
           pip install pytest
-          REDIS_SESSION=0 pytest
-      - run: REDIS_SESSION=0 pypy setup.py test
+          LOAD_APP=0 pytest
+      - run: LOAD_APP=0 pypy setup.py test
         if: ${{ !contains(fromJson('["3.9", "3.10", "3.11", "3.12","latest"]'), matrix.python-version) }}

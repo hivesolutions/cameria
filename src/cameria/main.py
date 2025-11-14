@@ -49,17 +49,22 @@ CURRENT_DIRECTORY = os.path.dirname(__file__)
 CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
 UPLOAD_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "uploads")
 
-app = quorum.load(
-    name=__name__,
-    secret_key=quorum.conf("SECRET_KEY", SECRET_KEY),
-    redis_session=quorum.conf("REDIS_SESSION", True, cast=bool),
-    mongo_database=MONGO_DATABASE,
-    logger="cameria.debug",
-    models=cameria.models,
-    PERMANENT_SESSION_LIFETIME=datetime.timedelta(365),
-    UPLOAD_FOLDER=UPLOAD_FOLDER,
-    MAX_CONTENT_LENGTH=1024**3,
-)
+global app
+
+if quorum.conf("LOAD_APP", True, cast=bool):
+    app = quorum.load(
+        name=__name__,
+        secret_key=quorum.conf("SECRET_KEY", SECRET_KEY),
+        redis_session=quorum.conf("REDIS_SESSION", True, cast=bool),
+        mongo_database=quorum.conf("MONGO_DATABASE", MONGO_DATABASE),
+        logger=quorum.conf("LOGGER", "cameria.debug"),
+        models=cameria.models,
+        PERMANENT_SESSION_LIFETIME=datetime.timedelta(365),
+        UPLOAD_FOLDER=UPLOAD_FOLDER,
+        MAX_CONTENT_LENGTH=1024**3,
+    )
+else:
+    app = None
 
 import cameria.views  # @UnusedImport
 
