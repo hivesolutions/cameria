@@ -64,7 +64,7 @@ if quorum.conf("LOAD_APP", True, cast=bool):
         MAX_CONTENT_LENGTH=1024**3,
     )
 else:
-    app = None
+    app = quorum.load(name=__name__)
 
 import cameria.views  # @UnusedImport
 
