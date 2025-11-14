@@ -51,8 +51,8 @@ UPLOAD_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "uploads")
 
 app = quorum.load(
     name=__name__,
-    secret_key=SECRET_KEY,
-    redis_session=True,
+    secret_key=quorum.conf("SECRET_KEY", SECRET_KEY),
+    redis_session=quorum.conf("REDIS_SESSION", True, cast=bool),
     mongo_database=MONGO_DATABASE,
     logger="cameria.debug",
     models=cameria.models,
