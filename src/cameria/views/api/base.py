@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -43,8 +34,9 @@ from cameria.main import app
 from cameria.main import flask
 from cameria.main import quorum
 
-@app.route("/api/login.json", methods = ("GET", "POST"), json = True)
-@app.route("/api/signin.json", methods = ("GET", "POST"), json = True)
+
+@app.route("/api/login.json", methods=("GET", "POST"), json=True)
+@app.route("/api/signin.json", methods=("GET", "POST"), json=True)
 def login_api():
     # retrieves both the username and the password from
     # the flask request form, these are the values that
@@ -67,27 +59,28 @@ def login_api():
     # session but only in case it exists
     sid = hasattr(flask.session, "sid") and flask.session.sid or None
 
-    return dict(
-        sid = sid,
-        session_id = sid,
-        username = username
-    )
+    return dict(sid=sid, session_id=sid, username=username)
 
-@app.route("/api/logout.json", methods = ("GET", "POST"), json = True)
-@app.route("/api/signout.json", methods = ("GET", "POST"), json = True)
+
+@app.route("/api/logout.json", methods=("GET", "POST"), json=True)
+@app.route("/api/signout.json", methods=("GET", "POST"), json=True)
 def logout_api():
     # removes the various session associated values from the
     # session so that the used is no longer allowed to interact
     # with the system (at least for private operations)
-    if "username" in flask.session: del flask.session["username"]
-    if "cameras" in flask.session: del flask.session["cameras"]
-    if "tokens" in flask.session: del flask.session["tokens"]
+    if "username" in flask.session:
+        del flask.session["username"]
+    if "cameras" in flask.session:
+        del flask.session["cameras"]
+    if "tokens" in flask.session:
+        del flask.session["tokens"]
 
     return dict()
 
-@app.route("/api/session.json", methods = ("GET",))
+
+@app.route("/api/session.json", methods=("GET",))
 def session_api():
     session = flask.session
     id = hasattr(session, "sid") and session.sid or None
 
-    return dict(id = id)
+    return dict(id=id)

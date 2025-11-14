@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -44,17 +35,12 @@ import quorum
 from . import spec
 from . import device
 
+
 class Camera(spec.Spec):
 
-    camera_id = dict(
-        index = True,
-        immutable = True,
-        default = True
-    )
+    camera_id = dict(index=True, immutable=True, default=True)
 
-    url = dict(
-        index = True
-    )
+    url = dict(index=True)
 
     camera = dict()
 
@@ -65,12 +51,7 @@ class Camera(spec.Spec):
     protocol = dict()
 
     device = dict(
-        type = quorum.reference(
-            device.Device,
-            name = "device_id",
-            dumpall = True
-        ),
-        eager = True
+        type=quorum.reference(device.Device, name="device_id", dumpall=True), eager=True
     )
 
     @classmethod
@@ -78,9 +59,8 @@ class Camera(spec.Spec):
         return super(Camera, cls).validate() + [
             quorum.not_null("url"),
             quorum.not_empty("url"),
-
             quorum.not_null("device"),
-            quorum.not_empty("device")
+            quorum.not_empty("device"),
         ]
 
     @classmethod
@@ -90,36 +70,38 @@ class Camera(spec.Spec):
             quorum.not_empty("camera_id"),
             quorum.string_gt("camera_id", 2),
             quorum.string_lt("camera_id", 64),
-            quorum.not_duplicate("camera_id", cls._name())
+            quorum.not_duplicate("camera_id", cls._name()),
         ]
 
     @classmethod
-    def find_a(cls, cameras = None, *args, **kwargs):
+    def find_a(cls, cameras=None, *args, **kwargs):
         cameras = cameras or flask.session.get("cameras", [])
         if not cameras == None:
-            cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
+            cls.filter_merge("camera_id", {"$in": cameras}, kwargs)
         return cls.find(*args, **kwargs)
 
     @classmethod
-    def get_a(cls, cameras = None, *args, **kwargs):
+    def get_a(cls, cameras=None, *args, **kwargs):
         cameras = cameras or flask.session.get("cameras", [])
         if not cameras == None:
-            cls.filter_merge("camera_id", {"$in" : cameras}, kwargs)
+            cls.filter_merge("camera_id", {"$in": cameras}, kwargs)
         return cls.get(*args, **kwargs)
 
     @classmethod
     def _build(cls, model, map):
         super(Camera, cls)._build(model, map)
         device = model.get("device", {})
-        if device: model["suffix"] = device.suffix
+        if device:
+            model["suffix"] = device.suffix
 
     @property
     def suffix(self):
         return self.device.suffix
 
     def merge_device(self):
-        self.merge(self.device, override = False)
+        self.merge(self.device, override=False)
 
     def filter_device(self):
-        if not self.device: return
+        if not self.device:
+            return
         self.device.filter_camera(self)

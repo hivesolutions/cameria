@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -40,7 +31,7 @@ __license__ = "Apache License, Version 2.0"
 import os
 import datetime
 
-import flask #@UnusedImport
+import flask  # @UnusedImport
 
 import quorum
 
@@ -59,20 +50,20 @@ CURRENT_DIRECTORY_ABS = os.path.abspath(CURRENT_DIRECTORY)
 UPLOAD_FOLDER = os.path.join(CURRENT_DIRECTORY_ABS, "uploads")
 
 app = quorum.load(
-    name = __name__,
-    secret_key = SECRET_KEY,
-    redis_session = True,
-    mongo_database = MONGO_DATABASE,
-    logger = "cameria.debug",
-    models = cameria.models,
-    PERMANENT_SESSION_LIFETIME = datetime.timedelta(365),
-    UPLOAD_FOLDER = UPLOAD_FOLDER,
-    MAX_CONTENT_LENGTH = 1024 ** 3
+    name=__name__,
+    secret_key=SECRET_KEY,
+    redis_session=True,
+    mongo_database=MONGO_DATABASE,
+    logger="cameria.debug",
+    models=cameria.models,
+    PERMANENT_SESSION_LIFETIME=datetime.timedelta(365),
+    UPLOAD_FOLDER=UPLOAD_FOLDER,
+    MAX_CONTENT_LENGTH=1024**3,
 )
 
-import cameria.views #@UnusedImport
+import cameria.views  # @UnusedImport
 
 if __name__ == "__main__":
-    quorum.run(server = "netius")
+    quorum.run(server="netius")
 else:
     __path__ = []

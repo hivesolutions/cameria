@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -49,39 +40,36 @@ NAME = "cameria"
 """ The default name to be used as prefix for the database
 export file in the export operation """
 
-SINGLE_ENTITIES = (
-    ("account", "username"),
-)
+SINGLE_ENTITIES = (("account", "username"),)
 """ The set of entities to be considered single file
 oriented (exports to one file per complete set) """
 
 MULTIPLE_ENTITIES = (
     ("set", "set_id"),
     ("camera", "camera_id"),
-    ("device", "device_id")
+    ("device", "device_id"),
 )
 """ The set of entities to be considered multiple file
 oriented (exports to one file per entity) """
 
-@app.route("/settings", methods = ("GET",))
+
+@app.route("/settings", methods=("GET",))
 @quorum.ensure("settings")
 def settings():
     return flask.render_template(
-        "settings/show.html.tpl",
-        link = "settings",
-        sub_link = "show"
+        "settings/show.html.tpl", link="settings", sub_link="show"
     )
 
-@app.route("/import", methods = ("GET",))
+
+@app.route("/import", methods=("GET",))
 @quorum.ensure("import")
 def import_a():
     return flask.render_template(
-        "settings/import.html.tpl",
-        link = "settings",
-        sub_link = "import"
+        "settings/import.html.tpl", link="settings", sub_link="import"
     )
 
-@app.route("/import", methods = ("POST",))
+
+@app.route("/import", methods=("POST",))
 @quorum.ensure("import")
 def import_do():
     # retrieves the import file values (reference to the
@@ -92,9 +80,9 @@ def import_do():
     if import_file == None or not import_file.filename:
         return flask.render_template(
             "settings/import.html.tpl",
-            link = "settings",
-            sub_link = "import",
-            error = "No file defined"
+            link="settings",
+            sub_link="import",
+            error="No file defined",
         )
 
     # creates a temporary file path for the storage of the file
@@ -107,28 +95,25 @@ def import_do():
     # in the current temporary path
     adapter = quorum.get_adapter()
     manager = quorum.export.ExportManager(
-        adapter,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
+        adapter, single=SINGLE_ENTITIES, multiple=MULTIPLE_ENTITIES
     )
-    try: manager.import_data(file_path)
-    finally: os.close(fd); os.remove(file_path)
+    try:
+        manager.import_data(file_path)
+    finally:
+        os.close(fd)
+        os.remove(file_path)
     return flask.redirect(
-        flask.url_for(
-            "import_a",
-            message = "Database file imported with success"
-        )
+        flask.url_for("import_a", message="Database file imported with success")
     )
 
-@app.route("/export", methods = ("GET",))
+
+@app.route("/export", methods=("GET",))
 @quorum.ensure("export")
 def export_do():
     adapter = quorum.get_adapter()
     file = quorum.legacy.BytesIO()
     manager = quorum.export.ExportManager(
-        adapter,
-        single = SINGLE_ENTITIES,
-        multiple = MULTIPLE_ENTITIES
+        adapter, single=SINGLE_ENTITIES, multiple=MULTIPLE_ENTITIES
     )
     manager.export_data(file)
 
@@ -138,16 +123,13 @@ def export_do():
 
     return flask.Response(
         file.getvalue(),
-        headers = {
-            "Content-Disposition" : "attachment; filename=\"%s\"" % file_name
-        },
-        mimetype = "application/octet-stream"
+        headers={"Content-Disposition": 'attachment; filename="%s"' % file_name},
+        mimetype="application/octet-stream",
     )
 
-@app.route("/reset", methods = ("GET",))
+
+@app.route("/reset", methods=("GET",))
 @quorum.ensure("reset")
 def reset_do():
     quorum.drop_mongo_db()
-    return flask.redirect(
-        flask.url_for("settings")
-    )
+    return flask.redirect(flask.url_for("settings"))

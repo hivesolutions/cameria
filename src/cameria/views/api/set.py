@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -42,33 +33,27 @@ from cameria import models
 from cameria.main import app
 from cameria.main import quorum
 
-@app.route("/api/sets.json", methods = ("GET",), json = True)
-@quorum.ensure("sets.list", json = True)
-def list_sets_api():
-    object = quorum.get_object(
-        alias = True,
-        find = True,
-        limit = 0,
-        sort = [("name", 1)]
-    )
-    sets = models.Set.find_a(map = True, **object)
-    return dict(sets = sets)
 
-@app.route("/api/sets/<set_id>.json", methods = ("GET",), json = True)
-@quorum.ensure("sets.show", json = True)
+@app.route("/api/sets.json", methods=("GET",), json=True)
+@quorum.ensure("sets.list", json=True)
+def list_sets_api():
+    object = quorum.get_object(alias=True, find=True, limit=0, sort=[("name", 1)])
+    sets = models.Set.find_a(map=True, **object)
+    return dict(sets=sets)
+
+
+@app.route("/api/sets/<set_id>.json", methods=("GET",), json=True)
+@quorum.ensure("sets.show", json=True)
 def show_set_api(set_id):
-    set = models.Set.get_a(map = True, set_id = set_id)
+    set = models.Set.get_a(map=True, set_id=set_id)
     return set
 
-@app.route("/api/sets_m.json", methods = ("GET",), json = True)
-@quorum.ensure("sets.list", json = True)
+
+@app.route("/api/sets_m.json", methods=("GET",), json=True)
+@quorum.ensure("sets.list", json=True)
 def list_sets_m_api():
-    object = quorum.get_object(
-        alias = True,
-        find = True,
-        limit = 0,
-        sort = [("name", 1)]
-    )
+    object = quorum.get_object(alias=True, find=True, limit=0, sort=[("name", 1)])
     sets = models.Set.find_a(**object)
-    for set in sets: set.merge_cameras()
-    return dict(sets = sets)
+    for set in sets:
+        set.merge_cameras()
+    return dict(sets=sets)

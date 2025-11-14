@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -39,44 +30,26 @@ __license__ = "Apache License, Version 2.0"
 
 from . import base
 
+
 class Spec(base.Base):
 
-    resolution = dict(
-        index = True
-    )
+    resolution = dict(index=True)
 
-    width = dict(
-        type = int
-    )
+    width = dict(type=int)
 
-    height = dict(
-        type = int
-    )
+    height = dict(type=int)
 
-    compression = dict(
-        type = int
-    )
+    compression = dict(type=int)
 
-    fps = dict(
-        type = int
-    )
+    fps = dict(type=int)
 
-    clock = dict(
-        type = int
-    )
+    clock = dict(type=int)
 
     @classmethod
     def get_spec(cls):
-        return (
-            "resolution",
-            "width",
-            "height",
-            "compression",
-            "fps",
-            "clock"
-        )
+        return ("resolution", "width", "height", "compression", "fps", "clock")
 
-    def merge(self, spec, override = True):
+    def merge(self, spec, override=True):
         # verifies that the current instance contains an origin reference
         # and in case it does not creates a new one and then retrieves the
         # reference to it so that it may be used latter for setting
@@ -92,19 +65,22 @@ class Spec(base.Base):
             # in case the spec object does not contain the current
             # spec name must continue the loop (not possible to
             # merge a non existent value)
-            if not hasattr(spec, name): continue
+            if not hasattr(spec, name):
+                continue
 
             # verifies if the current instance already contains a set
             # and valid value and in case the override flag is not
             # set overrides the current loop (already set value)
             is_set = hasattr(self, name) and not getattr(self, name) == None
-            if is_set and not override: continue
+            if is_set and not override:
+                continue
 
             # retrieves the current value (considered to be the original) and in
             # case the value already exists and is going to be replaced saves it
             # under the map of original values (as defined by spec)
             value = getattr(self, name) if is_set else None
-            if is_set and override: origin[name] = value
+            if is_set and override:
+                origin[name] = value
 
             # retrieves the value for the current name in the spec
             # object and then sets it in the current instance

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -41,27 +32,26 @@ import os
 import setuptools
 
 setuptools.setup(
-    name = "cameria",
-    version = "0.1.0",
-    author = "Hive Solutions Lda.",
-    author_email = "development@hive.pt",
-    description = "Cameria Web Interface",
-    license = "Apache License, Version 2.0",
-    keywords = "cameria cameras iptv control",
-    url = "http://cameria.hive.pt",
-    zip_safe = False,
-    packages = [
+    name="cameria",
+    version="0.1.0",
+    author="Hive Solutions Lda.",
+    author_email="development@hive.pt",
+    description="Cameria Web Interface",
+    license="Apache License, Version 2.0",
+    keywords="cameria cameras iptv control",
+    url="http://cameria.hive.pt",
+    zip_safe=False,
+    packages=[
         "cameria",
         "cameria.models",
         "cameria.views",
         "cameria.views.api",
-        "cameria.views.web"
+        "cameria.views.web",
     ],
-    package_dir = {
-        "" : os.path.normpath("src")
-    },
-    package_data = {
-        "cameria" : [
+    test_suite="cameria.test",
+    package_dir={"": os.path.normpath("src")},
+    package_data={
+        "cameria": [
             "static/css/*",
             "static/images/*",
             "static/js/*",
@@ -71,14 +61,11 @@ setuptools.setup(
             "templates/device/*.tpl",
             "templates/partials/*.tpl",
             "templates/set/*.tpl",
-            "templates/settings/*.tpl"
+            "templates/settings/*.tpl",
         ]
     },
-    install_requires = [
-        "flask",
-        "quorum"
-    ],
-    classifiers = [
+    install_requires=["flask", "quorum"],
+    classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
         "License :: OSI Approved :: Apache Software License",
@@ -93,6 +80,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7"
-    ]
+        "Programming Language :: Python :: 3.7",
+    ],
 )

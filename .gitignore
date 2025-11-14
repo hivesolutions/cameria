@@ -3,6 +3,8 @@
 
 redis.shelve*
 
+/.venv
+
 /dist
 /build
 /src/cameria.egg-info

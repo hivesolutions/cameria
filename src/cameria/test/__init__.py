@@ -24,9 +24,3 @@ __copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
-
-from . import api
-from . import web
-
-from .api import *
-from .web import *

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Cameria System
-# Copyright (c) 2008-2022 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Cameria System.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2022 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -41,33 +32,20 @@ import quorum
 
 from . import spec
 
+
 class Device(spec.Spec):
 
-    device_id = dict(
-        index = True,
-        immutable = True
-    )
+    device_id = dict(index=True, immutable=True)
 
-    name = dict(
-        index = True,
-        default = True
-    )
+    name = dict(index=True, default=True)
 
-    type = dict(
-        index = True
-    )
+    type = dict(index=True)
 
-    model_d = dict(
-        index = True
-    )
+    model_d = dict(index=True)
 
-    device = dict(
-        index = True
-    )
+    device = dict(index=True)
 
-    filter_options = dict(
-        type = list
-    )
+    filter_options = dict(type=list)
 
     @classmethod
     def validate_new(cls):
@@ -77,28 +55,28 @@ class Device(spec.Spec):
             quorum.string_gt("device_id", 2),
             quorum.string_lt("device_id", 64),
             quorum.not_duplicate("device_id", cls._name()),
-
             quorum.not_null("type"),
             quorum.not_empty("type"),
-
             quorum.not_null("model_d"),
-            quorum.not_empty("model_d")
+            quorum.not_empty("model_d"),
         ]
 
     @classmethod
     def _build(cls, model, map):
         super(Device, cls)._build(model, map)
         type = model.get("type", None)
-        model["suffix"] = cls._suffix_g(type = type)
+        model["suffix"] = cls._suffix_g(type=type)
 
     @classmethod
-    def _suffix_g(cls, type = None):
-        if type == "axis": return "/axis-cgi/mjpg/video.cgi"
-        else: return "/video.cgi"
+    def _suffix_g(cls, type=None):
+        if type == "axis":
+            return "/axis-cgi/mjpg/video.cgi"
+        else:
+            return "/video.cgi"
 
     @property
     def suffix(self):
-        return self.__class__._suffix_g(type = self.type)
+        return self.__class__._suffix_g(type=self.type)
 
     def pre_create(self):
         spec.Spec.pre_create(self)
@@ -116,7 +94,8 @@ class Device(spec.Spec):
 
     def filter_camera(self, camera):
         for filter_option in self.filter_options:
-            if not hasattr(camera, filter_option): continue
+            if not hasattr(camera, filter_option):
+                continue
             setattr(camera, filter_option, None)
 
     def get_name(self):
